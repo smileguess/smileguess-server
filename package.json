@@ -14,7 +14,9 @@
   "author": "",
   "license": "",
   "dependencies": {
+    "chance": "^1.0.2",
     "express": "^4.13.4",
+    "nodemon": "^1.9.1"
   },
   "devDependencies": {
     "babel-core": "^6.7.4",
@@ -25,7 +27,6 @@
     "babel-preset-react": "^6.5.0",
     "jasmine-console-reporter": "^1.2.4",
     "request": "^2.70.0",
-    "jasmine": "^2.4.1",
-    "nodemon": "^1.9.1"
+    "jasmine": "^2.4.1"
   }
 }

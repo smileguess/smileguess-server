@@ -1,4 +1,5 @@
 const request = require('request');
+const User = require('../models/users.js');
 const reporter = require('./spec/support/reporter.js');
 
 jasmine.getEnv().addReporter(reporter);
@@ -20,6 +21,16 @@ describe('Basic Server Functions', () => {
         expect(res.statusCode).toBe(404);
         done();
       });
+    });
+  });
+});
+
+describe('Models', () => {
+  describe('User Model', () => {
+    it('will correctly instantiate a new user', () => {
+      const testUser = new User('56Xfd8');
+      expect(testUser.id).toBe('56Xfd8');
+      expect(typeof testUser.username).toBe('string');
     });
   });
 });
