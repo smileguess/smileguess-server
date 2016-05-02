@@ -1,6 +1,7 @@
+const reporter = require('./spec/support/reporter.js');
 const request = require('request');
 const User = require('../models/users.js');
-const reporter = require('./spec/support/reporter.js');
+const Game = require('../models/games.js');
 
 jasmine.getEnv().addReporter(reporter);
 
@@ -26,11 +27,18 @@ describe('Basic Server Functions', () => {
 });
 
 describe('Models', () => {
+  const testUser = new User('56Xfd8');
   describe('User Model', () => {
     it('will correctly instantiate a new user', () => {
-      const testUser = new User('56Xfd8');
       expect(testUser.id).toBe('56Xfd8');
       expect(typeof testUser.username).toBe('string');
+    });
+  });
+
+  describe('Game Model', () => {
+    it('will correctly instantiate a new game', () => {
+      const testGame = new Game(testUser);
+      expect(testGame.players[0].id).toBe('56Xfd8');
     });
   });
 });
