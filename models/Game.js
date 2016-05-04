@@ -17,12 +17,38 @@
   popped to and from the 'this.clue' array.
 */
 
+/**
+ * The Game model persists data about a single game room, including players, dealer
+ * and other state information. Should be instantiated when a brand new game room is
+ * created, otherwise retrieved from the Games collection.
+ * @example
+ * const newGame = new Game(user);
+ */
 module.exports = class Game {
+  /**
+   * Constructor to instantiate a new Game instance.
+   * @param {number} userWhoStartsGame - Id of the user who is creating the game.
+   */
   constructor(userWhoStartsGame) {
+    /**
+     * @type {number[ ]}
+     */
     this.players = [userWhoStartsGame];
+    /**
+    * @type {number}
+    */
     this.dealer = null;
+    /**
+    * @type {string}
+    */
     this.solution = null;
+    /**
+    * @type {string}
+    */
     this.category = null;
+    /**
+    * @type {string[ ]}
+    */
     this.clue = [];
   }
 };
