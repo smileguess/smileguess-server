@@ -1,3 +1,5 @@
 module.exports = {
-  'min-players': 3,
+  minPlayers: 3,
+  maxPlayers: 6,
+  charsToAvoid: /-/g,
 };

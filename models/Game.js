@@ -1,3 +1,12 @@
+const settings = require('../gameSettings');
+// const gameMethods = require('../controllers/GameController');
+const Games = require('../collections/Games');
+const utils = require('../utils');
+const solutions = require('../solutions');
+
+const fullGames = Games.fullGames;
+const openGames = Games.openGames;
+const random = utils.getRandomIntInclusive;
 /*
   When a user clicks 'join random game,' he or she will be put
   into an active game, if one is available. If one is not available,
@@ -27,28 +36,115 @@
 module.exports = class Game {
   /**
    * Constructor to instantiate a new Game instance.
-   * @param {number} userWhoStartsGame - Id of the user who is creating the game.
    */
   constructor(userWhoStartsGame) {
     /**
-     * @type {number[ ]}
+    * @type {number}
+    */
+    this.gameId = null;
+    /**
+    * @type {number}
+    */
+    this.socketId = null;
+    /**
+     * @type {object[ ]}
      */
     this.players = [userWhoStartsGame];
     /**
     * @type {number}
     */
+    this.seatsOpen = settings.maxPlayers - 1;
+    /**
+    * @type {object}
+    */
     this.dealer = null;
     /**
+    * This property defines the "solution" that the "dealer"
+    * must communicate via emojis
     * @type {string}
     */
-    this.solution = null;
+    this.solutionForDisplay = null;
     /**
+    * This property prevents correct answers from being deemed
+    * incorrect due to capitilization, special characters, etc.
+    * @type {string}
+    */
+    this.solutionForMatching = null;
+    /**
+    * This property will communicate the solution's category to all players
     * @type {string}
     */
     this.category = null;
     /**
-    * @type {string[ ]}
+    * This property will prevent the game from running until sufficient players have joined
+    * @type {boolean}
     */
-    this.clue = [];
+    this.active = false;
+
+    // in the future, we may want to add a clue property, referring to the dealer's emoji's
+  }
+
+  updateOpenSeats() {
+    this.seatsOpen = settings.maxPlayers - this.players.length;
+  }
+
+  removePlayer(user) {
+    this.players.splice(this.players.indexOf(user), 1);
+    this.updateOpenSeats();
+    this.updateGameAvailability(this);
+  }
+
+  addPlayer(user) {
+    if (this.players.length < settings.maxPlayers) {
+      this.players.push(user);
+    } else {
+      console.error('Error: Game full');
+    }
+    this.updateOpenSeats();
+    this.updateGameAvailability(this);
+    if (!this.active && this.players.length >= settings.minPlayers) {
+      this.active = true;
+      this.assignFirstDealer();
+      this.getSolution();
+    }
+  }
+
+  updateGameAvailability() {
+    if (this.seatsOpen === 0 && fullGames.indexOf(this) === -1) {
+      Games.fullGames.push(this);
+      openGames.splice(openGames.indexOf(this), 1);
+    } else if (this.seatsOpen === settings.maxPlayers) {
+      openGames.splice(openGames.indexOf(this), 1);
+    } else if (openGames.indexOf(this) === -1) {
+      openGames.push(this);
+      Games.sort(openGames);
+      const gameLoc = fullGames.indexOf(this);
+      if (gameLoc !== -1) {
+        fullGames.splice(gameLoc, 1);
+      }
+    }
+  }
+
+  assignFirstDealer() {
+    this.dealer = this.players[random(1, this.players.length) - 1];
+  }
+
+  getSolution() {
+    const categoryNumber = random(0, solutions.solutionsForDisplay.length - 1);
+    const solutionNumber = random(0, solutions.solutionsForDisplay[categoryNumber].length - 1);
+    this.solutionForDisplay = solutions.solutionsForDisplay[categoryNumber][solutionNumber];
+    this.solutionForMatching = solutions.simplifiedSolutions[categoryNumber][solutionNumber];
+  }
+
+  checkGuess(message) {
+    const simplifiedGuess = utils.simplifyString(message.messageBody);
+    if (simplifiedGuess === this.solutionForMatching) {
+      this.handleDealerChange(message.user);
+    }
+  }
+
+  handleDealerChange(user) {
+    this.dealer = user;
+    this.getSolution();
   }
 };
