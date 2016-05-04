@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "node server.js & sleep 10 && jasmine && pgrep node | tail -n 1 | xargs kill -9",
+    "start": "node server.js"
   },
   "babel": {
     "presets": [
