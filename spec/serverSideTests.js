@@ -1,7 +1,7 @@
-const reporter = require('./spec/support/reporter.js');
+const reporter = require('./support/reporter.js');
 const request = require('request');
-const User = require('../models/users.js');
-const Game = require('../models/games.js');
+const User = require('../models/User.js');
+const Game = require('../models/Game.js');
 
 jasmine.getEnv().addReporter(reporter);
 
