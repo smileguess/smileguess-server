@@ -1,5 +1,4 @@
 const reporter = require('./support/reporter.js');
-jasmine.getEnv().addReporter(reporter);
 const io = require('socket.io-client');
 const serverURL = 'http://127.0.0.1:1234';
 

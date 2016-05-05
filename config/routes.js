@@ -1,5 +1,7 @@
-const express = require('express');
 const gameController = require('../controllers/GameController');
-const app = express();
 
-app.post('/api/randomgame:userid', gameController.joinOrStartGame());
+module.exports = (app, db) => {
+  app.get('/api/game/:userId', (req, res) => {
+    gameController.play(db, req.params.userId, (game) => res.json(game));
+  });
+};
