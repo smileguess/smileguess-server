@@ -1,10 +1,10 @@
 {
-  "source": "./models",
+  "source": "./",
   "destination": "./docs/esdoc",
   "plugins": [
     {"name": "./docs/node-esdocs-plugin.js"}
   ],
-  "excludes": ["^(\\.js)","docs/"],
+  "excludes": ["^(\\.js)","docs/","node_modules/","server.js"],
   "autoPrivate": true,
   "unexportIdentifier": false,
   "undocumentIdentifier": true,
