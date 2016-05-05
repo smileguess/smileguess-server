@@ -1,15 +1,33 @@
 window.esdocSearchIndex = [
   [
-    "smileguess-server/models/game.js~game",
-    "class/models/Game.js~Game.html",
-    "<span>Game</span> <span class=\"search-result-import-path\">smileguess-server/models/Game.js</span>",
+    "smileguess-server/smileguess-server/models/game.js~game",
+    "class/smileguess-server/models/Game.js~Game.html",
+    "<span>Game</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/models/Game.js</span>",
     "class"
   ],
   [
-    "smileguess-server/models/user.js~user",
-    "class/models/User.js~User.html",
-    "<span>User</span> <span class=\"search-result-import-path\">smileguess-server/models/User.js</span>",
+    "smileguess-server/smileguess-server/models/user.js~user",
+    "class/smileguess-server/models/User.js~User.html",
+    "<span>User</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/models/User.js</span>",
     "class"
+  ],
+  [
+    "smileguess-server/smileguess-server/sockets/dummysocketdata.js~dummy",
+    "variable/index.html#static-variable-dummy",
+    "<span>dummy</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/sockets/dummySocketData.js</span>",
+    "variable"
+  ],
+  [
+    "smileguess-server/smileguess-server/sockets/onconnect.js~onconnect",
+    "variable/index.html#static-variable-onConnect",
+    "<span>onConnect</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/sockets/onConnect.js</span>",
+    "variable"
+  ],
+  [
+    "smileguess-server/smileguess-server/sockets/sendcluemessage.js~sendcluemessage",
+    "variable/index.html#static-variable-sendClueMessage",
+    "<span>sendClueMessage</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/sockets/sendClueMessage.js</span>",
+    "variable"
   ],
   [
     "builtinexternal/ecmascriptexternal.js~array",
@@ -342,69 +360,249 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
-    "models/game.js",
-    "file/models/Game.js.html",
-    "models/Game.js",
+    "smileguess-server/collections/games.js",
+    "file/smileguess-server/collections/Games.js.html",
+    "smileguess-server/collections/Games.js",
     "file"
   ],
   [
-    "models/game.js~game#category",
-    "class/models/Game.js~Game.html#instance-member-category",
-    "models/Game.js~Game#category",
-    "member"
-  ],
-  [
-    "models/game.js~game#clue",
-    "class/models/Game.js~Game.html#instance-member-clue",
-    "models/Game.js~Game#clue",
-    "member"
-  ],
-  [
-    "models/game.js~game#constructor",
-    "class/models/Game.js~Game.html#instance-constructor-constructor",
-    "models/Game.js~Game#constructor",
-    "method"
-  ],
-  [
-    "models/game.js~game#dealer",
-    "class/models/Game.js~Game.html#instance-member-dealer",
-    "models/Game.js~Game#dealer",
-    "member"
-  ],
-  [
-    "models/game.js~game#players",
-    "class/models/Game.js~Game.html#instance-member-players",
-    "models/Game.js~Game#players",
-    "member"
-  ],
-  [
-    "models/game.js~game#solution",
-    "class/models/Game.js~Game.html#instance-member-solution",
-    "models/Game.js~Game#solution",
-    "member"
-  ],
-  [
-    "models/user.js",
-    "file/models/User.js.html",
-    "models/User.js",
+    "smileguess-server/config/middleware.js",
+    "file/smileguess-server/config/middleware.js.html",
+    "smileguess-server/config/middleware.js",
     "file"
   ],
   [
-    "models/user.js~user#constructor",
-    "class/models/User.js~User.html#instance-constructor-constructor",
-    "models/User.js~User#constructor",
+    "smileguess-server/config/routes.js",
+    "file/smileguess-server/config/routes.js.html",
+    "smileguess-server/config/routes.js",
+    "file"
+  ],
+  [
+    "smileguess-server/config/sockets.js",
+    "file/smileguess-server/config/sockets.js.html",
+    "smileguess-server/config/sockets.js",
+    "file"
+  ],
+  [
+    "smileguess-server/controllers/gamecontroller.js",
+    "file/smileguess-server/controllers/GameController.js.html",
+    "smileguess-server/controllers/GameController.js",
+    "file"
+  ],
+  [
+    "smileguess-server/gamesettings.js",
+    "file/smileguess-server/gameSettings.js.html",
+    "smileguess-server/gameSettings.js",
+    "file"
+  ],
+  [
+    "smileguess-server/models/game.js",
+    "file/smileguess-server/models/Game.js.html",
+    "smileguess-server/models/Game.js",
+    "file"
+  ],
+  [
+    "smileguess-server/models/game.js~game#active",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-active",
+    "smileguess-server/models/Game.js~Game#active",
+    "member"
+  ],
+  [
+    "smileguess-server/models/game.js~game#addplayer",
+    "class/smileguess-server/models/Game.js~Game.html#instance-method-addPlayer",
+    "smileguess-server/models/Game.js~Game#addPlayer",
     "method"
   ],
   [
-    "models/user.js~user#id",
-    "class/models/User.js~User.html#instance-member-id",
-    "models/User.js~User#id",
+    "smileguess-server/models/game.js~game#assignfirstdealer",
+    "class/smileguess-server/models/Game.js~Game.html#instance-method-assignFirstDealer",
+    "smileguess-server/models/Game.js~Game#assignFirstDealer",
+    "method"
+  ],
+  [
+    "smileguess-server/models/game.js~game#category",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-category",
+    "smileguess-server/models/Game.js~Game#category",
     "member"
   ],
   [
-    "models/user.js~user#username",
-    "class/models/User.js~User.html#instance-member-username",
-    "models/User.js~User#username",
+    "smileguess-server/models/game.js~game#checkguess",
+    "class/smileguess-server/models/Game.js~Game.html#instance-method-checkGuess",
+    "smileguess-server/models/Game.js~Game#checkGuess",
+    "method"
+  ],
+  [
+    "smileguess-server/models/game.js~game#constructor",
+    "class/smileguess-server/models/Game.js~Game.html#instance-constructor-constructor",
+    "smileguess-server/models/Game.js~Game#constructor",
+    "method"
+  ],
+  [
+    "smileguess-server/models/game.js~game#dealer",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-dealer",
+    "smileguess-server/models/Game.js~Game#dealer",
     "member"
+  ],
+  [
+    "smileguess-server/models/game.js~game#gameid",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-gameId",
+    "smileguess-server/models/Game.js~Game#gameId",
+    "member"
+  ],
+  [
+    "smileguess-server/models/game.js~game#getsolution",
+    "class/smileguess-server/models/Game.js~Game.html#instance-method-getSolution",
+    "smileguess-server/models/Game.js~Game#getSolution",
+    "method"
+  ],
+  [
+    "smileguess-server/models/game.js~game#handledealerchange",
+    "class/smileguess-server/models/Game.js~Game.html#instance-method-handleDealerChange",
+    "smileguess-server/models/Game.js~Game#handleDealerChange",
+    "method"
+  ],
+  [
+    "smileguess-server/models/game.js~game#players",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-players",
+    "smileguess-server/models/Game.js~Game#players",
+    "member"
+  ],
+  [
+    "smileguess-server/models/game.js~game#removeplayer",
+    "class/smileguess-server/models/Game.js~Game.html#instance-method-removePlayer",
+    "smileguess-server/models/Game.js~Game#removePlayer",
+    "method"
+  ],
+  [
+    "smileguess-server/models/game.js~game#seatsopen",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-seatsOpen",
+    "smileguess-server/models/Game.js~Game#seatsOpen",
+    "member"
+  ],
+  [
+    "smileguess-server/models/game.js~game#socketid",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-socketId",
+    "smileguess-server/models/Game.js~Game#socketId",
+    "member"
+  ],
+  [
+    "smileguess-server/models/game.js~game#solutionfordisplay",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-solutionForDisplay",
+    "smileguess-server/models/Game.js~Game#solutionForDisplay",
+    "member"
+  ],
+  [
+    "smileguess-server/models/game.js~game#solutionformatching",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-solutionForMatching",
+    "smileguess-server/models/Game.js~Game#solutionForMatching",
+    "member"
+  ],
+  [
+    "smileguess-server/models/game.js~game#updategameavailability",
+    "class/smileguess-server/models/Game.js~Game.html#instance-method-updateGameAvailability",
+    "smileguess-server/models/Game.js~Game#updateGameAvailability",
+    "method"
+  ],
+  [
+    "smileguess-server/models/game.js~game#updateopenseats",
+    "class/smileguess-server/models/Game.js~Game.html#instance-method-updateOpenSeats",
+    "smileguess-server/models/Game.js~Game#updateOpenSeats",
+    "method"
+  ],
+  [
+    "smileguess-server/models/user.js",
+    "file/smileguess-server/models/User.js.html",
+    "smileguess-server/models/User.js",
+    "file"
+  ],
+  [
+    "smileguess-server/models/user.js~user#constructor",
+    "class/smileguess-server/models/User.js~User.html#instance-constructor-constructor",
+    "smileguess-server/models/User.js~User#constructor",
+    "method"
+  ],
+  [
+    "smileguess-server/models/user.js~user#id",
+    "class/smileguess-server/models/User.js~User.html#instance-member-id",
+    "smileguess-server/models/User.js~User#id",
+    "member"
+  ],
+  [
+    "smileguess-server/models/user.js~user#username",
+    "class/smileguess-server/models/User.js~User.html#instance-member-username",
+    "smileguess-server/models/User.js~User#username",
+    "member"
+  ],
+  [
+    "smileguess-server/sockets/dummysocketdata.js",
+    "file/smileguess-server/sockets/dummySocketData.js.html",
+    "smileguess-server/sockets/dummySocketData.js",
+    "file"
+  ],
+  [
+    "smileguess-server/sockets/onconnect.js",
+    "file/smileguess-server/sockets/onConnect.js.html",
+    "smileguess-server/sockets/onConnect.js",
+    "file"
+  ],
+  [
+    "smileguess-server/sockets/ondisconnect.js",
+    "file/smileguess-server/sockets/onDisconnect.js.html",
+    "smileguess-server/sockets/onDisconnect.js",
+    "file"
+  ],
+  [
+    "smileguess-server/sockets/sendcluemessage.js",
+    "file/smileguess-server/sockets/sendClueMessage.js.html",
+    "smileguess-server/sockets/sendClueMessage.js",
+    "file"
+  ],
+  [
+    "smileguess-server/sockets/sendguessmessage.js",
+    "file/smileguess-server/sockets/sendGuessMessage.js.html",
+    "smileguess-server/sockets/sendGuessMessage.js",
+    "file"
+  ],
+  [
+    "smileguess-server/sockets/sendwinner.js",
+    "file/smileguess-server/sockets/sendWinner.js.html",
+    "smileguess-server/sockets/sendWinner.js",
+    "file"
+  ],
+  [
+    "smileguess-server/solutions.js",
+    "file/smileguess-server/solutions.js.html",
+    "smileguess-server/solutions.js",
+    "file"
+  ],
+  [
+    "smileguess-server/spec/useragent.js",
+    "file/smileguess-server/spec/UserAgent.js.html",
+    "smileguess-server/spec/UserAgent.js",
+    "file"
+  ],
+  [
+    "smileguess-server/spec/serversidetests.js",
+    "file/smileguess-server/spec/serverSideTests.js.html",
+    "smileguess-server/spec/serverSideTests.js",
+    "file"
+  ],
+  [
+    "smileguess-server/spec/sockettests.js",
+    "file/smileguess-server/spec/socketTests.js.html",
+    "smileguess-server/spec/socketTests.js",
+    "file"
+  ],
+  [
+    "smileguess-server/spec/support/reporter.js",
+    "file/smileguess-server/spec/support/reporter.js.html",
+    "smileguess-server/spec/support/reporter.js",
+    "file"
+  ],
+  [
+    "smileguess-server/utils.js",
+    "file/smileguess-server/utils.js.html",
+    "smileguess-server/utils.js",
+    "file"
   ]
 ]

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">smileguess-server/models/Game.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html">User</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">sockets</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dummy">dummy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/models/Game.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const settings = require(&apos;../gameSettings&apos;);
+// const gameMethods = require(&apos;../controllers/GameController&apos;);
+const Games = require(&apos;../collections/Games&apos;);
+const utils = require(&apos;../utils&apos;);
+const solutions = require(&apos;../solutions&apos;);
+
+const fullGames = Games.fullGames;
+const openGames = Games.openGames;
+const random = utils.getRandomIntInclusive;
+/*
+  When a user clicks &apos;join random game,&apos; he or she will be put
+  into an active game, if one is available. If one is not available,
+  a new game will be instantiated for him or her.
+
+  When players join the game, they are pushed into the game&apos;s &apos;players&apos; array.
+  A game will start when enough players are available to have a fun time. This
+  variable resides in game-settings.js with a default value of 3.
+
+  After enough players have joined to satisfy game genesis, a dealer will be
+  chosen at random.
+
+  A category will be randomly chosen, then a solution will randomly be chosen
+  within that category.
+
+  As the dealer enters or removes emojis as clues, they will be pushed and
+  popped to and from the &apos;this.clue&apos; array.
+*/
+
+/**
+ * The Game model persists data about a single game room, including players, dealer
+ * and other state information. Should be instantiated when a brand new game room is
+ * created, otherwise retrieved from the Games collection.
+ * @example
+ * const newGame = new Game(user);
+ */
+module.exports = class Game {
+  /**
+   * Constructor to instantiate a new Game instance.
+   */
+  constructor(userWhoStartsGame) {
+    /**
+    * @type {number}
+    */
+    this.gameId = null;
+    /**
+    * @type {number}
+    */
+    this.socketId = null;
+    /**
+     * @type {object[ ]}
+     */
+    this.players = [userWhoStartsGame];
+    /**
+    * @type {number}
+    */
+    this.seatsOpen = settings.maxPlayers - 1;
+    /**
+    * @type {object}
+    */
+    this.dealer = null;
+    /**
+    * This property defines the &quot;solution&quot; that the &quot;dealer&quot;
+    * must communicate via emojis
+    * @type {string}
+    */
+    this.solutionForDisplay = null;
+    /**
+    * This property prevents correct answers from being deemed
+    * incorrect due to capitilization, special characters, etc.
+    * @type {string}
+    */
+    this.solutionForMatching = null;
+    /**
+    * This property will communicate the solution&apos;s category to all players
+    * @type {string}
+    */
+    this.category = null;
+    /**
+    * This property will prevent the game from running until sufficient players have joined
+    * @type {boolean}
+    */
+    this.active = false;
+
+    // in the future, we may want to add a clue property, referring to the dealer&apos;s emoji&apos;s
+  }
+
+  updateOpenSeats() {
+    this.seatsOpen = settings.maxPlayers - this.players.length;
+  }
+
+  removePlayer(user) {
+    this.players.splice(this.players.indexOf(user), 1);
+    this.updateOpenSeats();
+    this.updateGameAvailability(this);
+  }
+
+  addPlayer(user) {
+    if (this.players.length &lt; settings.maxPlayers) {
+      this.players.push(user);
+    } else {
+      console.error(&apos;Error: Game full&apos;);
+    }
+    this.updateOpenSeats();
+    this.updateGameAvailability(this);
+    if (!this.active &amp;&amp; this.players.length &gt;= settings.minPlayers) {
+      this.active = true;
+      this.assignFirstDealer();
+      this.getSolution();
+    }
+  }
+
+  updateGameAvailability() {
+    if (this.seatsOpen === 0 &amp;&amp; fullGames.indexOf(this) === -1) {
+      Games.fullGames.push(this);
+      openGames.splice(openGames.indexOf(this), 1);
+    } else if (this.seatsOpen === settings.maxPlayers) {
+      openGames.splice(openGames.indexOf(this), 1);
+    } else if (openGames.indexOf(this) === -1) {
+      openGames.push(this);
+      Games.sort(openGames);
+      const gameLoc = fullGames.indexOf(this);
+      if (gameLoc !== -1) {
+        fullGames.splice(gameLoc, 1);
+      }
+    }
+  }
+
+  assignFirstDealer() {
+    this.dealer = this.players[random(1, this.players.length) - 1];
+  }
+
+  getSolution() {
+    const categoryNumber = random(0, solutions.solutionsForDisplay.length - 1);
+    const solutionNumber = random(0, solutions.solutionsForDisplay[categoryNumber].length - 1);
+    this.solutionForDisplay = solutions.solutionsForDisplay[categoryNumber][solutionNumber];
+    this.solutionForMatching = solutions.simplifiedSolutions[categoryNumber][solutionNumber];
+  }
+
+  checkGuess(message) {
+    const simplifiedGuess = utils.simplifyString(message.messageBody);
+    if (simplifiedGuess === this.solutionForMatching) {
+      this.handleDealerChange(message.user);
+    }
+  }
+
+  handleDealerChange(user) {
+    this.dealer = user;
+    this.getSolution();
+  }
+};
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.7)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

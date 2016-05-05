@@ -1,0 +1,515 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "express",
+            "range": [
+              6,
+              13
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 6
+              },
+              "end": {
+                "line": 1,
+                "column": 13
+              }
+            }
+          },
+          "init": {
+            "type": "CallExpression",
+            "callee": {
+              "type": "Identifier",
+              "name": "require",
+              "range": [
+                16,
+                23
+              ],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 16
+                },
+                "end": {
+                  "line": 1,
+                  "column": 23
+                }
+              }
+            },
+            "arguments": [
+              {
+                "type": "Literal",
+                "value": "express",
+                "raw": "'express'",
+                "range": [
+                  24,
+                  33
+                ],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 24
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 33
+                  }
+                }
+              }
+            ],
+            "range": [
+              16,
+              34
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 16
+              },
+              "end": {
+                "line": 1,
+                "column": 34
+              }
+            }
+          },
+          "range": [
+            6,
+            34
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 6
+            },
+            "end": {
+              "line": 1,
+              "column": 34
+            }
+          }
+        }
+      ],
+      "kind": "const",
+      "range": [
+        0,
+        35
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 35
+        }
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "gameController",
+            "range": [
+              42,
+              56
+            ],
+            "loc": {
+              "start": {
+                "line": 2,
+                "column": 6
+              },
+              "end": {
+                "line": 2,
+                "column": 20
+              }
+            }
+          },
+          "init": {
+            "type": "CallExpression",
+            "callee": {
+              "type": "Identifier",
+              "name": "require",
+              "range": [
+                59,
+                66
+              ],
+              "loc": {
+                "start": {
+                  "line": 2,
+                  "column": 23
+                },
+                "end": {
+                  "line": 2,
+                  "column": 30
+                }
+              }
+            },
+            "arguments": [
+              {
+                "type": "Literal",
+                "value": "../controllers/GameController",
+                "raw": "'../controllers/GameController'",
+                "range": [
+                  67,
+                  98
+                ],
+                "loc": {
+                  "start": {
+                    "line": 2,
+                    "column": 31
+                  },
+                  "end": {
+                    "line": 2,
+                    "column": 62
+                  }
+                }
+              }
+            ],
+            "range": [
+              59,
+              99
+            ],
+            "loc": {
+              "start": {
+                "line": 2,
+                "column": 23
+              },
+              "end": {
+                "line": 2,
+                "column": 63
+              }
+            }
+          },
+          "range": [
+            42,
+            99
+          ],
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 6
+            },
+            "end": {
+              "line": 2,
+              "column": 63
+            }
+          }
+        }
+      ],
+      "kind": "const",
+      "range": [
+        36,
+        100
+      ],
+      "loc": {
+        "start": {
+          "line": 2,
+          "column": 0
+        },
+        "end": {
+          "line": 2,
+          "column": 64
+        }
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "app",
+            "range": [
+              107,
+              110
+            ],
+            "loc": {
+              "start": {
+                "line": 3,
+                "column": 6
+              },
+              "end": {
+                "line": 3,
+                "column": 9
+              }
+            }
+          },
+          "init": {
+            "type": "CallExpression",
+            "callee": {
+              "type": "Identifier",
+              "name": "express",
+              "range": [
+                113,
+                120
+              ],
+              "loc": {
+                "start": {
+                  "line": 3,
+                  "column": 12
+                },
+                "end": {
+                  "line": 3,
+                  "column": 19
+                }
+              }
+            },
+            "arguments": [],
+            "range": [
+              113,
+              122
+            ],
+            "loc": {
+              "start": {
+                "line": 3,
+                "column": 12
+              },
+              "end": {
+                "line": 3,
+                "column": 21
+              }
+            }
+          },
+          "range": [
+            107,
+            122
+          ],
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 6
+            },
+            "end": {
+              "line": 3,
+              "column": 21
+            }
+          }
+        }
+      ],
+      "kind": "const",
+      "range": [
+        101,
+        123
+      ],
+      "loc": {
+        "start": {
+          "line": 3,
+          "column": 0
+        },
+        "end": {
+          "line": 3,
+          "column": 22
+        }
+      }
+    },
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "CallExpression",
+        "callee": {
+          "type": "MemberExpression",
+          "computed": false,
+          "object": {
+            "type": "Identifier",
+            "name": "app",
+            "range": [
+              125,
+              128
+            ],
+            "loc": {
+              "start": {
+                "line": 5,
+                "column": 0
+              },
+              "end": {
+                "line": 5,
+                "column": 3
+              }
+            }
+          },
+          "property": {
+            "type": "Identifier",
+            "name": "post",
+            "range": [
+              129,
+              133
+            ],
+            "loc": {
+              "start": {
+                "line": 5,
+                "column": 4
+              },
+              "end": {
+                "line": 5,
+                "column": 8
+              }
+            }
+          },
+          "range": [
+            125,
+            133
+          ],
+          "loc": {
+            "start": {
+              "line": 5,
+              "column": 0
+            },
+            "end": {
+              "line": 5,
+              "column": 8
+            }
+          }
+        },
+        "arguments": [
+          {
+            "type": "Literal",
+            "value": "/api/randomgame:userid",
+            "raw": "'/api/randomgame:userid'",
+            "range": [
+              134,
+              158
+            ],
+            "loc": {
+              "start": {
+                "line": 5,
+                "column": 9
+              },
+              "end": {
+                "line": 5,
+                "column": 33
+              }
+            }
+          },
+          {
+            "type": "CallExpression",
+            "callee": {
+              "type": "MemberExpression",
+              "computed": false,
+              "object": {
+                "type": "Identifier",
+                "name": "gameController",
+                "range": [
+                  160,
+                  174
+                ],
+                "loc": {
+                  "start": {
+                    "line": 5,
+                    "column": 35
+                  },
+                  "end": {
+                    "line": 5,
+                    "column": 49
+                  }
+                }
+              },
+              "property": {
+                "type": "Identifier",
+                "name": "joinOrStartGame",
+                "range": [
+                  175,
+                  190
+                ],
+                "loc": {
+                  "start": {
+                    "line": 5,
+                    "column": 50
+                  },
+                  "end": {
+                    "line": 5,
+                    "column": 65
+                  }
+                }
+              },
+              "range": [
+                160,
+                190
+              ],
+              "loc": {
+                "start": {
+                  "line": 5,
+                  "column": 35
+                },
+                "end": {
+                  "line": 5,
+                  "column": 65
+                }
+              }
+            },
+            "arguments": [],
+            "range": [
+              160,
+              192
+            ],
+            "loc": {
+              "start": {
+                "line": 5,
+                "column": 35
+              },
+              "end": {
+                "line": 5,
+                "column": 67
+              }
+            }
+          }
+        ],
+        "range": [
+          125,
+          193
+        ],
+        "loc": {
+          "start": {
+            "line": 5,
+            "column": 0
+          },
+          "end": {
+            "line": 5,
+            "column": 68
+          }
+        }
+      },
+      "range": [
+        125,
+        194
+      ],
+      "loc": {
+        "start": {
+          "line": 5,
+          "column": 0
+        },
+        "end": {
+          "line": 5,
+          "column": 69
+        }
+      }
+    }
+  ],
+  "sourceType": "module",
+  "range": [
+    0,
+    194
+  ],
+  "loc": {
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 5,
+      "column": 69
+    }
+  },
+  "comments": []
+}

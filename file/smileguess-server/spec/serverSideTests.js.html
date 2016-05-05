@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">smileguess-server/spec/serverSideTests.js | API Document</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  
+  
+  <script src="script/manual.js"></script>
+</head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+</header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html">User</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">sockets</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dummy">dummy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/spec/serverSideTests.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const reporter = require(&apos;./support/reporter&apos;);
+const request = require(&apos;request&apos;);
+const User = require(&apos;../models/User&apos;);
+const Game = require(&apos;../models/Game&apos;);
+const Games = require(&apos;../collections/Games.js&apos;);
+const gameMethods = require(&apos;../controllers/GameController&apos;);
+const settings = require(&apos;../gameSettings&apos;);
+jasmine.getEnv().addReporter(reporter);
+
+const serverURL = &apos;http://127.0.0.1:1234&apos;;
+
+describe(&apos;Basic Server Functions&apos;, () =&gt; {
+  describe(&apos;Server&apos;, () =&gt; {
+    it(&apos;will respond to a request at a nonexistant endpoint&apos;, (done) =&gt; {
+      const options = {
+        method: &apos;GET&apos;,
+        uri: serverURL,
+      };
+
+      request(options, (error, res) =&gt; {
+        if (error &amp;&amp; error.code === &apos;ECONNREFUSED&apos;) {
+          throw new Error(&apos;Connection refused, are you sure your server is running?&apos;);
+        }
+        expect(res.statusCode).toBe(404);
+        done();
+      });
+    });
+  });
+});
+
+describe(&apos;Models, Controllers and Collections: &apos;, () =&gt; {
+  let openGames = Games.openGames;
+  const fullGames = Games.fullGames;
+  const testUser1 = new User(&apos;user1ID&apos;);
+  const testUser2 = new User(&apos;user2ID&apos;);
+  const testUser3 = new User(&apos;user3ID&apos;);
+  const testUser4 = new User(&apos;user4ID&apos;);
+  const testUser5 = new User(&apos;user5ID&apos;);
+  const testUser6 = new User(&apos;user6ID&apos;);
+  const testGame1 = new Game(testUser1);
+
+  describe(&apos;User Model&apos;, () =&gt; {
+    it(&apos;will correctly instantiate a new user&apos;, () =&gt; {
+      expect(testUser1.id).toBe(&apos;user1ID&apos;);
+      expect(typeof testUser1.username).toBe(&apos;string&apos;);
+    });
+  });
+
+  describe(&apos;Game: Model, Collection and Controllers&apos;, () =&gt; {
+
+    it(&apos;will correctly instantiate a new game&apos;, () =&gt; { 
+      expect(testGame1.players[0].id).toBe(&apos;user1ID&apos;);
+    });
+
+    it(&apos;will place a user in a game&apos;, () =&gt; {
+      const testUser2 = new User(&apos;user2ID&apos;);
+      testGame1.addPlayer(testUser2);
+      expect(testGame1.players[0].id).toBe(&apos;user1ID&apos;);
+      expect(testGame1.players[1].id).toBe(&apos;user2ID&apos;);
+    });
+    it(&apos;will remove a player from a game&apos;, () =&gt; {
+      testGame1.removePlayer(testUser1);
+      expect(testGame1.players.length).toBe(1);
+    })
+    it(&apos;will adjust the number of seats available after adding players&apos;, () =&gt; {
+      testGame1.addPlayer(testUser2);
+      testGame1.addPlayer(testUser3);
+      expect(testGame1.seatsOpen).toBe(settings.maxPlayers - 3);
+    });
+    it(&apos;will adjust the number of seats available after removing players&apos;, () =&gt; {
+      testGame1.removePlayer(testUser2);
+      testGame1.removePlayer(testUser3);
+      expect(testGame1.seatsOpen).toBe(settings.maxPlayers - 1);
+    });
+    it(&apos;will quarantine full games&apos;, () =&gt; {
+      testGame1.addPlayer(testUser2);
+      testGame1.addPlayer(testUser3);
+      testGame1.addPlayer(testUser4);
+      testGame1.addPlayer(testUser5);
+      testGame1.addPlayer(testUser6);
+      expect(Games.fullGames.length).toBe(1);
+    });
+    it(&apos;will aggregate games with seats available&apos;, () =&gt; {
+      testGame1.removePlayer(testUser6);
+      expect(openGames.length).toBe(1);
+    });
+    it(&apos;will remove games from openGames when they are no longer open and add games to fullGames&apos;, () =&gt; {
+      expect(fullGames.length).toBe(0);
+      expect(openGames.length).toBe(1);
+
+      testGame1.addPlayer(testUser6);
+
+      expect(fullGames.length).toBe(1);
+      expect(openGames.length).toBe(0);
+    });
+    it(&apos;will remove games from fullGames when a seat is open, and add games to openGames&apos;, () =&gt; {
+      testGame1.removePlayer(testUser6);
+      expect(fullGames.length).toBe(0);
+      expect(openGames.length).toBe(1);
+    });
+    it(&apos;will order open games by number of seats available&apos;, () =&gt; {
+      const testGame2 = new Game(testUser2);
+      testGame2.updateGameAvailability();
+      Games.sort(openGames);
+      expect(openGames[0].seatsOpen &lt; openGames[1].seatsOpen).toBe(true);
+    });
+    it(&apos;will place users in the game with the most seats available&apos;, () =&gt; {
+      gameMethods.joinOrStartGame(testUser2);
+      expect(openGames[1].seatsOpen).toBe(4);
+    });
+    it(&apos;will create a new game if no seats are available&apos;, () =&gt; {
+      gameMethods.joinOrStartGame(testUser2);
+      gameMethods.joinOrStartGame(testUser3);
+      gameMethods.joinOrStartGame(testUser4);
+      gameMethods.joinOrStartGame(testUser5);
+      gameMethods.joinOrStartGame(testUser6);
+
+      expect(openGames.length).toBe(0);
+      expect(openGames.length + fullGames.length).toBe(2);
+
+      gameMethods.joinOrStartGame(testUser6);
+
+      expect(openGames.length + fullGames.length).toBe(3);
+    });
+    it(&apos;will start a game after enough players have joined&apos;, () =&gt; {
+      expect(openGames[openGames.length - 1].active).toBe(false);
+      for (let i = 1; i &lt; settings.minPlayers; i++) {
+        gameMethods.joinOrStartGame(testUser4);
+      }
+      expect(openGames[openGames.length - 1].active).toBe(true);
+    });
+    it(&apos;will assign the first dealer&apos;, () =&gt; {
+      expect(openGames[openGames.length - 1].dealer).not.toBe(null);
+    });
+    it(&apos;will assign a random solution from a random category&apos;, () =&gt; {
+      console.log(openGames[openGames.length - 1].solutionForDisplay);
+      expect(openGames[openGames.length - 1].solutionForDisplay).not.toBe(null);
+      expect(openGames[openGames.length - 1].solutionForMatching).not.toBe(null);
+    });
+    it(&apos;will destroy the game if all players leave&apos;, () =&gt; {
+      openGames[0].removePlayer(testUser4);
+      openGames[0].removePlayer(testUser4);
+      expect(openGames.length).toBe(1);
+      openGames[0].removePlayer(testUser6);
+      expect(openGames.length).toBe(0);
+    });
+    xit(&apos;will check guesses&apos;, () =&gt; {
+      // game method built, but waiting until message functions are built to test
+    });
+  });
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(0.4.7)</span></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

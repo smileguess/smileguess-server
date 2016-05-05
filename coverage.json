@@ -1,22 +1,48 @@
 {
-  "coverage": "63.63%",
-  "expectCount": 11,
-  "actualCount": 7,
+  "coverage": "50%",
+  "expectCount": 26,
+  "actualCount": 13,
   "files": {
-    "models/Game.js": {
-      "expectCount": 7,
-      "actualCount": 7,
-      "undocumentLines": []
+    "smileguess-server/models/Game.js": {
+      "expectCount": 19,
+      "actualCount": 11,
+      "undocumentLines": [
+        97,
+        128,
+        139,
+        132,
+        146,
+        91,
+        112,
+        87
+      ]
     },
-    "models/User.js": {
+    "smileguess-server/models/User.js": {
       "expectCount": 4,
       "actualCount": 0,
       "undocumentLines": [
+        6,
+        7,
         8,
-        9,
-        10,
-        11
+        9
       ]
+    },
+    "smileguess-server/sockets/dummySocketData.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        1
+      ]
+    },
+    "smileguess-server/sockets/onConnect.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "smileguess-server/sockets/sendClueMessage.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
     }
   }
 }
