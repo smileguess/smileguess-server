@@ -8,6 +8,7 @@ const settings = require('../gameSettings');
 jasmine.getEnv().addReporter(reporter);
 
 const serverURL = 'http://127.0.0.1:1234';
+const joinOrStartGameURL = 'http://127.0.0.1/random:';
 
 describe('Basic Server Functions', () => {
   describe('Server', () => {
@@ -109,23 +110,23 @@ describe('Models, Controllers and Collections: ', () => {
       expect(openGames[1].seatsOpen).toBe(4);
     });
     it('will create a new game if no seats are available', () => {
-      gameMethods.joinOrStartGame(testUser2);
-      gameMethods.joinOrStartGame(testUser3);
-      gameMethods.joinOrStartGame(testUser4);
-      gameMethods.joinOrStartGame(testUser5);
-      gameMethods.joinOrStartGame(testUser6);
-
+      let i = 'bob';
+      for (let i = openGames.length; i < settings.maxPlayers; i++) {
+        const options = {
+          method: 'GET',
+          uri: joinOrStartGameURL + i,
+        };
+        request(options);
+      }
       expect(openGames.length).toBe(0);
       expect(openGames.length + fullGames.length).toBe(2);
 
-      gameMethods.joinOrStartGame(testUser6);
-
+      request(options);
       expect(openGames.length + fullGames.length).toBe(3);
     });
     it('will start a game after enough players have joined', () => {
       expect(openGames[openGames.length - 1].active).toBe(false);
       for (let i = 1; i < settings.minPlayers; i++) {
-        gameMethods.joinOrStartGame(testUser4);
       }
       expect(openGames[openGames.length - 1].active).toBe(true);
     });
