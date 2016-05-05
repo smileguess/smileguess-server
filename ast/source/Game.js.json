@@ -1,0 +1,1181 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "ExportDefaultDeclaration",
+      "declaration": {
+        "type": "ClassDeclaration",
+        "id": {
+          "type": "Identifier",
+          "name": "Game",
+          "range": [
+            1039,
+            1043
+          ],
+          "loc": {
+            "start": {
+              "line": 27,
+              "column": 21
+            },
+            "end": {
+              "line": 27,
+              "column": 25
+            }
+          }
+        },
+        "superClass": null,
+        "body": {
+          "type": "ClassBody",
+          "body": [
+            {
+              "type": "MethodDefinition",
+              "key": {
+                "type": "Identifier",
+                "name": "constructor",
+                "range": [
+                  1195,
+                  1206
+                ],
+                "loc": {
+                  "start": {
+                    "line": 32,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 32,
+                    "column": 13
+                  }
+                }
+              },
+              "value": {
+                "type": "FunctionExpression",
+                "id": null,
+                "params": [
+                  {
+                    "type": "Identifier",
+                    "name": "userWhoStartsGame",
+                    "range": [
+                      1207,
+                      1224
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 32,
+                        "column": 14
+                      },
+                      "end": {
+                        "line": 32,
+                        "column": 31
+                      }
+                    }
+                  }
+                ],
+                "body": {
+                  "type": "BlockStatement",
+                  "body": [
+                    {
+                      "type": "ExpressionStatement",
+                      "expression": {
+                        "type": "AssignmentExpression",
+                        "operator": "=",
+                        "left": {
+                          "type": "MemberExpression",
+                          "computed": false,
+                          "object": {
+                            "type": "ThisExpression",
+                            "range": [
+                              1273,
+                              1277
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 36,
+                                "column": 4
+                              },
+                              "end": {
+                                "line": 36,
+                                "column": 8
+                              }
+                            }
+                          },
+                          "property": {
+                            "type": "Identifier",
+                            "name": "players",
+                            "range": [
+                              1278,
+                              1285
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 36,
+                                "column": 9
+                              },
+                              "end": {
+                                "line": 36,
+                                "column": 16
+                              }
+                            }
+                          },
+                          "range": [
+                            1273,
+                            1285
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 36,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 36,
+                              "column": 16
+                            }
+                          }
+                        },
+                        "right": {
+                          "type": "ArrayExpression",
+                          "elements": [
+                            {
+                              "type": "Identifier",
+                              "name": "userWhoStartsGame",
+                              "range": [
+                                1289,
+                                1306
+                              ],
+                              "loc": {
+                                "start": {
+                                  "line": 36,
+                                  "column": 20
+                                },
+                                "end": {
+                                  "line": 36,
+                                  "column": 37
+                                }
+                              }
+                            }
+                          ],
+                          "range": [
+                            1288,
+                            1307
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 36,
+                              "column": 19
+                            },
+                            "end": {
+                              "line": 36,
+                              "column": 38
+                            }
+                          }
+                        },
+                        "range": [
+                          1273,
+                          1307
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 36,
+                            "column": 4
+                          },
+                          "end": {
+                            "line": 36,
+                            "column": 38
+                          }
+                        }
+                      },
+                      "range": [
+                        1273,
+                        1308
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 36,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 36,
+                          "column": 39
+                        }
+                      },
+                      "leadingComments": [
+                        {
+                          "type": "Block",
+                          "value": "*\n     * @type {number[ ]}\n     ",
+                          "range": [
+                            1232,
+                            1268
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 33,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 35,
+                              "column": 7
+                            }
+                          }
+                        }
+                      ],
+                      "trailingComments": [
+                        {
+                          "type": "Block",
+                          "value": "*\n    * @type {number}\n    ",
+                          "range": [
+                            1313,
+                            1344
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 37,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 39,
+                              "column": 6
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "ExpressionStatement",
+                      "expression": {
+                        "type": "AssignmentExpression",
+                        "operator": "=",
+                        "left": {
+                          "type": "MemberExpression",
+                          "computed": false,
+                          "object": {
+                            "type": "ThisExpression",
+                            "range": [
+                              1349,
+                              1353
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 40,
+                                "column": 4
+                              },
+                              "end": {
+                                "line": 40,
+                                "column": 8
+                              }
+                            }
+                          },
+                          "property": {
+                            "type": "Identifier",
+                            "name": "dealer",
+                            "range": [
+                              1354,
+                              1360
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 40,
+                                "column": 9
+                              },
+                              "end": {
+                                "line": 40,
+                                "column": 15
+                              }
+                            }
+                          },
+                          "range": [
+                            1349,
+                            1360
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 40,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 40,
+                              "column": 15
+                            }
+                          }
+                        },
+                        "right": {
+                          "type": "Literal",
+                          "value": null,
+                          "raw": "null",
+                          "range": [
+                            1363,
+                            1367
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 40,
+                              "column": 18
+                            },
+                            "end": {
+                              "line": 40,
+                              "column": 22
+                            }
+                          }
+                        },
+                        "range": [
+                          1349,
+                          1367
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 40,
+                            "column": 4
+                          },
+                          "end": {
+                            "line": 40,
+                            "column": 22
+                          }
+                        }
+                      },
+                      "range": [
+                        1349,
+                        1368
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 40,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 40,
+                          "column": 23
+                        }
+                      },
+                      "leadingComments": [
+                        {
+                          "type": "Block",
+                          "value": "*\n    * @type {number}\n    ",
+                          "range": [
+                            1313,
+                            1344
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 37,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 39,
+                              "column": 6
+                            }
+                          }
+                        }
+                      ],
+                      "trailingComments": [
+                        {
+                          "type": "Block",
+                          "value": "*\n    * @type {string}\n    ",
+                          "range": [
+                            1373,
+                            1404
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 41,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 43,
+                              "column": 6
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "ExpressionStatement",
+                      "expression": {
+                        "type": "AssignmentExpression",
+                        "operator": "=",
+                        "left": {
+                          "type": "MemberExpression",
+                          "computed": false,
+                          "object": {
+                            "type": "ThisExpression",
+                            "range": [
+                              1409,
+                              1413
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 44,
+                                "column": 4
+                              },
+                              "end": {
+                                "line": 44,
+                                "column": 8
+                              }
+                            }
+                          },
+                          "property": {
+                            "type": "Identifier",
+                            "name": "solution",
+                            "range": [
+                              1414,
+                              1422
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 44,
+                                "column": 9
+                              },
+                              "end": {
+                                "line": 44,
+                                "column": 17
+                              }
+                            }
+                          },
+                          "range": [
+                            1409,
+                            1422
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 44,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 44,
+                              "column": 17
+                            }
+                          }
+                        },
+                        "right": {
+                          "type": "Literal",
+                          "value": null,
+                          "raw": "null",
+                          "range": [
+                            1425,
+                            1429
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 44,
+                              "column": 20
+                            },
+                            "end": {
+                              "line": 44,
+                              "column": 24
+                            }
+                          }
+                        },
+                        "range": [
+                          1409,
+                          1429
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 44,
+                            "column": 4
+                          },
+                          "end": {
+                            "line": 44,
+                            "column": 24
+                          }
+                        }
+                      },
+                      "range": [
+                        1409,
+                        1430
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 44,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 44,
+                          "column": 25
+                        }
+                      },
+                      "leadingComments": [
+                        {
+                          "type": "Block",
+                          "value": "*\n    * @type {string}\n    ",
+                          "range": [
+                            1373,
+                            1404
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 41,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 43,
+                              "column": 6
+                            }
+                          }
+                        }
+                      ],
+                      "trailingComments": [
+                        {
+                          "type": "Block",
+                          "value": "*\n    * @type {string}\n    ",
+                          "range": [
+                            1435,
+                            1466
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 45,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 47,
+                              "column": 6
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "ExpressionStatement",
+                      "expression": {
+                        "type": "AssignmentExpression",
+                        "operator": "=",
+                        "left": {
+                          "type": "MemberExpression",
+                          "computed": false,
+                          "object": {
+                            "type": "ThisExpression",
+                            "range": [
+                              1471,
+                              1475
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 48,
+                                "column": 4
+                              },
+                              "end": {
+                                "line": 48,
+                                "column": 8
+                              }
+                            }
+                          },
+                          "property": {
+                            "type": "Identifier",
+                            "name": "category",
+                            "range": [
+                              1476,
+                              1484
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 48,
+                                "column": 9
+                              },
+                              "end": {
+                                "line": 48,
+                                "column": 17
+                              }
+                            }
+                          },
+                          "range": [
+                            1471,
+                            1484
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 48,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 48,
+                              "column": 17
+                            }
+                          }
+                        },
+                        "right": {
+                          "type": "Literal",
+                          "value": null,
+                          "raw": "null",
+                          "range": [
+                            1487,
+                            1491
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 48,
+                              "column": 20
+                            },
+                            "end": {
+                              "line": 48,
+                              "column": 24
+                            }
+                          }
+                        },
+                        "range": [
+                          1471,
+                          1491
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 48,
+                            "column": 4
+                          },
+                          "end": {
+                            "line": 48,
+                            "column": 24
+                          }
+                        }
+                      },
+                      "range": [
+                        1471,
+                        1492
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 48,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 48,
+                          "column": 25
+                        }
+                      },
+                      "leadingComments": [
+                        {
+                          "type": "Block",
+                          "value": "*\n    * @type {string}\n    ",
+                          "range": [
+                            1435,
+                            1466
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 45,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 47,
+                              "column": 6
+                            }
+                          }
+                        }
+                      ],
+                      "trailingComments": [
+                        {
+                          "type": "Block",
+                          "value": "*\n    * @type {string[ ]}\n    ",
+                          "range": [
+                            1497,
+                            1531
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 49,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 51,
+                              "column": 6
+                            }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "ExpressionStatement",
+                      "expression": {
+                        "type": "AssignmentExpression",
+                        "operator": "=",
+                        "left": {
+                          "type": "MemberExpression",
+                          "computed": false,
+                          "object": {
+                            "type": "ThisExpression",
+                            "range": [
+                              1536,
+                              1540
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 52,
+                                "column": 4
+                              },
+                              "end": {
+                                "line": 52,
+                                "column": 8
+                              }
+                            }
+                          },
+                          "property": {
+                            "type": "Identifier",
+                            "name": "clue",
+                            "range": [
+                              1541,
+                              1545
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 52,
+                                "column": 9
+                              },
+                              "end": {
+                                "line": 52,
+                                "column": 13
+                              }
+                            }
+                          },
+                          "range": [
+                            1536,
+                            1545
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 52,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 52,
+                              "column": 13
+                            }
+                          }
+                        },
+                        "right": {
+                          "type": "ArrayExpression",
+                          "elements": [],
+                          "range": [
+                            1548,
+                            1550
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 52,
+                              "column": 16
+                            },
+                            "end": {
+                              "line": 52,
+                              "column": 18
+                            }
+                          }
+                        },
+                        "range": [
+                          1536,
+                          1550
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 52,
+                            "column": 4
+                          },
+                          "end": {
+                            "line": 52,
+                            "column": 18
+                          }
+                        }
+                      },
+                      "range": [
+                        1536,
+                        1551
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 52,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 52,
+                          "column": 19
+                        }
+                      },
+                      "leadingComments": [
+                        {
+                          "type": "Block",
+                          "value": "*\n    * @type {string[ ]}\n    ",
+                          "range": [
+                            1497,
+                            1531
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 49,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 51,
+                              "column": 6
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "range": [
+                    1226,
+                    1555
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 32,
+                      "column": 33
+                    },
+                    "end": {
+                      "line": 53,
+                      "column": 3
+                    }
+                  }
+                },
+                "generator": false,
+                "expression": false,
+                "range": [
+                  1206,
+                  1555
+                ],
+                "loc": {
+                  "start": {
+                    "line": 32,
+                    "column": 13
+                  },
+                  "end": {
+                    "line": 53,
+                    "column": 3
+                  }
+                }
+              },
+              "kind": "constructor",
+              "computed": false,
+              "range": [
+                1195,
+                1555
+              ],
+              "loc": {
+                "start": {
+                  "line": 32,
+                  "column": 2
+                },
+                "end": {
+                  "line": 53,
+                  "column": 3
+                }
+              },
+              "leadingComments": [
+                {
+                  "type": "Block",
+                  "value": "*\n   * Constructor to instantiate a new Game instance.\n   * @param {number} userWhoStartsGame - Id of the user who is creating the game.\n   ",
+                  "range": [
+                    1048,
+                    1192
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 28,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 31,
+                      "column": 5
+                    }
+                  }
+                }
+              ],
+              "static": false
+            }
+          ],
+          "range": [
+            1044,
+            1557
+          ],
+          "loc": {
+            "start": {
+              "line": 27,
+              "column": 26
+            },
+            "end": {
+              "line": 54,
+              "column": 1
+            }
+          }
+        },
+        "range": [
+          1033,
+          1557
+        ],
+        "loc": {
+          "start": {
+            "line": 27,
+            "column": 15
+          },
+          "end": {
+            "line": 54,
+            "column": 1
+          }
+        },
+        "leadingComments": [
+          {
+            "type": "Block",
+            "value": "\n  When a user clicks 'join random game,' he or she will be put\n  into an active game, if one is available. If one is not available,\n  a new game will be instantiated for him or her.\n\n  When players join the game, they are pushed into the game's 'players' array.\n  A game will start when enough players are available to have a fun time. This\n  variable resides in game-settings.js with a default value of 3.\n\n  After enough players have joined to satisfy game genesis, a dealer will be\n  chosen at random.\n\n  A category will be randomly chosen, then a solution will randomly be chosen\n  within that category.\n\n  As the dealer enters or removes emojis as clues, they will be pushed and\n  popped to and from the 'this.clue' array.\n",
+            "range": [
+              0,
+              733
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 0
+              },
+              "end": {
+                "line": 18,
+                "column": 2
+              }
+            }
+          },
+          {
+            "type": "Block",
+            "value": "*\n * The Game model persists data about a single game room, including players, dealer\n * and other state information. Should be instantiated when a brand new game room is\n * created, otherwise retrieved from the Games collection.\n * @example\n * const newGame = new Game(user);\n ",
+            "range": [
+              735,
+              1017
+            ],
+            "loc": {
+              "start": {
+                "line": 20,
+                "column": 0
+              },
+              "end": {
+                "line": 26,
+                "column": 3
+              }
+            }
+          }
+        ],
+        "trailingComments": []
+      },
+      "range": [
+        1018,
+        1557
+      ],
+      "loc": {
+        "start": {
+          "line": 27,
+          "column": 0
+        },
+        "end": {
+          "line": 54,
+          "column": 1
+        }
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": "\n  When a user clicks 'join random game,' he or she will be put\n  into an active game, if one is available. If one is not available,\n  a new game will be instantiated for him or her.\n\n  When players join the game, they are pushed into the game's 'players' array.\n  A game will start when enough players are available to have a fun time. This\n  variable resides in game-settings.js with a default value of 3.\n\n  After enough players have joined to satisfy game genesis, a dealer will be\n  chosen at random.\n\n  A category will be randomly chosen, then a solution will randomly be chosen\n  within that category.\n\n  As the dealer enters or removes emojis as clues, they will be pushed and\n  popped to and from the 'this.clue' array.\n",
+          "range": [
+            0,
+            733
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 18,
+              "column": 2
+            }
+          }
+        },
+        {
+          "type": "Block",
+          "value": "*\n * The Game model persists data about a single game room, including players, dealer\n * and other state information. Should be instantiated when a brand new game room is\n * created, otherwise retrieved from the Games collection.\n * @example\n * const newGame = new Game(user);\n ",
+          "range": [
+            735,
+            1017
+          ],
+          "loc": {
+            "start": {
+              "line": 20,
+              "column": 0
+            },
+            "end": {
+              "line": 26,
+              "column": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "EmptyStatement",
+      "range": [
+        1557,
+        1558
+      ],
+      "loc": {
+        "start": {
+          "line": 54,
+          "column": 1
+        },
+        "end": {
+          "line": 54,
+          "column": 2
+        }
+      }
+    }
+  ],
+  "sourceType": "module",
+  "range": [
+    1018,
+    1558
+  ],
+  "loc": {
+    "start": {
+      "line": 27,
+      "column": 0
+    },
+    "end": {
+      "line": 54,
+      "column": 2
+    }
+  },
+  "comments": [
+    {
+      "type": "Block",
+      "value": "\n  When a user clicks 'join random game,' he or she will be put\n  into an active game, if one is available. If one is not available,\n  a new game will be instantiated for him or her.\n\n  When players join the game, they are pushed into the game's 'players' array.\n  A game will start when enough players are available to have a fun time. This\n  variable resides in game-settings.js with a default value of 3.\n\n  After enough players have joined to satisfy game genesis, a dealer will be\n  chosen at random.\n\n  A category will be randomly chosen, then a solution will randomly be chosen\n  within that category.\n\n  As the dealer enters or removes emojis as clues, they will be pushed and\n  popped to and from the 'this.clue' array.\n",
+      "range": [
+        0,
+        733
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 18,
+          "column": 2
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * The Game model persists data about a single game room, including players, dealer\n * and other state information. Should be instantiated when a brand new game room is\n * created, otherwise retrieved from the Games collection.\n * @example\n * const newGame = new Game(user);\n ",
+      "range": [
+        735,
+        1017
+      ],
+      "loc": {
+        "start": {
+          "line": 20,
+          "column": 0
+        },
+        "end": {
+          "line": 26,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n   * Constructor to instantiate a new Game instance.\n   * @param {number} userWhoStartsGame - Id of the user who is creating the game.\n   ",
+      "range": [
+        1048,
+        1192
+      ],
+      "loc": {
+        "start": {
+          "line": 28,
+          "column": 2
+        },
+        "end": {
+          "line": 31,
+          "column": 5
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n     * @type {number[ ]}\n     ",
+      "range": [
+        1232,
+        1268
+      ],
+      "loc": {
+        "start": {
+          "line": 33,
+          "column": 4
+        },
+        "end": {
+          "line": 35,
+          "column": 7
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n    * @type {number}\n    ",
+      "range": [
+        1313,
+        1344
+      ],
+      "loc": {
+        "start": {
+          "line": 37,
+          "column": 4
+        },
+        "end": {
+          "line": 39,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n    * @type {string}\n    ",
+      "range": [
+        1373,
+        1404
+      ],
+      "loc": {
+        "start": {
+          "line": 41,
+          "column": 4
+        },
+        "end": {
+          "line": 43,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n    * @type {string}\n    ",
+      "range": [
+        1435,
+        1466
+      ],
+      "loc": {
+        "start": {
+          "line": 45,
+          "column": 4
+        },
+        "end": {
+          "line": 47,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n    * @type {string[ ]}\n    ",
+      "range": [
+        1497,
+        1531
+      ],
+      "loc": {
+        "start": {
+          "line": 49,
+          "column": 4
+        },
+        "end": {
+          "line": 51,
+          "column": 6
+        }
+      }
+    }
+  ]
+}

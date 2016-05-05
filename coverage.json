@@ -1,0 +1,22 @@
+{
+  "coverage": "63.63%",
+  "expectCount": 11,
+  "actualCount": 7,
+  "files": {
+    "models/Game.js": {
+      "expectCount": 7,
+      "actualCount": 7,
+      "undocumentLines": []
+    },
+    "models/User.js": {
+      "expectCount": 4,
+      "actualCount": 0,
+      "undocumentLines": [
+        8,
+        9,
+        10,
+        11
+      ]
+    }
+  }
+}
