@@ -6,7 +6,7 @@ const joinRandomGame = require('../sockets/joinRandomGame.js');
 
 const ioCreate = require('socket.io');
 
-module.exports = (app) => {
+module.exports = (app, db) => {
   const io = ioCreate.listen(app);
   io.on('connection', (socket) => {
     onConnect(io, socket);
