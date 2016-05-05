@@ -1,7 +1,7 @@
 {
-  "coverage": "50%",
-  "expectCount": 26,
-  "actualCount": 13,
+  "coverage": "55.17%",
+  "expectCount": 29,
+  "actualCount": 16,
   "files": {
     "smileguess-server/models/Game.js": {
       "expectCount": 19,
@@ -39,7 +39,22 @@
       "actualCount": 1,
       "undocumentLines": []
     },
+    "smileguess-server/sockets/onDisconnect.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
     "smileguess-server/sockets/sendClueMessage.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "smileguess-server/sockets/sendGuessMessage.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "smileguess-server/sockets/sendWinner.js": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []

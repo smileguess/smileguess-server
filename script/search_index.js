@@ -24,9 +24,27 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "smileguess-server/smileguess-server/sockets/ondisconnect.js~ondisconnect",
+    "variable/index.html#static-variable-onDisconnect",
+    "<span>onDisconnect</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/sockets/onDisconnect.js</span>",
+    "variable"
+  ],
+  [
     "smileguess-server/smileguess-server/sockets/sendcluemessage.js~sendcluemessage",
     "variable/index.html#static-variable-sendClueMessage",
     "<span>sendClueMessage</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/sockets/sendClueMessage.js</span>",
+    "variable"
+  ],
+  [
+    "smileguess-server/smileguess-server/sockets/sendguessmessage.js~sendguessmessage",
+    "variable/index.html#static-variable-sendGuessMessage",
+    "<span>sendGuessMessage</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/sockets/sendGuessMessage.js</span>",
+    "variable"
+  ],
+  [
+    "smileguess-server/smileguess-server/sockets/sendwinner.js~sendwinner",
+    "variable/index.html#static-variable-sendWinner",
+    "<span>sendWinner</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/sockets/sendWinner.js</span>",
     "variable"
   ],
   [

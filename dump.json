@@ -1201,7 +1201,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * The onDisonnect function is used to clean up a users connection to a game \n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} user - the user model for the user\n */\nmodule.exports = (io, socket, user) => {\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_USER_LEAVE_GAME',\n    user: dummy.user,\n  });\n  socket.leave(dummy.gameId);\n};\n\n"
+    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * The onDisonnect function is used to clean up a users connection to a game \n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} user - the user model for the user\n */\nmodule.exports = onDisconnect = (io, socket, user) => {\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_USER_LEAVE_GAME',\n    user: dummy.user,\n  });\n  socket.leave(dummy.gameId);\n};\n\n"
   },
   {
     "__docId__": 64,
@@ -1226,6 +1226,53 @@
   },
   {
     "__docId__": 65,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "onDisconnect",
+    "memberof": "smileguess-server/sockets/onDisconnect.js",
+    "longname": "smileguess-server/sockets/onDisconnect.js~onDisconnect",
+    "access": null,
+    "export": true,
+    "importPath": "smileguess-server/smileguess-server/sockets/onDisconnect.js",
+    "importStyle": "onDisconnect",
+    "description": "The onDisonnect function is used to clean up a users connection to a game ",
+    "lineNumber": 9,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "io",
+        "description": "this is the socket.io object"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "socket",
+        "description": "the users socket connection"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "user",
+        "description": "the user model for the user"
+      }
+    ]
+  },
+  {
+    "__docId__": 66,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1238,7 +1285,7 @@
     "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a clue message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} action - the action passed to the server from the client\n */\nmodule.exports = sendClueMessage = (io, socket, action) => {\n  console.log('sending clue message');\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_CLUE_MESSAGE',\n    userid: dummy.user.id,\n    message: dummy.message,\n  });\n};\n\n"
   },
   {
-    "__docId__": 66,
+    "__docId__": 67,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1259,7 +1306,7 @@
     }
   },
   {
-    "__docId__": 67,
+    "__docId__": 68,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1306,7 +1353,7 @@
     ]
   },
   {
-    "__docId__": 68,
+    "__docId__": 69,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1316,10 +1363,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a guess message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} action - the action passed to the server from the client\n */\nmodule.exports = (io, socket, action) => {\n  console.log('sending guess message');\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_GUESS_MESSAGE',\n    userid: dummy.user.id,\n    message: dummy.message,\n  });\n};\n\n"
+    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a guess message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} action - the action passed to the server from the client\n */\nmodule.exports = sendGuessMessage = (io, socket, action) => {\n  console.log('sending guess message');\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_GUESS_MESSAGE',\n    userid: dummy.user.id,\n    message: dummy.message,\n  });\n};\n\n"
   },
   {
-    "__docId__": 69,
+    "__docId__": 70,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1340,7 +1387,54 @@
     }
   },
   {
-    "__docId__": 70,
+    "__docId__": 71,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "sendGuessMessage",
+    "memberof": "smileguess-server/sockets/sendGuessMessage.js",
+    "longname": "smileguess-server/sockets/sendGuessMessage.js~sendGuessMessage",
+    "access": null,
+    "export": true,
+    "importPath": "smileguess-server/smileguess-server/sockets/sendGuessMessage.js",
+    "importStyle": "sendGuessMessage",
+    "description": "This function sends a guess message to all the members of a room through sockets.\nWhen this action is received on the client, it will be dispatched by redux automatically.",
+    "lineNumber": 10,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "io",
+        "description": "this is the socket.io object"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "socket",
+        "description": "the users socket connection"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "action",
+        "description": "the action passed to the server from the client"
+      }
+    ]
+  },
+  {
+    "__docId__": 72,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1350,10 +1444,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a clue message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} user - the user for the particular socket\n */\nmodule.exports = (io, socket, user) => {\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_DECLARE_WINNER',\n    userid: dummy.user.id,\n  });\n};\n\n"
+    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a clue message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} user - the user for the particular socket\n */\nmodule.exports = sendWinner = (io, socket, user) => {\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_DECLARE_WINNER',\n    userid: dummy.user.id,\n  });\n};\n\n"
   },
   {
-    "__docId__": 71,
+    "__docId__": 73,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1374,7 +1468,54 @@
     }
   },
   {
-    "__docId__": 72,
+    "__docId__": 74,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "sendWinner",
+    "memberof": "smileguess-server/sockets/sendWinner.js",
+    "longname": "smileguess-server/sockets/sendWinner.js~sendWinner",
+    "access": null,
+    "export": true,
+    "importPath": "smileguess-server/smileguess-server/sockets/sendWinner.js",
+    "importStyle": "sendWinner",
+    "description": "This function sends a clue message to all the members of a room through sockets.\nWhen this action is received on the client, it will be dispatched by redux automatically.",
+    "lineNumber": 10,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "io",
+        "description": "this is the socket.io object"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "socket",
+        "description": "the users socket connection"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "user",
+        "description": "the user for the particular socket"
+      }
+    ]
+  },
+  {
+    "__docId__": 75,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1387,7 +1528,7 @@
     "content": "const utils = require('./utils');\n\nconst categoriesAndSolutions = {\n  places: \"Affluent Suburb,Airport Runway,American Consulate,American Embassy,Amish Country,Amusement Park,Animal Rescue,Apartment Building,Apple Orchard,Appliance Store,Art Gallery,Auto Supply Store,Back Alley,Bakeshop,Ballpark,Banquet Hall,Bar And Grill,Barnyard,Baseball Stadium,Bathroom,Bathroom,Batter's Box,Battery Park In New York,Beach Cottage,Beauty Parlor,Beauty Salon,Bed And Breakfast,Bed And Breakfast,Bed And Breakfast,Bird Sanctuary,Boarding School,Boardroom,Boston Bruins,Boutique Hotel,Boxing Ring,Boy Scout Camp,Branch Bank,Branch Offices,Brick House,Bridal Salon,Broom Closet,Bullpen,Bumpy Road,Bunkhouse,Burger Joint,Business District,Busy Highway,Butcher Shop,Butler's Pantry,Camera Shop,Campaign Headquarters,Campground Site,Camping Ground,Candy Counter,Candy Factory,Car Dealership,Car Park,Cattle Ranch,Charm School,Charming Neighborhoods,Chinese Restaurant,City Hall,City Property,Civic Auditorium,Civic Center,Coastline,Cockpit,Coin-Operated Laundromat,College Campus,College Dormitory,Comedy Club,Comedy Club,Community College,Concert Hall,Congressional District,Convenient Location,Convention Center,Corner Deli,Corner Newsstand,Corner Office With Windows,County Courthouse,Courtroom,Courtside,Covered Patio,Covered Porch,Cozy Study,Credit Union,Crosswalk,Crowded Restaurant,Crowded Room,Cul-De-Sac,Cultural Center,Cultural Institution,Dairy Farm,Dance Studio,Deli Counter,Dentist's Office,Desert Landscape,Dinner Theater,Distant Galaxies\",\n  foodAndDrink: \"Apple Butter,After-Dinner Mint,Aged Cheddar Cheese,Aged Parmesan Cheese,Ahi Tuna Salad,Alaskan Cod Fillets,Alfalfa Sprouts,All-Natural Ingredients,Alphabet Soup,Apple Dumplings,Apple Jacks,Apple Juice,Apple Cider Vinegar,Applesauce,Apricot Raisin Pie,Artichoke Hearts,Arugula Salad,Authentic Italian Cuisine,Avocados,Bacon Bits,Bacon And Cheese Pizza,Baked Alaska,Baked Halibut With Tomato Salsa,Baked Lasagna,Baked Macaroni,Baked Ziti,Baked Fruit Compote,Banana Nut Bread,Banana Rum Creme Brulee,Barbecued Chicken,Barbecued Spare Ribs,Barbecued Beef Ribs,Barbecued Beef Sandwich,Barley Soup,Bartlett Pears,Basil Leaves,Batch Of Cookies,Batch Of Cookies,BBQ Pork,BBQ Baked Beans,Bean Sprouts,Beef Spaghetti,Beef Wellington,Beef And Vegetable Stir-Fry,Beef Filet With Red Pepper Relish,Beef Pot Roast,Beef Rib Roast,Beef Satay On Skewers,Bing Cherries,Birthday Cake,Birthday Cake With Buttermilk Icing,Birthday Cake & Ice Cream,Biscotti,Biscuits & Gravy,Bite-Sized Fudge Brownie Pieces,Bittersweet Chocolate,Black Bean Soup With Roasted Jalapenos,Black-Eyed Peas And Rice,Blackberry Jam,Blue Plate Special,Blueberry Shortcake,Boiled Beans,Boiled Beets,Boiled Cabbage,Boiled Eggs,Boiled Noodles,Boiled New Potatoes,Bologna Sandwich,Bolognese Pasta Sauce,Boston Baked Beans,Bottled Beer,Bountiful Harvest,Box Lunch,Braised Pheasant,Braised Veal Chops,Bread And Butter Pickles,Breakfast Burrito,Breakfast Cereals,Breast Wing Thigh & Drumstick,Broiled Mushrooms,Brown And Serve Rolls,Brown Bag Lunch,Buckwheat Pancakes,Buckwheat Pancakes,Bulk Candy,Burger & Fries,Buttered Bagel,Buttered Croissant,Buttermilk Waffles,Butterscotch Pudding,Buttery Biscuits,Cajun Cuisine,Cake,Canadian Bacon Pizza,Candied Apple,Candied Walnuts,Candied Yams,Canned Tuna,Canned Baked Beans,Canned Tomato Salad\",\n};\nlet solutionsForDisplay = [];\nlet simplifiedSolutions = [];\n\nlet categoryCount = 0;\nObject.keys(categoriesAndSolutions).forEach((category) => {\n  simplifiedSolutions.push(category);\n  simplifiedSolutions[categoryCount] = categoriesAndSolutions[category].split(',').map((solution) =>\n    utils.simplifyString(solution));\n  solutionsForDisplay.push(category);\n  solutionsForDisplay[categoryCount] = categoriesAndSolutions[category].split(',');\n  categoryCount++;\n});\n\nmodule.exports = {\n  solutionsForDisplay,\n  simplifiedSolutions,\n};\n"
   },
   {
-    "__docId__": 73,
+    "__docId__": 76,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1408,7 +1549,7 @@
     }
   },
   {
-    "__docId__": 74,
+    "__docId__": 77,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1429,7 +1570,7 @@
     }
   },
   {
-    "__docId__": 75,
+    "__docId__": 78,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1450,7 +1591,7 @@
     }
   },
   {
-    "__docId__": 76,
+    "__docId__": 79,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1471,7 +1612,7 @@
     }
   },
   {
-    "__docId__": 77,
+    "__docId__": 80,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1492,7 +1633,7 @@
     }
   },
   {
-    "__docId__": 78,
+    "__docId__": 81,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1505,7 +1646,7 @@
     "content": "window = {};\nwindow.navigator = {};\nwindow.navigator.userAgent = 'react-native';\n\nmodule.exports = window;\n\n"
   },
   {
-    "__docId__": 79,
+    "__docId__": 82,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1518,7 +1659,7 @@
     "content": "const reporter = require('./support/reporter');\nconst request = require('request');\nconst User = require('../models/User');\nconst Game = require('../models/Game');\nconst Games = require('../collections/Games.js');\nconst gameMethods = require('../controllers/GameController');\nconst settings = require('../gameSettings');\njasmine.getEnv().addReporter(reporter);\n\nconst serverURL = 'http://127.0.0.1:1234';\n\ndescribe('Basic Server Functions', () => {\n  describe('Server', () => {\n    it('will respond to a request at a nonexistant endpoint', (done) => {\n      const options = {\n        method: 'GET',\n        uri: serverURL,\n      };\n\n      request(options, (error, res) => {\n        if (error && error.code === 'ECONNREFUSED') {\n          throw new Error('Connection refused, are you sure your server is running?');\n        }\n        expect(res.statusCode).toBe(404);\n        done();\n      });\n    });\n  });\n});\n\ndescribe('Models, Controllers and Collections: ', () => {\n  let openGames = Games.openGames;\n  const fullGames = Games.fullGames;\n  const testUser1 = new User('user1ID');\n  const testUser2 = new User('user2ID');\n  const testUser3 = new User('user3ID');\n  const testUser4 = new User('user4ID');\n  const testUser5 = new User('user5ID');\n  const testUser6 = new User('user6ID');\n  const testGame1 = new Game(testUser1);\n\n  describe('User Model', () => {\n    it('will correctly instantiate a new user', () => {\n      expect(testUser1.id).toBe('user1ID');\n      expect(typeof testUser1.username).toBe('string');\n    });\n  });\n\n  describe('Game: Model, Collection and Controllers', () => {\n\n    it('will correctly instantiate a new game', () => { \n      expect(testGame1.players[0].id).toBe('user1ID');\n    });\n\n    it('will place a user in a game', () => {\n      const testUser2 = new User('user2ID');\n      testGame1.addPlayer(testUser2);\n      expect(testGame1.players[0].id).toBe('user1ID');\n      expect(testGame1.players[1].id).toBe('user2ID');\n    });\n    it('will remove a player from a game', () => {\n      testGame1.removePlayer(testUser1);\n      expect(testGame1.players.length).toBe(1);\n    })\n    it('will adjust the number of seats available after adding players', () => {\n      testGame1.addPlayer(testUser2);\n      testGame1.addPlayer(testUser3);\n      expect(testGame1.seatsOpen).toBe(settings.maxPlayers - 3);\n    });\n    it('will adjust the number of seats available after removing players', () => {\n      testGame1.removePlayer(testUser2);\n      testGame1.removePlayer(testUser3);\n      expect(testGame1.seatsOpen).toBe(settings.maxPlayers - 1);\n    });\n    it('will quarantine full games', () => {\n      testGame1.addPlayer(testUser2);\n      testGame1.addPlayer(testUser3);\n      testGame1.addPlayer(testUser4);\n      testGame1.addPlayer(testUser5);\n      testGame1.addPlayer(testUser6);\n      expect(Games.fullGames.length).toBe(1);\n    });\n    it('will aggregate games with seats available', () => {\n      testGame1.removePlayer(testUser6);\n      expect(openGames.length).toBe(1);\n    });\n    it('will remove games from openGames when they are no longer open and add games to fullGames', () => {\n      expect(fullGames.length).toBe(0);\n      expect(openGames.length).toBe(1);\n\n      testGame1.addPlayer(testUser6);\n\n      expect(fullGames.length).toBe(1);\n      expect(openGames.length).toBe(0);\n    });\n    it('will remove games from fullGames when a seat is open, and add games to openGames', () => {\n      testGame1.removePlayer(testUser6);\n      expect(fullGames.length).toBe(0);\n      expect(openGames.length).toBe(1);\n    });\n    it('will order open games by number of seats available', () => {\n      const testGame2 = new Game(testUser2);\n      testGame2.updateGameAvailability();\n      Games.sort(openGames);\n      expect(openGames[0].seatsOpen < openGames[1].seatsOpen).toBe(true);\n    });\n    it('will place users in the game with the most seats available', () => {\n      gameMethods.joinOrStartGame(testUser2);\n      expect(openGames[1].seatsOpen).toBe(4);\n    });\n    it('will create a new game if no seats are available', () => {\n      gameMethods.joinOrStartGame(testUser2);\n      gameMethods.joinOrStartGame(testUser3);\n      gameMethods.joinOrStartGame(testUser4);\n      gameMethods.joinOrStartGame(testUser5);\n      gameMethods.joinOrStartGame(testUser6);\n\n      expect(openGames.length).toBe(0);\n      expect(openGames.length + fullGames.length).toBe(2);\n\n      gameMethods.joinOrStartGame(testUser6);\n\n      expect(openGames.length + fullGames.length).toBe(3);\n    });\n    it('will start a game after enough players have joined', () => {\n      expect(openGames[openGames.length - 1].active).toBe(false);\n      for (let i = 1; i < settings.minPlayers; i++) {\n        gameMethods.joinOrStartGame(testUser4);\n      }\n      expect(openGames[openGames.length - 1].active).toBe(true);\n    });\n    it('will assign the first dealer', () => {\n      expect(openGames[openGames.length - 1].dealer).not.toBe(null);\n    });\n    it('will assign a random solution from a random category', () => {\n      console.log(openGames[openGames.length - 1].solutionForDisplay);\n      expect(openGames[openGames.length - 1].solutionForDisplay).not.toBe(null);\n      expect(openGames[openGames.length - 1].solutionForMatching).not.toBe(null);\n    });\n    it('will destroy the game if all players leave', () => {\n      openGames[0].removePlayer(testUser4);\n      openGames[0].removePlayer(testUser4);\n      expect(openGames.length).toBe(1);\n      openGames[0].removePlayer(testUser6);\n      expect(openGames.length).toBe(0);\n    });\n    xit('will check guesses', () => {\n      // game method built, but waiting until message functions are built to test\n    });\n  });\n});\n"
   },
   {
-    "__docId__": 80,
+    "__docId__": 83,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1539,7 +1680,7 @@
     }
   },
   {
-    "__docId__": 81,
+    "__docId__": 84,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1560,7 +1701,7 @@
     }
   },
   {
-    "__docId__": 82,
+    "__docId__": 85,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1581,7 +1722,7 @@
     }
   },
   {
-    "__docId__": 83,
+    "__docId__": 86,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1602,7 +1743,7 @@
     }
   },
   {
-    "__docId__": 84,
+    "__docId__": 87,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1623,7 +1764,7 @@
     }
   },
   {
-    "__docId__": 85,
+    "__docId__": 88,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1644,7 +1785,7 @@
     }
   },
   {
-    "__docId__": 86,
+    "__docId__": 89,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1665,7 +1806,7 @@
     }
   },
   {
-    "__docId__": 87,
+    "__docId__": 90,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1686,7 +1827,7 @@
     }
   },
   {
-    "__docId__": 88,
+    "__docId__": 91,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1699,7 +1840,7 @@
     "content": "const reporter = require('./support/reporter.js');\njasmine.getEnv().addReporter(reporter);\nconst io = require('socket.io-client');\nconst serverURL = 'http://127.0.0.1:1234';\n\nconst sendGuessMessage = require('../sockets/sendGuessMessage.js');\nconst sendClueMessage = require('../sockets/sendClueMessage.js');\nconst sendWinner = require('../sockets/sendWinner.js');\n\nvar socket;\ndescribe('Socket responder functions', () => {\n  beforeEach((done) => {\n    socket = io.connect(serverURL, {\n      'reconnection delay': 0,\n      'reopen delay': 0,\n      'force new connection': true,\n    });\n    socket.on('connect', () => {\n      done();\n    });\n  });\n\n  afterEach((done) => {\n    socket.disconnect();\n    done();\n  });\n\n  describe('sendGuessMessage', () => {\n    let actionType = 'SOCKET_GUESS_MESSAGE'\n    let label = 'sendGuessMessage';\n    it('should be a function', () => {\n      expect(typeof sendGuessMessage).toBe('function');\n    });\n    it('should respond with an action called ' + actionType, (done) => {\n      socket.on('action', (response) => {\n        expect(response.type).toBe(actionType);\n        done();\n      });\n      socket.emit('action', {\n        type: 'server/' + label,\n      });\n    });\n  });\n\n  describe('sendClueMessage', () => {\n    let actionType = 'SOCKET_CLUE_MESSAGE'\n    let label = 'sendClueMessage';\n    it('should be a function', () => {\n      expect(typeof sendClueMessage).toBe('function');\n    });\n    it('should respond with an action called ' + actionType, (done) => {\n      socket.on('action', (response) => {\n        expect(response.type).toBe(actionType);\n        done();\n      });\n      socket.emit('action', {\n        type: 'server/' + label,\n      });\n    });\n  });\n\n  describe('sendClueMessage', () => {\n    it('should be a function', () => {\n      expect(typeof sendClueMessage).toBe('function');\n    });\n  });\n});\n\n\n"
   },
   {
-    "__docId__": 89,
+    "__docId__": 92,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1720,7 +1861,7 @@
     }
   },
   {
-    "__docId__": 90,
+    "__docId__": 93,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1741,7 +1882,7 @@
     }
   },
   {
-    "__docId__": 91,
+    "__docId__": 94,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1762,7 +1903,7 @@
     }
   },
   {
-    "__docId__": 92,
+    "__docId__": 95,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1783,7 +1924,7 @@
     }
   },
   {
-    "__docId__": 93,
+    "__docId__": 96,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1804,7 +1945,7 @@
     }
   },
   {
-    "__docId__": 94,
+    "__docId__": 97,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1825,7 +1966,7 @@
     }
   },
   {
-    "__docId__": 95,
+    "__docId__": 98,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1838,7 +1979,7 @@
     "content": "const JasmineConsoleReporter = require('jasmine-console-reporter');\nmodule.exports = new JasmineConsoleReporter({\n  colors: 1,           // (0|false)|(1|true)|2\n  cleanStack: 1,       // (0|false)|(1|true)|2|3\n  verbosity: 4,        // (0|false)|1|2|(3|true)|4\n  listStyle: 'indent', // \"flat\"|\"indent\"\n  activity: false,\n});\n"
   },
   {
-    "__docId__": 96,
+    "__docId__": 99,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1859,7 +2000,7 @@
     }
   },
   {
-    "__docId__": 97,
+    "__docId__": 100,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1872,7 +2013,7 @@
     "content": "const settings = require('./gameSettings');\n\nmodule.exports = {\n  getRandomIntInclusive: (min, max) => (\n    Math.floor(Math.random() * (max - min + 1)) + min\n  ),\n  simplifyString: (string) => (\n    string.toLowerCase().replace(settings.charsToAvoid, '')\n  ),\n};\n"
   },
   {
-    "__docId__": 98,
+    "__docId__": 101,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1893,7 +2034,7 @@
     }
   },
   {
-    "__docId__": 100,
+    "__docId__": 103,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1906,7 +2047,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 101,
+    "__docId__": 104,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1919,7 +2060,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 102,
+    "__docId__": 105,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1932,7 +2073,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 103,
+    "__docId__": 106,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1945,7 +2086,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 104,
+    "__docId__": 107,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1958,7 +2099,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 105,
+    "__docId__": 108,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1971,7 +2112,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 106,
+    "__docId__": 109,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1984,7 +2125,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 107,
+    "__docId__": 110,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -1997,7 +2138,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 108,
+    "__docId__": 111,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2010,7 +2151,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 109,
+    "__docId__": 112,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2023,7 +2164,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 110,
+    "__docId__": 113,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2036,7 +2177,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 111,
+    "__docId__": 114,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2049,7 +2190,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 112,
+    "__docId__": 115,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2062,7 +2203,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 113,
+    "__docId__": 116,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2075,7 +2216,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 114,
+    "__docId__": 117,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2088,7 +2229,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 115,
+    "__docId__": 118,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2101,7 +2242,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 116,
+    "__docId__": 119,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2114,7 +2255,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 117,
+    "__docId__": 120,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2127,7 +2268,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 118,
+    "__docId__": 121,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2140,7 +2281,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 119,
+    "__docId__": 122,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2153,7 +2294,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 120,
+    "__docId__": 123,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2166,7 +2307,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 121,
+    "__docId__": 124,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2179,7 +2320,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 122,
+    "__docId__": 125,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2192,7 +2333,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 123,
+    "__docId__": 126,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2205,7 +2346,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 124,
+    "__docId__": 127,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2218,7 +2359,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 125,
+    "__docId__": 128,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2231,7 +2372,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 126,
+    "__docId__": 129,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2244,7 +2385,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 127,
+    "__docId__": 130,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2257,7 +2398,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 128,
+    "__docId__": 131,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2270,7 +2411,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 129,
+    "__docId__": 132,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2283,7 +2424,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 130,
+    "__docId__": 133,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2296,7 +2437,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 131,
+    "__docId__": 134,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2309,7 +2450,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 132,
+    "__docId__": 135,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2322,7 +2463,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 133,
+    "__docId__": 136,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2335,7 +2476,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 134,
+    "__docId__": 137,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2348,7 +2489,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 135,
+    "__docId__": 138,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2361,7 +2502,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 136,
+    "__docId__": 139,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2374,7 +2515,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 137,
+    "__docId__": 140,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2387,7 +2528,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 138,
+    "__docId__": 141,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2400,7 +2541,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 139,
+    "__docId__": 142,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2413,7 +2554,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 140,
+    "__docId__": 143,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2426,7 +2567,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 141,
+    "__docId__": 144,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2439,7 +2580,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 142,
+    "__docId__": 145,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2452,7 +2593,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 143,
+    "__docId__": 146,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2465,7 +2606,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 144,
+    "__docId__": 147,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2478,7 +2619,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 145,
+    "__docId__": 148,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2491,7 +2632,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 146,
+    "__docId__": 149,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2504,7 +2645,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 148,
+    "__docId__": 151,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2517,7 +2658,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 149,
+    "__docId__": 152,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2530,7 +2671,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 150,
+    "__docId__": 153,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2543,7 +2684,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 151,
+    "__docId__": 154,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2556,7 +2697,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 152,
+    "__docId__": 155,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2569,7 +2710,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 153,
+    "__docId__": 156,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2582,7 +2723,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 154,
+    "__docId__": 157,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2595,7 +2736,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 155,
+    "__docId__": 158,
     "kind": "external",
     "static": true,
     "variation": null,
