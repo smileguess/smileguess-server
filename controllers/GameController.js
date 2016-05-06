@@ -22,5 +22,15 @@ module.exports = {
       res.json(newGame);
     }
   },
+  handlePlayerJoin: (collection, player) => {
+    const adjustedGame = collection.dequeue().addPlayer(player);
+    collection.updateGameAvailability(adjustedGame);
+    return adjustedGame;
+  },
+  handlePlayerLeave: (collection, gameId, player) => {
+    const game = collection.retrieve(gameId);
+    game.removePlayer(player);
+    collection.updateGameAvailability(game);
+  },
 };
 

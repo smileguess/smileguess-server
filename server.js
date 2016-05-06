@@ -1,6 +1,7 @@
 const express = require('express');
 const database = require('./collections/Games');
 
+
 const app = express();
 const server = require('http').createServer(app);
 require('./config/routes.js')(app, express);

@@ -37,11 +37,11 @@ module.exports = class Game {
   /**
    * Constructor to instantiate a new Game instance.
    */
-  constructor(userWhoStartsGame) {
+  constructor(userWhoStartsGame, gameId) {
     /**
     * @type {number}
     */
-    this.gameId = null;
+    this.gameId = gameId;
     /**
     * @type {number}
     */
@@ -86,12 +86,13 @@ module.exports = class Game {
 
   updateOpenSeats() {
     this.seatsOpen = settings.maxPlayers - this.players.length;
+    return this;
   }
 
   removePlayer(user) {
     this.players.splice(this.players.indexOf(user), 1);
     this.updateOpenSeats();
-    // this.updateGameAvailability(this);
+    return this;
   }
 
   addPlayer(user) {
@@ -101,12 +102,12 @@ module.exports = class Game {
       console.error('Error: Game full');
     }
     this.updateOpenSeats();
-    // this.updateGameAvailability(this);
     if (!this.active && this.players.length >= settings.minPlayers) {
       this.active = true;
       this.assignFirstDealer();
       this.getSolution();
     }
+    return this;
   }
 
   // updateGameAvailability() {
