@@ -1,7 +1,7 @@
 {
-  "coverage": "55.17%",
-  "expectCount": 29,
-  "actualCount": 16,
+  "coverage": "58.06%",
+  "expectCount": 31,
+  "actualCount": 18,
   "files": {
     "smileguess-server/models/Game.js": {
       "expectCount": 19,
@@ -34,6 +34,11 @@
         1
       ]
     },
+    "smileguess-server/sockets/joinRandomGame.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
     "smileguess-server/sockets/onConnect.js": {
       "expectCount": 1,
       "actualCount": 1,
@@ -50,6 +55,11 @@
       "undocumentLines": []
     },
     "smileguess-server/sockets/sendGuessMessage.js": {
+      "expectCount": 1,
+      "actualCount": 1,
+      "undocumentLines": []
+    },
+    "smileguess-server/sockets/sendPlayerJoinGame.js": {
       "expectCount": 1,
       "actualCount": 1,
       "undocumentLines": []

@@ -35,10 +35,12 @@
   <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html">User</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">sockets</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dummy">dummy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-joinRandomGame">joinRandomGame</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onDisconnect">onDisconnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendGuessMessage">sendGuessMessage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPlayerJoinGame">sendPlayerJoinGame</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendWinner">sendWinner</a></span></span></li>
 </ul>
 </div>
@@ -63,6 +65,10 @@ describe(&apos;Socket responder functions&apos;, () =&gt; {
       &apos;force new connection&apos;: true,
     });
     socket.on(&apos;connect&apos;, () =&gt; {
+      socket.emit(&apos;action&apos;, {
+        type: &apos;server/joinRandomGame&apos;,
+        user: { id: 5, username: &apos;testUser&apos; },
+      });
       done();
     });
   });
@@ -80,11 +86,17 @@ describe(&apos;Socket responder functions&apos;, () =&gt; {
     });
     it(&apos;should respond with an action called &apos; + actionType, (done) =&gt; {
       socket.on(&apos;action&apos;, (response) =&gt; {
-        expect(response.type).toBe(actionType);
-        done();
+        if (response.type === actionType) {
+          expect(response.type).toBe(actionType);
+          expect(response.userid).toBe(5);
+          expect(response.message).toBe(&apos;testGuessMessage&apos;);
+          done();
+        }
       });
       socket.emit(&apos;action&apos;, {
         type: &apos;server/&apos; + label,
+        userid: 5,
+        message: &apos;testGuessMessage&apos;
       });
     });
   });
@@ -97,20 +109,20 @@ describe(&apos;Socket responder functions&apos;, () =&gt; {
     });
     it(&apos;should respond with an action called &apos; + actionType, (done) =&gt; {
       socket.on(&apos;action&apos;, (response) =&gt; {
-        expect(response.type).toBe(actionType);
-        done();
+        if (response.type === actionType) {
+          expect(response.userid).toBe(5);
+          expect(response.message).toBe(&apos;testClueMessage&apos;);
+          done();
+        }
       });
       socket.emit(&apos;action&apos;, {
         type: &apos;server/&apos; + label,
+        userid: 5,
+        message: &apos;testClueMessage&apos;
       });
     });
   });
 
-  describe(&apos;sendClueMessage&apos;, () =&gt; {
-    it(&apos;should be a function&apos;, () =&gt; {
-      expect(typeof sendClueMessage).toBe(&apos;function&apos;);
-    });
-  });
 });
 
 

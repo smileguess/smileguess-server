@@ -1,50 +1,62 @@
 window.esdocSearchIndex = [
   [
-    "smileguess-server/smileguess-server/models/game.js~game",
+    "./smileguess-server/models/game.js~game",
     "class/smileguess-server/models/Game.js~Game.html",
-    "<span>Game</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/models/Game.js</span>",
+    "<span>Game</span> <span class=\"search-result-import-path\">./smileguess-server/models/Game.js</span>",
     "class"
   ],
   [
-    "smileguess-server/smileguess-server/models/user.js~user",
+    "./smileguess-server/models/user.js~user",
     "class/smileguess-server/models/User.js~User.html",
-    "<span>User</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/models/User.js</span>",
+    "<span>User</span> <span class=\"search-result-import-path\">./smileguess-server/models/User.js</span>",
     "class"
   ],
   [
-    "smileguess-server/smileguess-server/sockets/dummysocketdata.js~dummy",
+    "./smileguess-server/sockets/dummysocketdata.js~dummy",
     "variable/index.html#static-variable-dummy",
-    "<span>dummy</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/sockets/dummySocketData.js</span>",
+    "<span>dummy</span> <span class=\"search-result-import-path\">./smileguess-server/sockets/dummySocketData.js</span>",
     "variable"
   ],
   [
-    "smileguess-server/smileguess-server/sockets/onconnect.js~onconnect",
+    "./smileguess-server/sockets/joinrandomgame.js~joinrandomgame",
+    "variable/index.html#static-variable-joinRandomGame",
+    "<span>joinRandomGame</span> <span class=\"search-result-import-path\">./smileguess-server/sockets/joinRandomGame.js</span>",
+    "variable"
+  ],
+  [
+    "./smileguess-server/sockets/onconnect.js~onconnect",
     "variable/index.html#static-variable-onConnect",
-    "<span>onConnect</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/sockets/onConnect.js</span>",
+    "<span>onConnect</span> <span class=\"search-result-import-path\">./smileguess-server/sockets/onConnect.js</span>",
     "variable"
   ],
   [
-    "smileguess-server/smileguess-server/sockets/ondisconnect.js~ondisconnect",
+    "./smileguess-server/sockets/ondisconnect.js~ondisconnect",
     "variable/index.html#static-variable-onDisconnect",
-    "<span>onDisconnect</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/sockets/onDisconnect.js</span>",
+    "<span>onDisconnect</span> <span class=\"search-result-import-path\">./smileguess-server/sockets/onDisconnect.js</span>",
     "variable"
   ],
   [
-    "smileguess-server/smileguess-server/sockets/sendcluemessage.js~sendcluemessage",
+    "./smileguess-server/sockets/sendcluemessage.js~sendcluemessage",
     "variable/index.html#static-variable-sendClueMessage",
-    "<span>sendClueMessage</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/sockets/sendClueMessage.js</span>",
+    "<span>sendClueMessage</span> <span class=\"search-result-import-path\">./smileguess-server/sockets/sendClueMessage.js</span>",
     "variable"
   ],
   [
-    "smileguess-server/smileguess-server/sockets/sendguessmessage.js~sendguessmessage",
+    "./smileguess-server/sockets/sendguessmessage.js~sendguessmessage",
     "variable/index.html#static-variable-sendGuessMessage",
-    "<span>sendGuessMessage</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/sockets/sendGuessMessage.js</span>",
+    "<span>sendGuessMessage</span> <span class=\"search-result-import-path\">./smileguess-server/sockets/sendGuessMessage.js</span>",
     "variable"
   ],
   [
-    "smileguess-server/smileguess-server/sockets/sendwinner.js~sendwinner",
+    "./smileguess-server/sockets/sendplayerjoingame.js~sendplayerjoingame",
+    "variable/index.html#static-variable-sendPlayerJoinGame",
+    "<span>sendPlayerJoinGame</span> <span class=\"search-result-import-path\">./smileguess-server/sockets/sendPlayerJoinGame.js</span>",
+    "variable"
+  ],
+  [
+    "./smileguess-server/sockets/sendwinner.js~sendwinner",
     "variable/index.html#static-variable-sendWinner",
-    "<span>sendWinner</span> <span class=\"search-result-import-path\">smileguess-server/smileguess-server/sockets/sendWinner.js</span>",
+    "<span>sendWinner</span> <span class=\"search-result-import-path\">./smileguess-server/sockets/sendWinner.js</span>",
     "variable"
   ],
   [
@@ -558,6 +570,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "smileguess-server/sockets/joinrandomgame.js",
+    "file/smileguess-server/sockets/joinRandomGame.js.html",
+    "smileguess-server/sockets/joinRandomGame.js",
+    "file"
+  ],
+  [
     "smileguess-server/sockets/onconnect.js",
     "file/smileguess-server/sockets/onConnect.js.html",
     "smileguess-server/sockets/onConnect.js",
@@ -579,6 +597,12 @@ window.esdocSearchIndex = [
     "smileguess-server/sockets/sendguessmessage.js",
     "file/smileguess-server/sockets/sendGuessMessage.js.html",
     "smileguess-server/sockets/sendGuessMessage.js",
+    "file"
+  ],
+  [
+    "smileguess-server/sockets/sendplayerjoingame.js",
+    "file/smileguess-server/sockets/sendPlayerJoinGame.js.html",
+    "smileguess-server/sockets/sendPlayerJoinGame.js",
     "file"
   ],
   [

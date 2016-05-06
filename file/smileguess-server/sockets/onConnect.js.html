@@ -35,10 +35,12 @@
   <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html">User</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">sockets</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dummy">dummy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-joinRandomGame">joinRandomGame</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onDisconnect">onDisconnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendGuessMessage">sendGuessMessage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPlayerJoinGame">sendPlayerJoinGame</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendWinner">sendWinner</a></span></span></li>
 </ul>
 </div>
@@ -48,13 +50,20 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const dummy = require(&apos;./dummySocketData.js&apos;);
 
 /**
- * @desc The onConnect function is used to add a user to a game&apos;s room.
- * @param socket - the users socket connection
+ * Function for setting up a users socket connection
+ * @param {Object} io - the socket.io object
+ * @param {Object} socket - the users socket connection
  */
-module.exports = onConnect = (socket) =&gt; {
+const onConnect = (io, socket) =&gt; {
   console.log(&apos;Connected to Socket&apos;);
-  socket.join(dummy.gameId);
 };
+module.exports = onConnect;
+/**
+ * TODO: Expect that the client will make a REST call 
+ * to server to get the game data upon entering a game
+ */
+
+module.exports = onConnect;
 
 </code></pre>
 

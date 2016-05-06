@@ -114,10 +114,10 @@
       "trailingComments": [
         {
           "type": "Block",
-          "value": "*\n * @desc The onConnect function is used to add a user to a game's room.\n * @param socket - the users socket connection\n ",
+          "value": "*\n * Function for setting up a users socket connection\n * @param {Object} io - the socket.io object\n * @param {Object} socket - the users socket connection\n ",
           "range": [
             48,
-            174
+            209
           ],
           "loc": {
             "start": {
@@ -125,7 +125,365 @@
               "column": 0
             },
             "end": {
-              "line": 6,
+              "line": 7,
+              "column": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "type": "Identifier",
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "onConnect",
+            "range": [
+              216,
+              225
+            ],
+            "loc": {
+              "start": {
+                "line": 8,
+                "column": 6
+              },
+              "end": {
+                "line": 8,
+                "column": 15
+              }
+            }
+          },
+          "init": {
+            "type": "ArrowFunctionExpression",
+            "id": null,
+            "params": [
+              {
+                "type": "Identifier",
+                "name": "io",
+                "range": [
+                  229,
+                  231
+                ],
+                "loc": {
+                  "start": {
+                    "line": 8,
+                    "column": 19
+                  },
+                  "end": {
+                    "line": 8,
+                    "column": 21
+                  }
+                }
+              },
+              {
+                "type": "Identifier",
+                "name": "socket",
+                "range": [
+                  233,
+                  239
+                ],
+                "loc": {
+                  "start": {
+                    "line": 8,
+                    "column": 23
+                  },
+                  "end": {
+                    "line": 8,
+                    "column": 29
+                  }
+                }
+              }
+            ],
+            "body": {
+              "type": "BlockStatement",
+              "body": [
+                {
+                  "type": "ExpressionStatement",
+                  "expression": {
+                    "type": "CallExpression",
+                    "callee": {
+                      "type": "MemberExpression",
+                      "computed": false,
+                      "object": {
+                        "type": "Identifier",
+                        "name": "console",
+                        "range": [
+                          248,
+                          255
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 9,
+                            "column": 2
+                          },
+                          "end": {
+                            "line": 9,
+                            "column": 9
+                          }
+                        }
+                      },
+                      "property": {
+                        "type": "Identifier",
+                        "name": "log",
+                        "range": [
+                          256,
+                          259
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 9,
+                            "column": 10
+                          },
+                          "end": {
+                            "line": 9,
+                            "column": 13
+                          }
+                        }
+                      },
+                      "range": [
+                        248,
+                        259
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 9,
+                          "column": 2
+                        },
+                        "end": {
+                          "line": 9,
+                          "column": 13
+                        }
+                      }
+                    },
+                    "arguments": [
+                      {
+                        "type": "Literal",
+                        "value": "Connected to Socket",
+                        "raw": "'Connected to Socket'",
+                        "range": [
+                          260,
+                          281
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 9,
+                            "column": 14
+                          },
+                          "end": {
+                            "line": 9,
+                            "column": 35
+                          }
+                        }
+                      }
+                    ],
+                    "range": [
+                      248,
+                      282
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 9,
+                        "column": 2
+                      },
+                      "end": {
+                        "line": 9,
+                        "column": 36
+                      }
+                    }
+                  },
+                  "range": [
+                    248,
+                    283
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 9,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 9,
+                      "column": 37
+                    }
+                  }
+                }
+              ],
+              "range": [
+                244,
+                285
+              ],
+              "loc": {
+                "start": {
+                  "line": 8,
+                  "column": 34
+                },
+                "end": {
+                  "line": 10,
+                  "column": 1
+                }
+              }
+            },
+            "generator": false,
+            "expression": false,
+            "range": [
+              228,
+              285
+            ],
+            "loc": {
+              "start": {
+                "line": 8,
+                "column": 18
+              },
+              "end": {
+                "line": 10,
+                "column": 1
+              }
+            }
+          },
+          "range": [
+            216,
+            285
+          ],
+          "loc": {
+            "start": {
+              "line": 8,
+              "column": 6
+            },
+            "end": {
+              "line": 10,
+              "column": 1
+            }
+          }
+        }
+      ],
+      "kind": "const",
+      "range": [
+        210,
+        286
+      ],
+      "loc": {
+        "start": {
+          "line": 8,
+          "column": 0
+        },
+        "end": {
+          "line": 10,
+          "column": 2
+        }
+      },
+      "leadingComments": [],
+      "name": "_",
+      "trailingComments": []
+    },
+    {
+      "type": "Identifier",
+      "declaration": {
+        "type": "Identifier",
+        "name": "onConnect",
+        "range": [
+          302,
+          311
+        ],
+        "loc": {
+          "start": {
+            "line": 11,
+            "column": 15
+          },
+          "end": {
+            "line": 11,
+            "column": 24
+          }
+        }
+      },
+      "range": [
+        287,
+        312
+      ],
+      "loc": {
+        "start": {
+          "line": 11,
+          "column": 0
+        },
+        "end": {
+          "line": 11,
+          "column": 25
+        }
+      },
+      "trailingComments": [],
+      "name": "_",
+      "leadingComments": []
+    },
+    {
+      "type": "ExportDefaultDeclaration",
+      "declaration": {
+        "type": "Identifier",
+        "name": "onConnect",
+        "range": [
+          447,
+          456
+        ],
+        "loc": {
+          "start": {
+            "line": 17,
+            "column": 15
+          },
+          "end": {
+            "line": 17,
+            "column": 24
+          }
+        },
+        "leadingComments": [
+          {
+            "type": "Block",
+            "value": "*\n * TODO: Expect that the client will make a REST call \n * to server to get the game data upon entering a game\n ",
+            "range": [
+              313,
+              430
+            ],
+            "loc": {
+              "start": {
+                "line": 12,
+                "column": 0
+              },
+              "end": {
+                "line": 15,
+                "column": 3
+              }
+            }
+          }
+        ],
+        "trailingComments": []
+      },
+      "range": [
+        432,
+        457
+      ],
+      "loc": {
+        "start": {
+          "line": 17,
+          "column": 0
+        },
+        "end": {
+          "line": 17,
+          "column": 25
+        }
+      },
+      "leadingComments": [
+        {
+          "type": "Block",
+          "value": "*\n * TODO: Expect that the client will make a REST call \n * to server to get the game data upon entering a game\n ",
+          "range": [
+            313,
+            430
+          ],
+          "loc": {
+            "start": {
+              "line": 12,
+              "column": 0
+            },
+            "end": {
+              "line": 15,
               "column": 3
             }
           }
@@ -135,359 +493,252 @@
     {
       "type": "ExportDefaultDeclaration",
       "declaration": {
-        "type": "AssignmentExpression",
-        "operator": "=",
-        "left": {
-          "type": "Identifier",
-          "name": "onConnect",
-          "range": [
-            190,
-            199
-          ],
-          "loc": {
-            "start": {
-              "line": 7,
-              "column": 15
-            },
-            "end": {
-              "line": 7,
-              "column": 24
-            }
-          }
-        },
-        "right": {
-          "type": "ArrowFunctionExpression",
-          "id": null,
-          "params": [
-            {
+        "type": "VariableDeclaration",
+        "declarations": [
+          {
+            "type": "VariableDeclarator",
+            "id": {
               "type": "Identifier",
-              "name": "socket",
+              "name": "onConnect",
               "range": [
-                203,
-                209
+                216,
+                225
               ],
               "loc": {
                 "start": {
-                  "line": 7,
-                  "column": 28
+                  "line": 8,
+                  "column": 6
                 },
                 "end": {
-                  "line": 7,
-                  "column": 34
+                  "line": 8,
+                  "column": 15
                 }
               }
-            }
-          ],
-          "body": {
-            "type": "BlockStatement",
-            "body": [
-              {
-                "type": "ExpressionStatement",
-                "expression": {
-                  "type": "CallExpression",
-                  "callee": {
-                    "type": "MemberExpression",
-                    "computed": false,
-                    "object": {
-                      "type": "Identifier",
-                      "name": "console",
-                      "range": [
-                        218,
-                        225
-                      ],
-                      "loc": {
-                        "start": {
-                          "line": 8,
-                          "column": 2
-                        },
-                        "end": {
-                          "line": 8,
-                          "column": 9
-                        }
-                      }
-                    },
-                    "property": {
-                      "type": "Identifier",
-                      "name": "log",
-                      "range": [
-                        226,
-                        229
-                      ],
-                      "loc": {
-                        "start": {
-                          "line": 8,
-                          "column": 10
-                        },
-                        "end": {
-                          "line": 8,
-                          "column": 13
-                        }
-                      }
-                    },
-                    "range": [
-                      218,
-                      229
-                    ],
-                    "loc": {
-                      "start": {
-                        "line": 8,
-                        "column": 2
-                      },
-                      "end": {
-                        "line": 8,
-                        "column": 13
-                      }
-                    }
-                  },
-                  "arguments": [
-                    {
-                      "type": "Literal",
-                      "value": "Connected to Socket",
-                      "raw": "'Connected to Socket'",
-                      "range": [
-                        230,
-                        251
-                      ],
-                      "loc": {
-                        "start": {
-                          "line": 8,
-                          "column": 14
-                        },
-                        "end": {
-                          "line": 8,
-                          "column": 35
-                        }
-                      }
-                    }
-                  ],
+            },
+            "init": {
+              "type": "ArrowFunctionExpression",
+              "id": null,
+              "params": [
+                {
+                  "type": "Identifier",
+                  "name": "io",
                   "range": [
-                    218,
-                    252
+                    229,
+                    231
                   ],
                   "loc": {
                     "start": {
                       "line": 8,
-                      "column": 2
+                      "column": 19
                     },
                     "end": {
                       "line": 8,
-                      "column": 36
+                      "column": 21
                     }
                   }
                 },
+                {
+                  "type": "Identifier",
+                  "name": "socket",
+                  "range": [
+                    233,
+                    239
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 8,
+                      "column": 23
+                    },
+                    "end": {
+                      "line": 8,
+                      "column": 29
+                    }
+                  }
+                }
+              ],
+              "body": {
+                "type": "BlockStatement",
+                "body": [
+                  {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                      "type": "CallExpression",
+                      "callee": {
+                        "type": "MemberExpression",
+                        "computed": false,
+                        "object": {
+                          "type": "Identifier",
+                          "name": "console",
+                          "range": [
+                            248,
+                            255
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 9,
+                              "column": 2
+                            },
+                            "end": {
+                              "line": 9,
+                              "column": 9
+                            }
+                          }
+                        },
+                        "property": {
+                          "type": "Identifier",
+                          "name": "log",
+                          "range": [
+                            256,
+                            259
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 9,
+                              "column": 10
+                            },
+                            "end": {
+                              "line": 9,
+                              "column": 13
+                            }
+                          }
+                        },
+                        "range": [
+                          248,
+                          259
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 9,
+                            "column": 2
+                          },
+                          "end": {
+                            "line": 9,
+                            "column": 13
+                          }
+                        }
+                      },
+                      "arguments": [
+                        {
+                          "type": "Literal",
+                          "value": "Connected to Socket",
+                          "raw": "'Connected to Socket'",
+                          "range": [
+                            260,
+                            281
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 9,
+                              "column": 14
+                            },
+                            "end": {
+                              "line": 9,
+                              "column": 35
+                            }
+                          }
+                        }
+                      ],
+                      "range": [
+                        248,
+                        282
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 9,
+                          "column": 2
+                        },
+                        "end": {
+                          "line": 9,
+                          "column": 36
+                        }
+                      }
+                    },
+                    "range": [
+                      248,
+                      283
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 9,
+                        "column": 2
+                      },
+                      "end": {
+                        "line": 9,
+                        "column": 37
+                      }
+                    }
+                  }
+                ],
                 "range": [
-                  218,
-                  253
+                  244,
+                  285
                 ],
                 "loc": {
                   "start": {
                     "line": 8,
-                    "column": 2
+                    "column": 34
                   },
                   "end": {
-                    "line": 8,
-                    "column": 37
+                    "line": 10,
+                    "column": 1
                   }
                 }
               },
-              {
-                "type": "ExpressionStatement",
-                "expression": {
-                  "type": "CallExpression",
-                  "callee": {
-                    "type": "MemberExpression",
-                    "computed": false,
-                    "object": {
-                      "type": "Identifier",
-                      "name": "socket",
-                      "range": [
-                        256,
-                        262
-                      ],
-                      "loc": {
-                        "start": {
-                          "line": 9,
-                          "column": 2
-                        },
-                        "end": {
-                          "line": 9,
-                          "column": 8
-                        }
-                      }
-                    },
-                    "property": {
-                      "type": "Identifier",
-                      "name": "join",
-                      "range": [
-                        263,
-                        267
-                      ],
-                      "loc": {
-                        "start": {
-                          "line": 9,
-                          "column": 9
-                        },
-                        "end": {
-                          "line": 9,
-                          "column": 13
-                        }
-                      }
-                    },
-                    "range": [
-                      256,
-                      267
-                    ],
-                    "loc": {
-                      "start": {
-                        "line": 9,
-                        "column": 2
-                      },
-                      "end": {
-                        "line": 9,
-                        "column": 13
-                      }
-                    }
-                  },
-                  "arguments": [
-                    {
-                      "type": "MemberExpression",
-                      "computed": false,
-                      "object": {
-                        "type": "Identifier",
-                        "name": "dummy",
-                        "range": [
-                          268,
-                          273
-                        ],
-                        "loc": {
-                          "start": {
-                            "line": 9,
-                            "column": 14
-                          },
-                          "end": {
-                            "line": 9,
-                            "column": 19
-                          }
-                        }
-                      },
-                      "property": {
-                        "type": "Identifier",
-                        "name": "gameId",
-                        "range": [
-                          274,
-                          280
-                        ],
-                        "loc": {
-                          "start": {
-                            "line": 9,
-                            "column": 20
-                          },
-                          "end": {
-                            "line": 9,
-                            "column": 26
-                          }
-                        }
-                      },
-                      "range": [
-                        268,
-                        280
-                      ],
-                      "loc": {
-                        "start": {
-                          "line": 9,
-                          "column": 14
-                        },
-                        "end": {
-                          "line": 9,
-                          "column": 26
-                        }
-                      }
-                    }
-                  ],
-                  "range": [
-                    256,
-                    281
-                  ],
-                  "loc": {
-                    "start": {
-                      "line": 9,
-                      "column": 2
-                    },
-                    "end": {
-                      "line": 9,
-                      "column": 27
-                    }
-                  }
+              "generator": false,
+              "expression": false,
+              "range": [
+                228,
+                285
+              ],
+              "loc": {
+                "start": {
+                  "line": 8,
+                  "column": 18
                 },
-                "range": [
-                  256,
-                  282
-                ],
-                "loc": {
-                  "start": {
-                    "line": 9,
-                    "column": 2
-                  },
-                  "end": {
-                    "line": 9,
-                    "column": 28
-                  }
+                "end": {
+                  "line": 10,
+                  "column": 1
                 }
               }
-            ],
+            },
             "range": [
-              214,
-              284
+              216,
+              285
             ],
             "loc": {
               "start": {
-                "line": 7,
-                "column": 39
+                "line": 8,
+                "column": 6
               },
               "end": {
                 "line": 10,
                 "column": 1
               }
             }
-          },
-          "generator": false,
-          "expression": false,
-          "range": [
-            202,
-            284
-          ],
-          "loc": {
-            "start": {
-              "line": 7,
-              "column": 27
-            },
-            "end": {
-              "line": 10,
-              "column": 1
-            }
           }
-        },
+        ],
+        "kind": "const",
         "range": [
-          190,
-          284
+          210,
+          286
         ],
         "loc": {
           "start": {
-            "line": 7,
-            "column": 15
+            "line": 8,
+            "column": 0
           },
           "end": {
             "line": 10,
-            "column": 1
+            "column": 2
           }
         },
         "leadingComments": [
           {
             "type": "Block",
-            "value": "*\n * @desc The onConnect function is used to add a user to a game's room.\n * @param socket - the users socket connection\n ",
+            "value": "*\n * Function for setting up a users socket connection\n * @param {Object} io - the socket.io object\n * @param {Object} socket - the users socket connection\n ",
             "range": [
               48,
-              174
+              209
             ],
             "loc": {
               "start": {
@@ -495,43 +746,62 @@
                 "column": 0
               },
               "end": {
-                "line": 6,
+                "line": 7,
                 "column": 3
               }
             }
           }
         ],
-        "trailingComments": []
+        "trailingComments": [
+          {
+            "type": "Block",
+            "value": "*\n * TODO: Expect that the client will make a REST call \n * to server to get the game data upon entering a game\n ",
+            "range": [
+              313,
+              430
+            ],
+            "loc": {
+              "start": {
+                "line": 12,
+                "column": 0
+              },
+              "end": {
+                "line": 15,
+                "column": 3
+              }
+            }
+          }
+        ]
       },
       "range": [
-        175,
-        285
+        287,
+        312
       ],
       "loc": {
         "start": {
-          "line": 7,
+          "line": 11,
           "column": 0
         },
         "end": {
-          "line": 10,
-          "column": 2
+          "line": 11,
+          "column": 25
         }
       },
-      "leadingComments": [
+      "trailingComments": [
         {
           "type": "Block",
-          "value": "*\n * @desc The onConnect function is used to add a user to a game's room.\n * @param socket - the users socket connection\n ",
+          "value": "*\n * TODO: Expect that the client will make a REST call \n * to server to get the game data upon entering a game\n ",
           "range": [
-            48,
-            174
+            313,
+            430
           ],
           "loc": {
             "start": {
-              "line": 3,
+              "line": 12,
               "column": 0
             },
             "end": {
-              "line": 6,
+              "line": 15,
               "column": 3
             }
           }
@@ -542,7 +812,7 @@
   "sourceType": "module",
   "range": [
     0,
-    285
+    457
   ],
   "loc": {
     "start": {
@@ -550,17 +820,17 @@
       "column": 0
     },
     "end": {
-      "line": 10,
-      "column": 2
+      "line": 17,
+      "column": 25
     }
   },
   "comments": [
     {
       "type": "Block",
-      "value": "*\n * @desc The onConnect function is used to add a user to a game's room.\n * @param socket - the users socket connection\n ",
+      "value": "*\n * Function for setting up a users socket connection\n * @param {Object} io - the socket.io object\n * @param {Object} socket - the users socket connection\n ",
       "range": [
         48,
-        174
+        209
       ],
       "loc": {
         "start": {
@@ -568,7 +838,25 @@
           "column": 0
         },
         "end": {
-          "line": 6,
+          "line": 7,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n * TODO: Expect that the client will make a REST call \n * to server to get the game data upon entering a game\n ",
+      "range": [
+        313,
+        430
+      ],
+      "loc": {
+        "start": {
+          "line": 12,
+          "column": 0
+        },
+        "end": {
+          "line": 15,
           "column": 3
         }
       }

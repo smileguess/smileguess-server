@@ -35,10 +35,12 @@
   <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html">User</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">sockets</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dummy">dummy</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-joinRandomGame">joinRandomGame</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onDisconnect">onDisconnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendGuessMessage">sendGuessMessage</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPlayerJoinGame">sendPlayerJoinGame</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendWinner">sendWinner</a></span></span></li>
 </ul>
 </div>
@@ -85,13 +87,14 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span><span data-ice="signature">(socket: <span>*</span>)</span>
+           <span data-ice="name"><span><a href="variable/index.html#static-variable-joinRandomGame">joinRandomGame</a></span></span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, user: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>The onConnect function is used to add a user to a game&apos;s room.</p>
+        <div data-ice="description"><p>Function is called when a socket action is received
+from the client requesting to join a random game.</p>
 </div>
       </div>
     </td>
@@ -111,7 +114,33 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="variable/index.html#static-variable-onDisconnect">onDisconnect</a></span></span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, user: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+           <span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Function for setting up a users socket connection</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="variable/index.html#static-variable-onDisconnect">onDisconnect</a></span></span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -137,7 +166,7 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, action: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+           <span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, action: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -163,7 +192,7 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="variable/index.html#static-variable-sendGuessMessage">sendGuessMessage</a></span></span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, action: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+           <span data-ice="name"><span><a href="variable/index.html#static-variable-sendGuessMessage">sendGuessMessage</a></span></span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, action: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -189,7 +218,34 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="variable/index.html#static-variable-sendWinner">sendWinner</a></span></span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, user: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+           <span data-ice="name"><span><a href="variable/index.html#static-variable-sendPlayerJoinGame">sendPlayerJoinGame</a></span></span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, user: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>This function sends a message letting the users of a
+game know that another user has joined.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="variable/index.html#static-variable-sendWinner">sendWinner</a></span></span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, user: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -224,10 +280,55 @@
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import dummy from &apos;<span><a href="file/smileguess-server/sockets/dummySocketData.js.html#lineNumber1">smileguess-server/smileguess-server/sockets/dummySocketData.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import dummy from &apos;<span><a href="file/smileguess-server/sockets/dummySocketData.js.html#lineNumber1">./smileguess-server/sockets/dummySocketData.js</a></span>&apos;</code></pre></div>
   
   
   
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-variable-joinRandomGame">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">joinRandomGame</span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, user: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/smileguess-server/sockets/joinRandomGame.js.html#lineNumber13">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import joinRandomGame from &apos;<span><a href="file/smileguess-server/sockets/joinRandomGame.js.html#lineNumber13">./smileguess-server/sockets/joinRandomGame.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>Function is called when a socket action is received
+from the client requesting to join a random game.
+A game is chosen, the user joins the socket room for
+that game, and the other players are sent a 
+&apos;SOCKET_PLAYER_JOIN_GAME&apos; action</p>
+</div>
 
   
 
@@ -256,18 +357,18 @@
     
     
     
-    <span data-ice="name">onConnect</span><span data-ice="signature">(socket: <span>*</span>)</span>
+    <span data-ice="name">onConnect</span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/sockets/onConnect.js.html#lineNumber7">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/sockets/onConnect.js.html#lineNumber8">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import onConnect from &apos;<span><a href="file/smileguess-server/sockets/onConnect.js.html#lineNumber7">smileguess-server/smileguess-server/sockets/onConnect.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import onConnect from &apos;<span><a href="file/smileguess-server/sockets/onConnect.js.html#lineNumber8">./smileguess-server/sockets/onConnect.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>The onConnect function is used to add a user to a game&apos;s room.</p>
+  <div data-ice="description"><p>Function for setting up a users socket connection</p>
 </div>
 
   
@@ -297,15 +398,15 @@
     
     
     
-    <span data-ice="name">onDisconnect</span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, user: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+    <span data-ice="name">onDisconnect</span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/sockets/onDisconnect.js.html#lineNumber9">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/sockets/onDisconnect.js.html#lineNumber8">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import onDisconnect from &apos;<span><a href="file/smileguess-server/sockets/onDisconnect.js.html#lineNumber9">smileguess-server/smileguess-server/sockets/onDisconnect.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import onDisconnect from &apos;<span><a href="file/smileguess-server/sockets/onDisconnect.js.html#lineNumber8">./smileguess-server/sockets/onDisconnect.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>The onDisonnect function is used to clean up a users connection to a game </p>
@@ -338,7 +439,7 @@
     
     
     
-    <span data-ice="name">sendClueMessage</span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, action: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+    <span data-ice="name">sendClueMessage</span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, action: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
@@ -346,7 +447,7 @@
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import sendClueMessage from &apos;<span><a href="file/smileguess-server/sockets/sendClueMessage.js.html#lineNumber16">smileguess-server/smileguess-server/sockets/sendClueMessage.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import sendClueMessage from &apos;<span><a href="file/smileguess-server/sockets/sendClueMessage.js.html#lineNumber16">./smileguess-server/sockets/sendClueMessage.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>This function sends a clue message to all the members of a room through sockets.
@@ -391,7 +492,7 @@ When this action is received on the client, it will be dispatched by redux autom
     
     
     
-    <span data-ice="name">sendGuessMessage</span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, action: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+    <span data-ice="name">sendGuessMessage</span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, action: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
@@ -399,7 +500,7 @@ When this action is received on the client, it will be dispatched by redux autom
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import sendGuessMessage from &apos;<span><a href="file/smileguess-server/sockets/sendGuessMessage.js.html#lineNumber16">smileguess-server/smileguess-server/sockets/sendGuessMessage.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import sendGuessMessage from &apos;<span><a href="file/smileguess-server/sockets/sendGuessMessage.js.html#lineNumber16">./smileguess-server/sockets/sendGuessMessage.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>This function sends a guess message to all the members of a room through sockets.
@@ -438,13 +539,55 @@ When this action is received on the client, it will be dispatched by redux autom
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-variable-sendPlayerJoinGame">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">sendPlayerJoinGame</span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, user: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/smileguess-server/sockets/sendPlayerJoinGame.js.html#lineNumber10">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import sendPlayerJoinGame from &apos;<span><a href="file/smileguess-server/sockets/sendPlayerJoinGame.js.html#lineNumber10">./smileguess-server/sockets/sendPlayerJoinGame.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>This function sends a message letting the users of a
+game know that another user has joined.</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="static-variable-sendWinner">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">sendWinner</span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, user: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+    <span data-ice="name">sendWinner</span><span data-ice="signature">(io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, socket: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, user: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
@@ -452,7 +595,7 @@ When this action is received on the client, it will be dispatched by redux autom
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import sendWinner from &apos;<span><a href="file/smileguess-server/sockets/sendWinner.js.html#lineNumber15">smileguess-server/smileguess-server/sockets/sendWinner.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import sendWinner from &apos;<span><a href="file/smileguess-server/sockets/sendWinner.js.html#lineNumber15">./smileguess-server/sockets/sendWinner.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>This function sends a clue message to all the members of a room through sockets.
