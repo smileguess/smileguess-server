@@ -16,6 +16,10 @@ describe('Socket responder functions', () => {
       'force new connection': true,
     });
     socket.on('connect', () => {
+      socket.emit('action', {
+        type: 'server/joinRandomGame',
+        user: { id: 5, username: 'testUser' },
+      });
       done();
     });
   });
@@ -33,11 +37,17 @@ describe('Socket responder functions', () => {
     });
     it('should respond with an action called ' + actionType, (done) => {
       socket.on('action', (response) => {
-        expect(response.type).toBe(actionType);
-        done();
+        if (response.type === actionType) {
+          expect(response.type).toBe(actionType);
+          expect(response.userid).toBe(5);
+          expect(response.message).toBe('testGuessMessage');
+          done();
+        }
       });
       socket.emit('action', {
         type: 'server/' + label,
+        userid: 5,
+        message: 'testGuessMessage'
       });
     });
   });
@@ -50,20 +60,20 @@ describe('Socket responder functions', () => {
     });
     it('should respond with an action called ' + actionType, (done) => {
       socket.on('action', (response) => {
-        expect(response.type).toBe(actionType);
-        done();
+        if (response.type === actionType) {
+          expect(response.userid).toBe(5);
+          expect(response.message).toBe('testClueMessage');
+          done();
+        }
       });
       socket.emit('action', {
         type: 'server/' + label,
+        userid: 5,
+        message: 'testClueMessage'
       });
     });
   });
 
-  describe('sendClueMessage', () => {
-    it('should be a function', () => {
-      expect(typeof sendClueMessage).toBe('function');
-    });
-  });
 });
 
 

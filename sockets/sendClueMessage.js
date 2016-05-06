@@ -17,10 +17,9 @@ const sendClueMessage = (io, socket, action) => {
   console.log('sending clue message');
   io.to(dummy.gameId).emit('action', {
     type: 'SOCKET_CLUE_MESSAGE',
-    userid: dummy.user.id,
-    message: dummy.message,
+    userid: action.userid,
+    message: action.message,
   });
 };
-
 module.exports = sendClueMessage;
 

@@ -17,10 +17,9 @@ const sendGuessMessage = (io, socket, action) => {
   console.log('sending guess message');
   io.to(dummy.gameId).emit('action', {
     type: 'SOCKET_GUESS_MESSAGE',
-    userid: dummy.user.id,
-    message: dummy.message,
+    userid: action.userid,
+    message: action.message,
   });
 };
-
 module.exports = sendGuessMessage;
 

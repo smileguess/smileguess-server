@@ -10,6 +10,6 @@
   "undocumentIdentifier": true,
   "builtinExternal": true,
   "index": "./README.md",
-  "package": "./package.json",
+  "package": "none",
   "coverage": true
 }
