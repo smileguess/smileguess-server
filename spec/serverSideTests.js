@@ -8,7 +8,22 @@ const settings = require('../gameSettings');
 jasmine.getEnv().addReporter(reporter);
 
 const serverURL = 'http://127.0.0.1:1234';
-const joinOrStartGameURL = 'http://127.0.0.1/random:';
+const joinOrStartGameURL = 'http://127.0.0.1:1234/api/play/';
+
+const sendNewOrRandomGameRequest = (deviceId, requestOptions) => {
+  const id = deviceId || 'defaultTestDeviceId';
+  const options = requestOptions || {
+    method: 'GET',
+    uri: joinOrStartGameURL + id,
+  };
+  return request(options, (err, res, body) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(body);
+    }
+  });
+};
 
 describe('Basic Server Functions', () => {
   describe('Server', () => {
@@ -48,7 +63,6 @@ describe('Models, Controllers and Collections: ', () => {
   });
 
   describe('Game: Model, Collection and Controllers', () => {
-
     it('will correctly instantiate a new game', () => { 
       expect(testGame1.players[0].id).toBe('user1ID');
     });
@@ -105,24 +119,25 @@ describe('Models, Controllers and Collections: ', () => {
       Games.sort(openGames);
       expect(openGames[0].seatsOpen < openGames[1].seatsOpen).toBe(true);
     });
-    it('will place users in the game with the most seats available', () => {
-      gameMethods.joinOrStartGame(testUser2);
-      expect(openGames[1].seatsOpen).toBe(4);
+    it('will place users in the game with the most seats available', (done) => {
+      console.log(openGames);
+      sendNewOrRandomGameRequest('someUsersPhoneId')
+        .on('response', () => (expect(openGames[1].seatsOpen).toBe('purple')));
+        done();
     });
-    it('will create a new game if no seats are available', () => {
-      let i = 'bob';
-      for (let i = openGames.length; i < settings.maxPlayers; i++) {
-        const options = {
-          method: 'GET',
-          uri: joinOrStartGameURL + i,
-        };
-        request(options);
-      }
-      expect(openGames.length).toBe(0);
-      expect(openGames.length + fullGames.length).toBe(2);
-
-      request(options);
-      expect(openGames.length + fullGames.length).toBe(3);
+    it('will create a new game if no seats are available', (done) => {
+      //fill up the openGames array
+      openGames.forEach((game) => {
+        for (let i = game.length - 1; i < settings.maxPlayers - 1; i++) {
+          const testDeviceId = 'deviceId' + i;
+          sendNewOrRandomGameRequest(testDeviceId);
+        }
+      }).then(() => {
+        expect(openGames.length).toBe(0);
+        sendNewOrRandomGameRequest('someDeviceId');
+      }).then(() => {
+        expect(openGames.length).toBe(1);
+      });
     });
     it('will start a game after enough players have joined', () => {
       expect(openGames[openGames.length - 1].active).toBe(false);

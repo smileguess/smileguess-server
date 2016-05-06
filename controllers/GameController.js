@@ -9,13 +9,17 @@ module.exports = {
     const userId = req.params.userId;
     const player = new User(userId);
     if (openGames.length > 0) {
-      openGames[openGames.length - 1].addPlayer(player);
+      console.log('THERE ARE OPEN GAMES')
+      const targetGame = openGames[openGames.length - 1];
+      targetGame.addPlayer(player);
       Games.sort(openGames);
-      res.sendStatus(200);
+      res.json(targetGame);
     } else {
+      console.log('THERE ARE NO OPEN GAMES')
       const newGame = new Game(player);
       newGame.updateGameAvailability();
-      res.sendStatus(200);
+      console.log('OPEN GAMES: ', openGames);
+      res.json(newGame);
     }
   },
 };
