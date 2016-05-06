@@ -53,6 +53,12 @@
  * @param {Object} io - this is the socket.io object
  * @param {Object} socket - the users socket connection
  * @param {Object} action - the action passed to the server from the client
+ * @example &lt;caption&gt;The action emitted:&lt;/caption&gt;
+ * let action = {
+ *   type: &apos;SOCKET_GUESS_MESSAGE&apos;,
+ *   userid: 5,
+ *   message: &apos;this will blow your mind!&apos;,
+ * };
  */
 module.exports = sendGuessMessage = (io, socket, action) =&gt; {
   console.log(&apos;sending guess message&apos;);

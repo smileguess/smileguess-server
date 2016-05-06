@@ -1282,7 +1282,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a clue message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} action - the action passed to the server from the client\n */\nmodule.exports = sendClueMessage = (io, socket, action) => {\n  console.log('sending clue message');\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_CLUE_MESSAGE',\n    userid: dummy.user.id,\n    message: dummy.message,\n  });\n};\n\n"
+    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a clue message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} action - the action passed to the server from the client\n * @example <caption>The action emitted:</caption>\n * let action = {\n *   type: 'SOCKET_CLUE_MESSAGE',\n *   userid: 5,\n *   message: '📵🐓 🌸',\n * };\n */\nmodule.exports = sendClueMessage = (io, socket, action) => {\n  console.log('sending clue message');\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_CLUE_MESSAGE',\n    userid: dummy.user.id,\n    message: dummy.message,\n  });\n};\n\n"
   },
   {
     "__docId__": 67,
@@ -1318,7 +1318,10 @@
     "importPath": "smileguess-server/smileguess-server/sockets/sendClueMessage.js",
     "importStyle": "sendClueMessage",
     "description": "This function sends a clue message to all the members of a room through sockets.\nWhen this action is received on the client, it will be dispatched by redux automatically.",
-    "lineNumber": 10,
+    "examples": [
+      "<caption>The action emitted:</caption>\nlet action = {\n  type: 'SOCKET_CLUE_MESSAGE',\n  userid: 5,\n  message: '📵🐓 🌸',\n};"
+    ],
+    "lineNumber": 16,
     "params": [
       {
         "nullable": null,
@@ -1363,7 +1366,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a guess message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} action - the action passed to the server from the client\n */\nmodule.exports = sendGuessMessage = (io, socket, action) => {\n  console.log('sending guess message');\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_GUESS_MESSAGE',\n    userid: dummy.user.id,\n    message: dummy.message,\n  });\n};\n\n"
+    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a guess message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} action - the action passed to the server from the client\n * @example <caption>The action emitted:</caption>\n * let action = {\n *   type: 'SOCKET_GUESS_MESSAGE',\n *   userid: 5,\n *   message: 'this will blow your mind!',\n * };\n */\nmodule.exports = sendGuessMessage = (io, socket, action) => {\n  console.log('sending guess message');\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_GUESS_MESSAGE',\n    userid: dummy.user.id,\n    message: dummy.message,\n  });\n};\n\n"
   },
   {
     "__docId__": 70,
@@ -1399,7 +1402,10 @@
     "importPath": "smileguess-server/smileguess-server/sockets/sendGuessMessage.js",
     "importStyle": "sendGuessMessage",
     "description": "This function sends a guess message to all the members of a room through sockets.\nWhen this action is received on the client, it will be dispatched by redux automatically.",
-    "lineNumber": 10,
+    "examples": [
+      "<caption>The action emitted:</caption>\nlet action = {\n  type: 'SOCKET_GUESS_MESSAGE',\n  userid: 5,\n  message: 'this will blow your mind!',\n};"
+    ],
+    "lineNumber": 16,
     "params": [
       {
         "nullable": null,
@@ -1444,7 +1450,7 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a clue message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} user - the user for the particular socket\n */\nmodule.exports = sendWinner = (io, socket, user) => {\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_DECLARE_WINNER',\n    userid: dummy.user.id,\n  });\n};\n\n"
+    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a clue message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} user - the user for the particular socket\n * @example <caption>The action emitted:</caption>\n * let action = {\n *   type: 'SOCKET_DECLARE_WINNER',\n *   userid: 5,\n * };\n */\nmodule.exports = sendWinner = (io, socket, user) => {\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_DECLARE_WINNER',\n    userid: dummy.user.id,\n  });\n};\n\n"
   },
   {
     "__docId__": 73,
@@ -1480,7 +1486,10 @@
     "importPath": "smileguess-server/smileguess-server/sockets/sendWinner.js",
     "importStyle": "sendWinner",
     "description": "This function sends a clue message to all the members of a room through sockets.\nWhen this action is received on the client, it will be dispatched by redux automatically.",
-    "lineNumber": 10,
+    "examples": [
+      "<caption>The action emitted:</caption>\nlet action = {\n  type: 'SOCKET_DECLARE_WINNER',\n  userid: 5,\n};"
+    ],
+    "lineNumber": 15,
     "params": [
       {
         "nullable": null,

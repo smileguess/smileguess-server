@@ -53,6 +53,11 @@
  * @param {Object} io - this is the socket.io object
  * @param {Object} socket - the users socket connection
  * @param {Object} user - the user for the particular socket
+ * @example &lt;caption&gt;The action emitted:&lt;/caption&gt;
+ * let action = {
+ *   type: &apos;SOCKET_DECLARE_WINNER&apos;,
+ *   userid: 5,
+ * };
  */
 module.exports = sendWinner = (io, socket, user) =&gt; {
   io.to(dummy.gameId).emit(&apos;action&apos;, {

@@ -342,11 +342,11 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/sockets/sendClueMessage.js.html#lineNumber10">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/sockets/sendClueMessage.js.html#lineNumber16">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import sendClueMessage from &apos;<span><a href="file/smileguess-server/sockets/sendClueMessage.js.html#lineNumber10">smileguess-server/smileguess-server/sockets/sendClueMessage.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import sendClueMessage from &apos;<span><a href="file/smileguess-server/sockets/sendClueMessage.js.html#lineNumber16">smileguess-server/smileguess-server/sockets/sendClueMessage.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>This function sends a clue message to all the members of a room through sockets.
@@ -366,7 +366,18 @@ When this action is received on the client, it will be dispatched by redux autom
 
   
 
-  
+  <div data-ice="example">
+    <h4>Example:</h4>
+    
+  <div class="example-doc" data-ice="exampleDoc">
+      <div class="example-caption" data-ice="exampleCaption">The action emitted:</div>
+      <pre class="prettyprint source-code"><code data-ice="exampleCode">let action = {
+  type: &apos;SOCKET_CLUE_MESSAGE&apos;,
+  userid: 5,
+  message: &apos;&#x1F4F5;&#x1F413; &#x1F338;&apos;,
+};</code></pre>
+    </div>
+</div>
 
   
 
@@ -384,11 +395,11 @@ When this action is received on the client, it will be dispatched by redux autom
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/sockets/sendGuessMessage.js.html#lineNumber10">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/sockets/sendGuessMessage.js.html#lineNumber16">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import sendGuessMessage from &apos;<span><a href="file/smileguess-server/sockets/sendGuessMessage.js.html#lineNumber10">smileguess-server/smileguess-server/sockets/sendGuessMessage.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import sendGuessMessage from &apos;<span><a href="file/smileguess-server/sockets/sendGuessMessage.js.html#lineNumber16">smileguess-server/smileguess-server/sockets/sendGuessMessage.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>This function sends a guess message to all the members of a room through sockets.
@@ -408,7 +419,18 @@ When this action is received on the client, it will be dispatched by redux autom
 
   
 
-  
+  <div data-ice="example">
+    <h4>Example:</h4>
+    
+  <div class="example-doc" data-ice="exampleDoc">
+      <div class="example-caption" data-ice="exampleCaption">The action emitted:</div>
+      <pre class="prettyprint source-code"><code data-ice="exampleCode">let action = {
+  type: &apos;SOCKET_GUESS_MESSAGE&apos;,
+  userid: 5,
+  message: &apos;this will blow your mind!&apos;,
+};</code></pre>
+    </div>
+</div>
 
   
 
@@ -426,11 +448,11 @@ When this action is received on the client, it will be dispatched by redux autom
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/sockets/sendWinner.js.html#lineNumber10">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/sockets/sendWinner.js.html#lineNumber15">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import sendWinner from &apos;<span><a href="file/smileguess-server/sockets/sendWinner.js.html#lineNumber10">smileguess-server/smileguess-server/sockets/sendWinner.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import sendWinner from &apos;<span><a href="file/smileguess-server/sockets/sendWinner.js.html#lineNumber15">smileguess-server/smileguess-server/sockets/sendWinner.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>This function sends a clue message to all the members of a room through sockets.
@@ -450,7 +472,17 @@ When this action is received on the client, it will be dispatched by redux autom
 
   
 
-  
+  <div data-ice="example">
+    <h4>Example:</h4>
+    
+  <div class="example-doc" data-ice="exampleDoc">
+      <div class="example-caption" data-ice="exampleCaption">The action emitted:</div>
+      <pre class="prettyprint source-code"><code data-ice="exampleCode">let action = {
+  type: &apos;SOCKET_DECLARE_WINNER&apos;,
+  userid: 5,
+};</code></pre>
+    </div>
+</div>
 
   
 
