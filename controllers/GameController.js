@@ -1,17 +1,26 @@
 const Game = require('../models/Game');
 const Games = require('../collections/Games');
+const User = require('../models/User');
 
 const openGames = Games.openGames;
 
 module.exports = {
-  joinOrStartGame: (user) => {
-    if (openGames.length > 0) {
-      openGames[openGames.length - 1].addPlayer(user);
-      Games.sort(openGames);
-    } else {
-      const newGame = new Game(user);
-      newGame.updateGameAvailability();
+  joinOrStartGame: (collection, userId, callback) => {
+    const player = new User(userId);
+    if (!collection.openGames.length) {
+      return callback(collection.createGame(player));
     }
+    callback(handlePlayerJoin(collection, player));
+  },
+  handlePlayerJoin: (collection, player) => {
+    const adjustedGame = collection.dequeue().addPlayer(player);
+    collection.updateGameAvailability(adjustedGame);
+    return adjustedGame;
+  },
+  handlePlayerLeave: (collection, gameId, player) => {
+    const game = collection.retrieve(gameId);
+    game.removePlayer(player);
+    collection.updateGameAvailability(game);
   },
 };
 

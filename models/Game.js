@@ -1,12 +1,12 @@
 const settings = require('../gameSettings');
 // const gameMethods = require('../controllers/GameController');
-const Games = require('../collections/Games');
+// const Games = require('../collections/Games');
 const utils = require('../utils');
 const solutions = require('../solutions');
 
-const fullGames = Games.fullGames;
-const openGames = Games.openGames;
+
 const random = utils.getRandomIntInclusive;
+// console.log(fullGames, openGames);
 /*
   When a user clicks 'join random game,' he or she will be put
   into an active game, if one is available. If one is not available,
@@ -37,11 +37,11 @@ module.exports = class Game {
   /**
    * Constructor to instantiate a new Game instance.
    */
-  constructor(userWhoStartsGame) {
+  constructor(userWhoStartsGame, gameId) {
     /**
     * @type {number}
     */
-    this.gameId = null;
+    this.gameId = gameId;
     /**
     * @type {number}
     */
@@ -86,12 +86,13 @@ module.exports = class Game {
 
   updateOpenSeats() {
     this.seatsOpen = settings.maxPlayers - this.players.length;
+    return this;
   }
 
   removePlayer(user) {
     this.players.splice(this.players.indexOf(user), 1);
     this.updateOpenSeats();
-    this.updateGameAvailability(this);
+    return this;
   }
 
   addPlayer(user) {
@@ -101,29 +102,30 @@ module.exports = class Game {
       console.error('Error: Game full');
     }
     this.updateOpenSeats();
-    this.updateGameAvailability(this);
     if (!this.active && this.players.length >= settings.minPlayers) {
       this.active = true;
       this.assignFirstDealer();
       this.getSolution();
     }
+    return this;
   }
 
-  updateGameAvailability() {
-    if (this.seatsOpen === 0 && fullGames.indexOf(this) === -1) {
-      Games.fullGames.push(this);
-      openGames.splice(openGames.indexOf(this), 1);
-    } else if (this.seatsOpen === settings.maxPlayers) {
-      openGames.splice(openGames.indexOf(this), 1);
-    } else if (openGames.indexOf(this) === -1) {
-      openGames.push(this);
-      Games.sort(openGames);
-      const gameLoc = fullGames.indexOf(this);
-      if (gameLoc !== -1) {
-        fullGames.splice(gameLoc, 1);
-      }
-    }
-  }
+  // updateGameAvailability() {
+  //   if (this.seatsOpen === 0 && fullGames.indexOf(this) === -1) {
+  //     fullGames.push(this);
+  //     openGames.splice(openGames.indexOf(this), 1);
+  //   } else if (this.seatsOpen === settings.maxPlayers) {
+  //     openGames.splice(openGames.indexOf(this), 1);
+  //   } else if (openGames.indexOf(this) === -1) {
+  //     // console.log('game not found', 'number of available games: ', Games.openGames.length);
+  //     openGames.push(this);
+  //     // console.log('after pushing, open games: ', Games.openGames);
+  //     const gameLoc = fullGames.indexOf(this);
+  //     if (gameLoc !== -1) {
+  //       fullGames.splice(gameLoc, 1);
+  //     }
+  //   }
+  // }
 
   assignFirstDealer() {
     this.dealer = this.players[random(1, this.players.length) - 1];
