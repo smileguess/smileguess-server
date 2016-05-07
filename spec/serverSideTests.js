@@ -161,7 +161,7 @@ describe('Models, Controllers and Collections: ', () => {
       gameMethods.handlePlayerJoin(db, testUser4);
       expect(db.openGames[0].players.length).toEqual(db.openGames[1].players.length);
     });
-    it('will create a new game if no seats are available', () => {
+    xit('will create a new game if no seats are available', () => {
       
     });
     xit('will start a game after enough players have joined', () => {
