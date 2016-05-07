@@ -1,5 +1,7 @@
-const GameController = require('../controllers/GameController');
+const gameController = require('../controllers/GameController');
 
-module.exports = (app) => {
-  app.get('/api/play/:userId', GameController.joinOrStartGame);
+module.exports = (app, db) => {
+  app.get('/api/game/:userId', (req, res) => {
+    gameController.play(db, req.params.userId, (game) => res.json(game));
+  });
 };

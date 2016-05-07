@@ -26,14 +26,6 @@ module.exports = class Games {
     this.openGames.sort((game1, game2) => game1.seatsOpen > game2.seatsOpen);
   }
 
-  flushOpenGames() {
-    this.openGames = [];
-  }
-
-  flushFullGames() {
-    this.fullGames = [];
-  }
-
   updateGameAvailability(game) {
     // if there are no seats available, push games to full games
     if (!game.seatsOpen && this.fullGames.indexOf(game) === -1) {

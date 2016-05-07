@@ -5,22 +5,12 @@ const User = require('../models/User');
 const openGames = Games.openGames;
 
 module.exports = {
-  joinOrStartGame: (req, res) => {
-    const userId = req.params.userId;
+  joinOrStartGame: (collection, userId, callback) => {
     const player = new User(userId);
-    if (openGames.length > 0) {
-      console.log('THERE ARE OPEN GAMES')
-      const targetGame = openGames[openGames.length - 1];
-      targetGame.addPlayer(player);
-      Games.sort(openGames);
-      res.json(targetGame);
-    } else {
-      console.log('THERE ARE NO OPEN GAMES')
-      const newGame = new Game(player);
-      newGame.updateGameAvailability();
-      console.log('OPEN GAMES: ', openGames);
-      res.json(newGame);
+    if (!collection.openGames.length) {
+      return callback(collection.createGame(player));
     }
+    callback(handlePlayerJoin(collection, player));
   },
   handlePlayerJoin: (collection, player) => {
     const adjustedGame = collection.dequeue().addPlayer(player);
