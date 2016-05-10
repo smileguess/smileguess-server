@@ -1,7 +1,7 @@
 # Configure specific version of Node
 language: node_js
 node_js:
-  - "5.8"
+  - "6.0"
 
 before_script:
   #Install app depdendencies
