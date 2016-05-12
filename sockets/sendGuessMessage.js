@@ -1,4 +1,5 @@
-const dummy = require('./dummySocketData.js');
+const GameController = require('../controllers/GameController');
+const sendWinner = require('./sendWinner');
 
 /**
  * This function sends a guess message to all the members of a room through sockets.
@@ -13,13 +14,18 @@ const dummy = require('./dummySocketData.js');
  *   message: 'this will blow your mind!',
  * };
  */
-const sendGuessMessage = (io, socket, action) => {
-  console.log('sending guess message');
-  io.to(dummy.gameId).emit('action', {
+ // action should include type, gameId, userId, message
+const sendGuessMessage = (io, socket, action, db) => {
+  console.log('emitting guess message:', action);
+  if (GameController.handleGuess(db.games, action.gameId, action.message)) {
+    sendWinner(io, socket, action.gameId, action.username, action.newDealer);
+  }
+  io.to(action.gameId).emit('action', {
     type: 'SOCKET_GUESS_MESSAGE',
-    userid: action.userid,
+    userid: action.username,
     message: action.message,
   });
 };
+
 module.exports = sendGuessMessage;
 

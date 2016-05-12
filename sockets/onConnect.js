@@ -14,5 +14,4 @@ module.exports = onConnect;
  * to server to get the game data upon entering a game
  */
 
-module.exports = onConnect;
 

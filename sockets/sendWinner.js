@@ -12,7 +12,7 @@ const dummy = require('./dummySocketData.js');
  *   userid: 5,
  * };
  */
-const sendWinner = (io, socket, user) => {
+const sendWinner = (io, socket, gameId, user) => {
   io.to(dummy.gameId).emit('action', {
     type: 'SOCKET_DECLARE_WINNER',
     userid: user.id,

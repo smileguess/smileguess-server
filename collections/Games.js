@@ -1,10 +1,10 @@
 const Game = require('../models/Game');
-
+const GameCon = require('../controllers/GameController');
 module.exports = class Games {
   /**
   * Creates a collection of games
   */
-  constructor() {
+  constructor(io) {
     /**
     * Map for storing game instances, referenced by game ID
     * @type {map}
@@ -25,18 +25,23 @@ module.exports = class Games {
     * @type {object}
     */
     this.allTimeGameCount = 0;
+
+
+    this.io = io;
   }
   /**
    * Instantiates a new game instance
    * @params {object} - a User instance
    */
-  createGame(firstPlayer) {
+  createGame() {
     const gameId = this.generateGameId();
-    const newGame = new Game(firstPlayer, gameId);
-    newGame.on('change', this.updateQueue.bind(this));
+    const newGame = new Game(gameId, this.io);
     newGame.on('empty', this.destroy.bind(this));
     newGame.on('full', this.moveToFullGames.bind(this));
     newGame.on('nowAvailable', this.moveToOpenGames.bind(this));
+    newGame.on('newDealer', GameCon.disseminateChange);
+    newGame.on('playerChange', this.updateQueue.bind(this), GameCon.disseminateChange);
+    newGame.on('newPrompt', GameCon.disseminateChange);
     this.insert(newGame);
     return newGame;
   }
@@ -45,16 +50,15 @@ module.exports = class Games {
    */
   generateGameId() {
     this.allTimeGameCount++;
-    const gameId = `game_${this.allTimeGameCount}`;
-    return gameId;
+    return this.allTimeGameCount;
   }
   /**
    * Stores a game instance
    * @params {object} - an instantiation of the Game model
    */
   insert(game) {
-    this.storage.set(game.gameId, game);
-    this.queue(game.gameId);
+    this.storage.set(game.id, game);
+    this.queue(game.id);
     return game;
   }
   /**
@@ -96,7 +100,7 @@ module.exports = class Games {
   moveToFullGames(gameId) {
     this.fullGames.push(gameId);
     this.openGames.forEach((game) => {
-      this.openGames.splice(game, 1);
+      this.openGames.splice(this.openGames.indexOf(gameId), 1);
     });
   }
   /**
@@ -104,7 +108,7 @@ module.exports = class Games {
    */
   moveToOpenGames(gameId) {
     this.openGames.push(gameId);
-    this.sort();
+    this.updateQueue();
     this.fullGames.forEach((game) => {
       this.fullGames.splice(game, 1);
     });
@@ -117,7 +121,7 @@ module.exports = class Games {
   removeGameSummary(subCollection, gameId) {
     subCollection.forEach((summary) => {
       if (summary === gameId) {
-        subCollection.splice(summary, 1);
+        subCollection.splice(subCollection.indexOf(summary), 1);
       }
     });
     return subCollection;
