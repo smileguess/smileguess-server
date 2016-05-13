@@ -1,4 +1,4 @@
-const settings = require('./gameSettings');
+const settings = require('../config/gameSettings');
 
 module.exports = {
   getRandomIntInclusive: (min, max) => (
