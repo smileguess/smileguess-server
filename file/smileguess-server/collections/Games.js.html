@@ -50,7 +50,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/collections/Games.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const Game = require(&apos;../models/Game&apos;);
-
+const GameCon = require(&apos;../controllers/GameController&apos;);
 module.exports = class Games {
   /**
   * Creates a collection of games
@@ -78,21 +78,21 @@ module.exports = class Games {
     this.allTimeGameCount = 0;
 
 
-
     this.io = io;
   }
   /**
    * Instantiates a new game instance
    * @params {object} - a User instance
    */
-  createGame(firstPlayer) {
+  createGame() {
     const gameId = this.generateGameId();
-    const newGame = new Game(gameId, this.io.to(gameId));
-    newGame.on(&apos;playerChange&apos;, this.updateQueue.bind(this), GameCon.disseminateChange);
+    const newGame = new Game(gameId, this.io);
     newGame.on(&apos;empty&apos;, this.destroy.bind(this));
     newGame.on(&apos;full&apos;, this.moveToFullGames.bind(this));
     newGame.on(&apos;nowAvailable&apos;, this.moveToOpenGames.bind(this));
     newGame.on(&apos;newDealer&apos;, GameCon.disseminateChange);
+    newGame.on(&apos;playerChange&apos;, this.updateQueue.bind(this), GameCon.disseminateChange);
+    newGame.on(&apos;newPrompt&apos;, GameCon.disseminateChange);
     this.insert(newGame);
     return newGame;
   }
@@ -101,16 +101,15 @@ module.exports = class Games {
    */
   generateGameId() {
     this.allTimeGameCount++;
-    const gameId = this.allTimeGameCount;
-    return gameId;
+    return this.allTimeGameCount;
   }
   /**
    * Stores a game instance
    * @params {object} - an instantiation of the Game model
    */
   insert(game) {
-    this.storage.set(game.gameId, game);
-    this.queue(game.gameId);
+    this.storage.set(game.id, game);
+    this.queue(game.id);
     return game;
   }
   /**

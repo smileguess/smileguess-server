@@ -58,13 +58,17 @@ const GameController = require(&apos;../controllers/GameController&apos;);
 const UserController = require(&apos;../controllers/UserController&apos;);
 const settings = require(&apos;../gameSettings&apos;);
 const testUtils = require(&apos;./testUtils&apos;);
+const express = require(&apos;express&apos;);
+const app = express();
+const server = require(&apos;http&apos;).createServer(app);
+const ioCreate = require(&apos;socket.io&apos;);
 jasmine.getEnv().addReporter(reporter);
 
 const serverURL = &apos;http://127.0.0.1:1234&apos;;
 const joinOrStartGameURL = &apos;http://127.0.0.1:1234/api/game/&apos;;
 
 let testDb = {
-  games: new Games(),
+  games: new Games(ioCreate.listen(server)),
   users: new Users(),
 };
 
@@ -84,11 +88,10 @@ describe(&apos;Server Functions&apos;, () =&gt; {
       });
     });
     it(&apos;will respond with a game instance&apos;, (done) =&gt; {
-      testUtils.sendPlayRequest(null, (req, res, body) =&gt; {
+      testUtils.sendPlayRequest(null, (err, res, body) =&gt; {
         const game = JSON.parse(body);
-        expect(game.hasOwnProperty(&apos;gameId&apos;)).toBe(true);
+        expect(game.hasOwnProperty(&apos;id&apos;)).toBe(true);
         expect(game.hasOwnProperty(&apos;players&apos;)).toBe(true);
-        expect(game.hasOwnProperty(&apos;seatsOpen&apos;)).toBe(true);
         done();
       });
     });
@@ -98,7 +101,7 @@ describe(&apos;Server Functions&apos;, () =&gt; {
 describe(&apos;Models, Collections and Controllers: &apos;, () =&gt; {
   beforeEach(() =&gt; {
     testDb = {
-      games: new Games(),
+      games: new Games(ioCreate.listen(server)),
       users: new Users(),
     };
   });
@@ -113,27 +116,33 @@ describe(&apos;Models, Collections and Controllers: &apos;, () =&gt; {
   describe(&apos;Game Model&apos;, () =&gt; {
     it(&apos;will correctly instantiate a new game&apos;, () =&gt; {
       testDb.games.createGame();
-      expect(testDb.games.getNextOpenGame().hasOwnProperty(&apos;gameId&apos;)).toBe(true);
+      expect(testDb.games.getNextOpenGame().hasOwnProperty(&apos;id&apos;)).toBe(true);
       expect(testDb.games.getNextOpenGame().hasOwnProperty(&apos;players&apos;)).toBe(true);
       expect(testDb.games.getNextOpenGame().hasOwnProperty(&apos;seatsOpen&apos;)).toBe(true);
-      expect(testDb.games.getNextOpenGame().hasOwnProperty(&apos;dealer&apos;)).toBe(true);
+      expect(testDb.games.getNextOpenGame().hasOwnProperty(&apos;dealerId&apos;)).toBe(true);
       expect(testDb.games.getNextOpenGame().hasOwnProperty(&apos;events&apos;)).toBe(true);
     });
 
     it(&apos;will place a player in a game&apos;, () =&gt; {
       testDb.games.createGame();
       testUtils.populateNextOpenGameWithPlayers(testDb, 2)
-      expect(testDb.games.getNextOpenGame().players[0]).toBe(1);
-      expect(testDb.games.getNextOpenGame().players[1]).toBe(2);
+      console.log(testDb.games.getNextOpenGame().players.all[&apos;1&apos;].userId);
+      expect(testDb.games.getNextOpenGame().players.byId[0]).toEqual(1);
+      expect(testDb.games.getNextOpenGame().players.all[&apos;1&apos;].userId).toEqual(1);
+      expect(testDb.games.getNextOpenGame().players.byId[1]).toEqual(2);
+      expect(testDb.games.getNextOpenGame().players.all[&apos;2&apos;].userId).toEqual(2)
     });
     it(&apos;will remove a player from a game&apos;, () =&gt; {
       const testGame = testDb.games.createGame();
       testUtils.populateNextOpenGameWithPlayers(testDb, 2)
-      expect(testGame.players.length).toEqual(2);
+      expect(testGame.players.byId.length).toEqual(2);
+      expect(Object.keys(testGame.players.all).length).toEqual(2);
 
 
       GameController.handlePlayerLeave(testDb.games, 1, 1);
-      expect(testGame.players.length).toBe(1);
+      expect(testGame.players.byId.length).toBe(1);
+      expect(Object.keys(testGame.players.all).length).toEqual(1);
+
     });
     it(&apos;will adjust the number of seats available after adding players&apos;, () =&gt; {
       const testGame = testDb.games.createGame();
@@ -141,7 +150,7 @@ describe(&apos;Models, Collections and Controllers: &apos;, () =&gt; {
       expect(testGame.seatsOpen).toEqual(settings.maxPlayers - 1);
 
       testUtils.populateNextOpenGameWithPlayers(testDb, 1);
-      expect(testGame.seatsOpen).toEqual(settings.maxPlayers - testGame.players.length);
+      expect(testGame.seatsOpen).toEqual(settings.maxPlayers - testGame.players.byId.length);
     });
     it(&apos;will adjust the number of seats available after removing players&apos;, () =&gt; {
       const testGame = testDb.games.createGame();
@@ -152,7 +161,7 @@ describe(&apos;Models, Collections and Controllers: &apos;, () =&gt; {
       expect(testGame.seatsOpen).toEqual(settings.maxPlayers - 1);
     });
     it(&apos;will start a game after enough players have joined&apos;, () =&gt; {
-      testDb.games.createGame();
+      const testGame = testDb.games.createGame();
       testUtils.populateNextOpenGameWithPlayers(testDb, settings.minPlayers - 1);
       expect(testDb.games.getNextOpenGame().active).toBe(false);
 
@@ -167,8 +176,8 @@ describe(&apos;Models, Collections and Controllers: &apos;, () =&gt; {
     it(&apos;will assign a random prompt from a random category&apos;, () =&gt; {
       testDb.games.createGame();
       testUtils.populateNextOpenGameWithPlayers(testDb, settings.minPlayers);
-      expect(testDb.games.openGames[0].prompt.forDisplay).not.toBe(null);
-      expect(testDb.games.openGames[0].prompt.forMatching).not.toBe(null);
+      expect(testDb.games.retrieve(1).prompt.forDisplay).not.toBe(null);
+      expect(testDb.games.retrieve(1).prompt.forMatching).not.toBe(null);
     });
     it(&apos;will check guesses&apos;, () =&gt; {
       const testGuess = {
@@ -181,6 +190,7 @@ describe(&apos;Models, Collections and Controllers: &apos;, () =&gt; {
       expect(GameController.handleGuess(testDb.games, 1, testGuess.message)).toBe(false);
 
       prompt = testDb.games.getNextOpenGame().prompt.forMatching.toLowerCase();
+      console.log(prompt);
       expect(GameController.handleGuess(testDb.games, 1, prompt)).not.toBe(false);
     });
   });
@@ -207,9 +217,7 @@ describe(&apos;Models, Collections and Controllers: &apos;, () =&gt; {
       testDb.games.createGame();
       testUtils.populateNextOpenGameWithPlayers(testDb, settings.maxPlayers - 1);
       expect(testDb.games.fullGames.length).toEqual(0);
-      console.log(testDb.games.fullGames.length, testDb.games.openGames.length);
       GameController.handlePlayerJoin(testDb.games, testUtils.generateTestUsers(testDb.users, 1)[0].userId);
-      console.log(testDb.games.fullGames.length, testDb.games.openGames.length);
       expect(testDb.games.fullGames.length).toEqual(1);
       expect(testDb.games.openGames.length).toEqual(0);
     });
@@ -236,16 +244,14 @@ describe(&apos;Models, Collections and Controllers: &apos;, () =&gt; {
     it(&apos;will create a new game if no seats are available&apos;, () =&gt; {
       GameController.play(testDb.games, (game) =&gt; {
         testUtils.populateNextOpenGameWithPlayers(testDb, 1);
-        expect(game.players[0]).toEqual(1);
+        expect(game.players.byId[0]).toEqual(1);
       });
     });
     it(&apos;will destroy the game if all players leave&apos;, () =&gt; {
       testDb.games.createGame();
       expect(testDb.games.openGames.length).toEqual(1);
       expect(typeof testDb.games.retrieve(testDb.games.openGames[0])).toBe(&apos;object&apos;);
-      console.log(testDb.games.getNextOpenGame())
       GameController.handlePlayerLeave(testDb.games, 1, 1);
-      console.log(testDb.games.openGames);
       expect(testDb.games.openGames.length).toEqual(0);
       expect(testDb.games.retrieve(testDb.games.openGames[0])).toBe(undefined);
     });

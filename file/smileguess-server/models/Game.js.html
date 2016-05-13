@@ -49,89 +49,72 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/models/Game.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const settings = require(&apos;../gameSettings&apos;);
-const utils = require(&apos;../utils&apos;);
-const solutions = require(&apos;../solutions&apos;);
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const settings = require(&apos;../config/gameSettings&apos;);
+const utils = require(&apos;../controllers/utils&apos;);
+const solutions = require(&apos;../config/solutions&apos;);
 const random = utils.getRandomIntInclusive;
-/*
-  When a user clicks &apos;join random game,&apos; he or she will be put
-  into an active game, if one is available. If one is not available,
-  a new game will be instantiated for him or her.
-
-  When players join the game, they are pushed into the game&apos;s &apos;players&apos; array.
-  A game will start when enough players are available to have a fun time. This
-  variable resides in game-settings.js with a default value of 3.
-
-  After enough players have joined to satisfy game genesis, a dealer will be
-  chosen at random.
-
-  A category will be randomly chosen, then a solution will randomly be chosen
-  within that category.
-
-  As the dealer enters or removes emojis as clues, they will be pushed and
-  popped to and from the &apos;this.clue&apos; array.
-*/
 
 /**
  * The Game model persists data about a single game room, including players, dealer
  * and other state information. Should be instantiated when a brand new game room is
  * created, otherwise retrieved from the Games collection.
  * @example
- * const newGame = new Game(user);
+ * const newGame = new Game(gameId, io);
  */
-module.exports = class Game {
+class Game {
   /**
    * Constructor to instantiate a new Game instance.
-   * @param {Object} userWhoStartsGame - an instance of the user model
    * @param {number} gameId - the identifer of the new game
+   * @param {object} io - the socket connection pre-limited to the game&apos;s id via io.to(gameId)
    */
   constructor(gameId, io) {
     /**
     * Game identifier
     * @type {number}
     */
-    this.gameId = gameId;
+    this.id = gameId;
+
     /**
-     * Collection of user instances in the game
+     * Collection of user instances in the game.  This has an `all` attribute with all the players in a hash table keyed by id, and an `byId` attribute with all the players&apos; ids in an array.
      * @type {object[ ]}
      */
     this.players = {
       all: {},
       byId: [],
-    }
+    };
+
     /**
     * Current number of available seats in the game
     * @type {number}
     */
     this.seatsOpen = settings.maxPlayers;
+
     /**
     * Specifies which player is currently creating clues with emojis
     * @type {object}
     */
     this.dealerId = null;
+
     /**
-    * Defines the prompt that the &quot;dealer&quot;
-    * must communicate via emojis
-    * @type {string}
+    * Defines the prompt that the &quot;dealer&quot; must communicate via emojis
+    * @type {object}
     */
     this.prompt = {
       /**
-      * Communicates the solution&apos;s category to all players
-      * @type {string}
+      * @property {string} prompt.category Communicates the solution&apos;s category to all players
       */
       category: null,
+
       /**
-      * Communicates the prompt to the dealer
-      * @type {string}
-      */
+       * @property {string} prompt.forDisplay Communicates the prompt to the dealer
+       */
       forDisplay: null,
+
       /**
-      * Prevents correct answers from being deemed
-      * incorrect due to capitilization, spacing, special characters, etc.
-      * @type {string}
-      */
+       * @property {string} prompt.forMatching Prevents correct answers from being deemed incorrect due to capitilization, spacing, special characters, etc.
+       */
       forMatching: null,
-    }
+    };
     /**
     * Prevents the game from running until sufficient players have joined
     * @type {boolean}
@@ -139,12 +122,16 @@ module.exports = class Game {
     this.active = false;
     /**
     * Event listener callback functions to be invoked
-    * @type {object[ ]}
+    * @type {array}
     */
     this.events = [];
 
+    /**
+     * The io object used for sending socket messages to this game
+     * @type {object}
+     */
+    this.io = io.to(this.id);
 
-    this.io = io;
   }
   /**
    * Adds event listeners
@@ -153,8 +140,9 @@ module.exports = class Game {
    */
   on(event, ...args) {
     this.events[event] = this.events[event] || [];
-    args.forEach(callback =&gt; this.events[event].push(callback))
+    args.forEach(callback =&gt; this.events[event].push(callback));
   }
+
   /**
    * Triggers a callback associated with a given event
    * @param {string} - an event name
@@ -164,13 +152,14 @@ module.exports = class Game {
       this.events[event].forEach(callback =&gt; callback.apply(null, args));
     }
   }
+
   /**
    * Modifies the number of available seats in the game
    */
   updateOpenSeats() {
     const wasFull = this.seatsOpen === 0;
-    const gameId = this.gameId;
-    this.seatsOpen = settings.maxPlayers - this.players.length;
+    const gameId = this.id;
+    this.seatsOpen = settings.maxPlayers - this.players.byId.length;
     this.trigger(&apos;playerChange&apos;, &apos;playerChange&apos;, this);
     if (this.seatsOpen === 0) {
       return this.trigger(&apos;full&apos;, gameId);
@@ -178,73 +167,82 @@ module.exports = class Game {
     if (this.seatsOpen === settings.maxPlayers) {
       return this.trigger(&apos;empty&apos;, gameId);
     }
-    if (wasFull) {
+    if (wasFull &amp;&amp; this.seatsOpen &gt; 0) {
       return this.trigger(&apos;nowAvailable&apos;, gameId, this.seatsOpen);
     }
+    return null;
   }
+
   /**
    * Removes a player from the game
    * @params {number} - a user ID
    */
   removePlayer(userId) {
-    this.players.splice(this.players.indexOf(userId), 1);
+    this.players.byId.splice(this.players.byId.indexOf(userId), 1);
     delete this.players.all[userId];
     this.updateOpenSeats();
-    if (this.players.length &lt; settings.minPlayers) {
+    if (this.players.byId.length &lt; settings.minPlayers) {
       this.active = false;
     }
     return this;
   }
+
   /**
    * Adds a player to the game
-   * @params {number} - a user ID
+   * @params {object} - a user model
    */
   addPlayer(user) {
-    if (this.players.length &lt; settings.maxPlayers) {
+    if (this.players.byId.length &lt; settings.maxPlayers) {
       this.players.byId.push(user.userId);
       this.players.all[user.userId] = user;
     } else {
       console.log(&apos;Error: Game full&apos;);
     }
     this.updateOpenSeats();
-    if (!this.active &amp;&amp; this.players.length &gt;= settings.minPlayers) {
+    if (!this.active &amp;&amp; this.players.byId.length &gt;= settings.minPlayers) {
       this.active = true;
-      this.trigger(&apos;activityStatus&apos;)
-      this.assignFirstDealer();
+      this.trigger(&apos;activityStatus&apos;, &apos;activityStatus&apos;, this);
+      this.newDealer();
       this.getPrompt();
     }
     return this;
   }
+
   /**
    * Randomly chooses a world or phrase to be guessed
    */
   getPrompt() {
     const categoryNumber = random(0, solutions.solutionsForDisplay.length - 1);
     const solutionNumber = random(0, solutions.solutionsForDisplay[categoryNumber].length - 1);
-    this.promptForDisplay = solutions.solutionsForDisplay[categoryNumber][solutionNumber];
-    this.promptForMatching = solutions.simplifiedSolutions[categoryNumber][solutionNumber];
+    this.prompt.forDisplay = solutions.solutionsForDisplay[categoryNumber][solutionNumber];
+    this.prompt.forMatching = solutions.simplifiedSolutions[categoryNumber][solutionNumber];
+    this.trigger(&apos;newPrompt&apos;, &apos;newPrompt&apos;, this);
   }
+
   /**
    * Checks messages for correct guesses
    * @params {object} - an object containing a message and a reference to the sender
    */
   checkGuess(message) {
-    if (utils.simplifyString(message) === this.promptForMatching) {
-      return this.handleDealerChange(message.userId);
+    if (utils.simplifyString(message) === this.prompt.forMatching) {
+      return this.newDealer(message.userId);
     }
     return false;
   }
+
   /**
    * Assigns the next dealer as the correct guesser
    * @params {string} - the user id of the next dealer
    */
-  handleDealerChange(userId) {
+  newDealer(userId) {
     this.dealerId = userId || this.players[random(1, this.players.length) - 1];
     this.trigger(&apos;newDealer&apos;, &apos;newDealer&apos;, this);
     this.getPrompt();
     return this.dealerId;
   }
 };
+
+module.exports = Game;
 
 </code></pre>
 

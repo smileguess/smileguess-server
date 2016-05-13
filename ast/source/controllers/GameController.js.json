@@ -8,10 +8,10 @@
           "type": "VariableDeclarator",
           "id": {
             "type": "Identifier",
-            "name": "User",
+            "name": "sendGameChange",
             "range": [
               6,
-              10
+              20
             ],
             "loc": {
               "start": {
@@ -20,7 +20,7 @@
               },
               "end": {
                 "line": 1,
-                "column": 10
+                "column": 20
               }
             }
           },
@@ -30,59 +30,59 @@
               "type": "Identifier",
               "name": "require",
               "range": [
-                13,
-                20
+                23,
+                30
               ],
               "loc": {
                 "start": {
                   "line": 1,
-                  "column": 13
+                  "column": 23
                 },
                 "end": {
                   "line": 1,
-                  "column": 20
+                  "column": 30
                 }
               }
             },
             "arguments": [
               {
                 "type": "Literal",
-                "value": "../models/User",
-                "raw": "'../models/User'",
+                "value": "../sockets/sendGameChange",
+                "raw": "'../sockets/sendGameChange'",
                 "range": [
-                  21,
-                  37
+                  31,
+                  58
                 ],
                 "loc": {
                   "start": {
                     "line": 1,
-                    "column": 21
+                    "column": 31
                   },
                   "end": {
                     "line": 1,
-                    "column": 37
+                    "column": 58
                   }
                 }
               }
             ],
             "range": [
-              13,
-              38
+              23,
+              59
             ],
             "loc": {
               "start": {
                 "line": 1,
-                "column": 13
+                "column": 23
               },
               "end": {
                 "line": 1,
-                "column": 38
+                "column": 59
               }
             }
           },
           "range": [
             6,
-            38
+            59
           ],
           "loc": {
             "start": {
@@ -91,7 +91,7 @@
             },
             "end": {
               "line": 1,
-              "column": 38
+              "column": 59
             }
           }
         }
@@ -99,7 +99,7 @@
       "kind": "const",
       "range": [
         0,
-        39
+        60
       ],
       "loc": {
         "start": {
@@ -108,7 +108,7 @@
         },
         "end": {
           "line": 1,
-          "column": 39
+          "column": 60
         }
       }
     },
@@ -123,8 +123,8 @@
               "type": "Identifier",
               "name": "handlePlayerJoin",
               "range": [
-                242,
-                258
+                263,
+                279
               ],
               "loc": {
                 "start": {
@@ -145,8 +145,8 @@
                   "type": "Identifier",
                   "name": "gamesCollection",
                   "range": [
-                    261,
-                    276
+                    282,
+                    297
                   ],
                   "loc": {
                     "start": {
@@ -163,8 +163,8 @@
                   "type": "Identifier",
                   "name": "user",
                   "range": [
-                    278,
-                    282
+                    299,
+                    303
                   ],
                   "loc": {
                     "start": {
@@ -197,8 +197,8 @@
                               "type": "Identifier",
                               "name": "gamesCollection",
                               "range": [
-                                300,
-                                315
+                                321,
+                                336
                               ],
                               "loc": {
                                 "start": {
@@ -215,8 +215,8 @@
                               "type": "Identifier",
                               "name": "getNextOpenGame",
                               "range": [
-                                316,
-                                331
+                                337,
+                                352
                               ],
                               "loc": {
                                 "start": {
@@ -230,8 +230,8 @@
                               }
                             },
                             "range": [
-                              300,
-                              331
+                              321,
+                              352
                             ],
                             "loc": {
                               "start": {
@@ -246,8 +246,8 @@
                           },
                           "arguments": [],
                           "range": [
-                            300,
-                            333
+                            321,
+                            354
                           ],
                           "loc": {
                             "start": {
@@ -264,8 +264,8 @@
                           "type": "Identifier",
                           "name": "addPlayer",
                           "range": [
-                            334,
-                            343
+                            355,
+                            364
                           ],
                           "loc": {
                             "start": {
@@ -279,8 +279,8 @@
                           }
                         },
                         "range": [
-                          300,
-                          343
+                          321,
+                          364
                         ],
                         "loc": {
                           "start": {
@@ -296,10 +296,10 @@
                       "arguments": [
                         {
                           "type": "Identifier",
-                          "name": "userId",
+                          "name": "user",
                           "range": [
-                            344,
-                            350
+                            365,
+                            369
                           ],
                           "loc": {
                             "start": {
@@ -308,14 +308,14 @@
                             },
                             "end": {
                               "line": 10,
-                              "column": 61
+                              "column": 59
                             }
                           }
                         }
                       ],
                       "range": [
-                        300,
-                        351
+                        321,
+                        370
                       ],
                       "loc": {
                         "start": {
@@ -324,13 +324,13 @@
                         },
                         "end": {
                           "line": 10,
-                          "column": 62
+                          "column": 60
                         }
                       }
                     },
                     "range": [
-                      293,
-                      352
+                      314,
+                      373
                     ],
                     "loc": {
                       "start": {
@@ -338,15 +338,15 @@
                         "column": 4
                       },
                       "end": {
-                        "line": 10,
-                        "column": 63
+                        "line": 11,
+                        "column": 2
                       }
                     }
                   }
                 ],
                 "range": [
-                  287,
-                  356
+                  308,
+                  374
                 ],
                 "loc": {
                   "start": {
@@ -362,8 +362,8 @@
               "generator": false,
               "expression": false,
               "range": [
-                260,
-                356
+                281,
+                374
               ],
               "loc": {
                 "start": {
@@ -381,8 +381,8 @@
             "shorthand": false,
             "computed": false,
             "range": [
-              242,
-              356
+              263,
+              374
             ],
             "loc": {
               "start": {
@@ -399,8 +399,8 @@
                 "type": "Block",
                 "value": "*\n   * Handles the addition of a player to a selected game\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   ",
                 "range": [
-                  60,
-                  239
+                  81,
+                  260
                 ],
                 "loc": {
                   "start": {
@@ -421,8 +421,8 @@
               "type": "Identifier",
               "name": "handlePlayerLeave",
               "range": [
-                556,
-                573
+                574,
+                591
               ],
               "loc": {
                 "start": {
@@ -443,8 +443,8 @@
                   "type": "Identifier",
                   "name": "gamesCollection",
                   "range": [
-                    576,
-                    591
+                    594,
+                    609
                   ],
                   "loc": {
                     "start": {
@@ -461,8 +461,8 @@
                   "type": "Identifier",
                   "name": "gameId",
                   "range": [
-                    593,
-                    599
+                    611,
+                    617
                   ],
                   "loc": {
                     "start": {
@@ -479,8 +479,8 @@
                   "type": "Identifier",
                   "name": "userId",
                   "range": [
-                    601,
-                    607
+                    619,
+                    625
                   ],
                   "loc": {
                     "start": {
@@ -508,8 +508,8 @@
                         "type": "Identifier",
                         "name": "gamesCollection",
                         "range": [
-                          618,
-                          633
+                          636,
+                          651
                         ],
                         "loc": {
                           "start": {
@@ -526,8 +526,8 @@
                         "type": "Identifier",
                         "name": "retrieve",
                         "range": [
-                          634,
-                          642
+                          652,
+                          660
                         ],
                         "loc": {
                           "start": {
@@ -541,8 +541,8 @@
                         }
                       },
                       "range": [
-                        618,
-                        642
+                        636,
+                        660
                       ],
                       "loc": {
                         "start": {
@@ -560,8 +560,8 @@
                         "type": "Identifier",
                         "name": "gameId",
                         "range": [
-                          643,
-                          649
+                          661,
+                          667
                         ],
                         "loc": {
                           "start": {
@@ -576,8 +576,8 @@
                       }
                     ],
                     "range": [
-                      618,
-                      650
+                      636,
+                      668
                     ],
                     "loc": {
                       "start": {
@@ -594,8 +594,8 @@
                     "type": "Identifier",
                     "name": "removePlayer",
                     "range": [
-                      651,
-                      663
+                      669,
+                      681
                     ],
                     "loc": {
                       "start": {
@@ -609,8 +609,8 @@
                     }
                   },
                   "range": [
-                    618,
-                    663
+                    636,
+                    681
                   ],
                   "loc": {
                     "start": {
@@ -628,8 +628,8 @@
                     "type": "Identifier",
                     "name": "userId",
                     "range": [
-                      664,
-                      670
+                      682,
+                      688
                     ],
                     "loc": {
                       "start": {
@@ -644,8 +644,8 @@
                   }
                 ],
                 "range": [
-                  618,
-                  671
+                  636,
+                  689
                 ],
                 "loc": {
                   "start": {
@@ -661,8 +661,8 @@
               "generator": false,
               "expression": true,
               "range": [
-                575,
-                675
+                593,
+                693
               ],
               "loc": {
                 "start": {
@@ -680,8 +680,8 @@
             "shorthand": false,
             "computed": false,
             "range": [
-              556,
-              675
+              574,
+              693
             ],
             "loc": {
               "start": {
@@ -698,8 +698,8 @@
                 "type": "Block",
                 "value": "*\n   * Handles a player leaving a game\n   * @params {object} - a instance of the Games collection\n   * @params {string} - a game ID\n   * @params {object} - an instance of the User model\n   ",
                 "range": [
-                  360,
-                  553
+                  378,
+                  571
                 ],
                 "loc": {
                   "start": {
@@ -720,8 +720,8 @@
               "type": "Identifier",
               "name": "play",
               "range": [
-                980,
-                984
+                998,
+                1002
               ],
               "loc": {
                 "start": {
@@ -742,8 +742,8 @@
                   "type": "Identifier",
                   "name": "gamesCollection",
                   "range": [
-                    987,
-                    1002
+                    1005,
+                    1020
                   ],
                   "loc": {
                     "start": {
@@ -760,8 +760,8 @@
                   "type": "Identifier",
                   "name": "callback",
                   "range": [
-                    1004,
-                    1012
+                    1022,
+                    1030
                   ],
                   "loc": {
                     "start": {
@@ -793,8 +793,8 @@
                             "type": "Identifier",
                             "name": "gamesCollection",
                             "range": [
-                              1028,
-                              1043
+                              1046,
+                              1061
                             ],
                             "loc": {
                               "start": {
@@ -811,8 +811,8 @@
                             "type": "Identifier",
                             "name": "openGames",
                             "range": [
-                              1044,
-                              1053
+                              1062,
+                              1071
                             ],
                             "loc": {
                               "start": {
@@ -826,8 +826,8 @@
                             }
                           },
                           "range": [
-                            1028,
-                            1053
+                            1046,
+                            1071
                           ],
                           "loc": {
                             "start": {
@@ -844,8 +844,8 @@
                           "type": "Identifier",
                           "name": "length",
                           "range": [
-                            1054,
-                            1060
+                            1072,
+                            1078
                           ],
                           "loc": {
                             "start": {
@@ -859,8 +859,8 @@
                           }
                         },
                         "range": [
-                          1028,
-                          1060
+                          1046,
+                          1078
                         ],
                         "loc": {
                           "start": {
@@ -875,8 +875,8 @@
                       },
                       "prefix": true,
                       "range": [
-                        1027,
-                        1060
+                        1045,
+                        1078
                       ],
                       "loc": {
                         "start": {
@@ -900,8 +900,8 @@
                               "type": "Identifier",
                               "name": "callback",
                               "range": [
-                                1077,
-                                1085
+                                1095,
+                                1103
                               ],
                               "loc": {
                                 "start": {
@@ -924,8 +924,8 @@
                                     "type": "Identifier",
                                     "name": "gamesCollection",
                                     "range": [
-                                      1086,
-                                      1101
+                                      1104,
+                                      1119
                                     ],
                                     "loc": {
                                       "start": {
@@ -942,8 +942,8 @@
                                     "type": "Identifier",
                                     "name": "createGame",
                                     "range": [
-                                      1102,
-                                      1112
+                                      1120,
+                                      1130
                                     ],
                                     "loc": {
                                       "start": {
@@ -957,8 +957,8 @@
                                     }
                                   },
                                   "range": [
-                                    1086,
-                                    1112
+                                    1104,
+                                    1130
                                   ],
                                   "loc": {
                                     "start": {
@@ -973,8 +973,8 @@
                                 },
                                 "arguments": [],
                                 "range": [
-                                  1086,
-                                  1114
+                                  1104,
+                                  1132
                                 ],
                                 "loc": {
                                   "start": {
@@ -989,8 +989,8 @@
                               }
                             ],
                             "range": [
-                              1077,
-                              1115
+                              1095,
+                              1133
                             ],
                             "loc": {
                               "start": {
@@ -1004,8 +1004,8 @@
                             }
                           },
                           "range": [
-                            1070,
-                            1116
+                            1088,
+                            1134
                           ],
                           "loc": {
                             "start": {
@@ -1020,8 +1020,8 @@
                         }
                       ],
                       "range": [
-                        1062,
-                        1122
+                        1080,
+                        1140
                       ],
                       "loc": {
                         "start": {
@@ -1036,8 +1036,8 @@
                     },
                     "alternate": null,
                     "range": [
-                      1023,
-                      1122
+                      1041,
+                      1140
                     ],
                     "loc": {
                       "start": {
@@ -1058,8 +1058,8 @@
                         "type": "Identifier",
                         "name": "callback",
                         "range": [
-                          1134,
-                          1142
+                          1152,
+                          1160
                         ],
                         "loc": {
                           "start": {
@@ -1082,8 +1082,8 @@
                               "type": "Identifier",
                               "name": "gamesCollection",
                               "range": [
-                                1143,
-                                1158
+                                1161,
+                                1176
                               ],
                               "loc": {
                                 "start": {
@@ -1100,8 +1100,8 @@
                               "type": "Identifier",
                               "name": "getNextOpenGame",
                               "range": [
-                                1159,
-                                1174
+                                1177,
+                                1192
                               ],
                               "loc": {
                                 "start": {
@@ -1115,8 +1115,8 @@
                               }
                             },
                             "range": [
-                              1143,
-                              1174
+                              1161,
+                              1192
                             ],
                             "loc": {
                               "start": {
@@ -1131,8 +1131,8 @@
                           },
                           "arguments": [],
                           "range": [
-                            1143,
-                            1176
+                            1161,
+                            1194
                           ],
                           "loc": {
                             "start": {
@@ -1147,8 +1147,8 @@
                         }
                       ],
                       "range": [
-                        1134,
-                        1177
+                        1152,
+                        1195
                       ],
                       "loc": {
                         "start": {
@@ -1162,8 +1162,8 @@
                       }
                     },
                     "range": [
-                      1127,
-                      1178
+                      1145,
+                      1196
                     ],
                     "loc": {
                       "start": {
@@ -1178,8 +1178,8 @@
                   }
                 ],
                 "range": [
-                  1017,
-                  1182
+                  1035,
+                  1200
                 ],
                 "loc": {
                   "start": {
@@ -1195,8 +1195,8 @@
               "generator": false,
               "expression": false,
               "range": [
-                986,
-                1182
+                1004,
+                1200
               ],
               "loc": {
                 "start": {
@@ -1214,8 +1214,8 @@
             "shorthand": false,
             "computed": false,
             "range": [
-              980,
-              1182
+              998,
+              1200
             ],
             "loc": {
               "start": {
@@ -1232,8 +1232,8 @@
                 "type": "Block",
                 "value": "*\n   * Handles a user wanting to play a game. If there are available games,\n   the user will be added to an ongoing game. A new game will be created\n   * for the user otherwise.\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   ",
                 "range": [
-                  679,
-                  977
+                  697,
+                  995
                 ],
                 "loc": {
                   "start": {
@@ -1254,8 +1254,8 @@
               "type": "Identifier",
               "name": "handleGuess",
               "range": [
-                1428,
-                1439
+                1446,
+                1457
               ],
               "loc": {
                 "start": {
@@ -1276,8 +1276,8 @@
                   "type": "Identifier",
                   "name": "gamesCollection",
                   "range": [
-                    1442,
-                    1457
+                    1460,
+                    1475
                   ],
                   "loc": {
                     "start": {
@@ -1294,8 +1294,8 @@
                   "type": "Identifier",
                   "name": "gameId",
                   "range": [
-                    1459,
-                    1465
+                    1477,
+                    1483
                   ],
                   "loc": {
                     "start": {
@@ -1312,8 +1312,8 @@
                   "type": "Identifier",
                   "name": "message",
                   "range": [
-                    1467,
-                    1474
+                    1485,
+                    1492
                   ],
                   "loc": {
                     "start": {
@@ -1341,8 +1341,8 @@
                         "type": "Identifier",
                         "name": "gamesCollection",
                         "range": [
-                          1485,
-                          1500
+                          1503,
+                          1518
                         ],
                         "loc": {
                           "start": {
@@ -1359,8 +1359,8 @@
                         "type": "Identifier",
                         "name": "retrieve",
                         "range": [
-                          1501,
-                          1509
+                          1519,
+                          1527
                         ],
                         "loc": {
                           "start": {
@@ -1374,8 +1374,8 @@
                         }
                       },
                       "range": [
-                        1485,
-                        1509
+                        1503,
+                        1527
                       ],
                       "loc": {
                         "start": {
@@ -1393,8 +1393,8 @@
                         "type": "Identifier",
                         "name": "gameId",
                         "range": [
-                          1510,
-                          1516
+                          1528,
+                          1534
                         ],
                         "loc": {
                           "start": {
@@ -1409,8 +1409,8 @@
                       }
                     ],
                     "range": [
-                      1485,
-                      1517
+                      1503,
+                      1535
                     ],
                     "loc": {
                       "start": {
@@ -1427,8 +1427,8 @@
                     "type": "Identifier",
                     "name": "checkGuess",
                     "range": [
-                      1518,
-                      1528
+                      1536,
+                      1546
                     ],
                     "loc": {
                       "start": {
@@ -1442,8 +1442,8 @@
                     }
                   },
                   "range": [
-                    1485,
-                    1528
+                    1503,
+                    1546
                   ],
                   "loc": {
                     "start": {
@@ -1461,8 +1461,8 @@
                     "type": "Identifier",
                     "name": "message",
                     "range": [
-                      1529,
-                      1536
+                      1547,
+                      1554
                     ],
                     "loc": {
                       "start": {
@@ -1477,8 +1477,8 @@
                   }
                 ],
                 "range": [
-                  1485,
-                  1537
+                  1503,
+                  1555
                 ],
                 "loc": {
                   "start": {
@@ -1494,8 +1494,8 @@
               "generator": false,
               "expression": true,
               "range": [
-                1441,
-                1541
+                1459,
+                1559
               ],
               "loc": {
                 "start": {
@@ -1513,8 +1513,8 @@
             "shorthand": false,
             "computed": false,
             "range": [
-              1428,
-              1541
+              1446,
+              1559
             ],
             "loc": {
               "start": {
@@ -1531,8 +1531,8 @@
                 "type": "Block",
                 "value": "*\n   * Handles the judgement of a player's guesses.\n   * Returns true for correct guesses, false for incorect guesses.\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   ",
                 "range": [
-                  1186,
-                  1425
+                  1204,
+                  1443
                 ],
                 "loc": {
                   "start": {
@@ -1553,8 +1553,8 @@
               "type": "Identifier",
               "name": "retrieve",
               "range": [
-                1546,
-                1554
+                1564,
+                1572
               ],
               "loc": {
                 "start": {
@@ -1575,8 +1575,8 @@
                   "type": "Identifier",
                   "name": "gamesCollection",
                   "range": [
-                    1557,
-                    1572
+                    1575,
+                    1590
                   ],
                   "loc": {
                     "start": {
@@ -1593,8 +1593,8 @@
                   "type": "Identifier",
                   "name": "gameId",
                   "range": [
-                    1574,
-                    1580
+                    1592,
+                    1598
                   ],
                   "loc": {
                     "start": {
@@ -1617,8 +1617,8 @@
                     "type": "Identifier",
                     "name": "gamesCollection",
                     "range": [
-                      1591,
-                      1606
+                      1609,
+                      1624
                     ],
                     "loc": {
                       "start": {
@@ -1635,8 +1635,8 @@
                     "type": "Identifier",
                     "name": "retrieve",
                     "range": [
-                      1607,
-                      1615
+                      1625,
+                      1633
                     ],
                     "loc": {
                       "start": {
@@ -1650,8 +1650,8 @@
                     }
                   },
                   "range": [
-                    1591,
-                    1615
+                    1609,
+                    1633
                   ],
                   "loc": {
                     "start": {
@@ -1669,8 +1669,8 @@
                     "type": "Identifier",
                     "name": "gameId",
                     "range": [
-                      1616,
-                      1622
+                      1634,
+                      1640
                     ],
                     "loc": {
                       "start": {
@@ -1685,8 +1685,8 @@
                   }
                 ],
                 "range": [
-                  1591,
-                  1623
+                  1609,
+                  1641
                 ],
                 "loc": {
                   "start": {
@@ -1702,8 +1702,8 @@
               "generator": false,
               "expression": true,
               "range": [
-                1556,
-                1627
+                1574,
+                1645
               ],
               "loc": {
                 "start": {
@@ -1721,8 +1721,8 @@
             "shorthand": false,
             "computed": false,
             "range": [
-              1546,
-              1627
+              1564,
+              1645
             ],
             "loc": {
               "start": {
@@ -1741,8 +1741,8 @@
               "type": "Identifier",
               "name": "disseminateChange",
               "range": [
-                1632,
-                1649
+                1650,
+                1667
               ],
               "loc": {
                 "start": {
@@ -1763,8 +1763,8 @@
                   "type": "Identifier",
                   "name": "type",
                   "range": [
-                    1652,
-                    1656
+                    1670,
+                    1674
                   ],
                   "loc": {
                     "start": {
@@ -1781,8 +1781,8 @@
                   "type": "Identifier",
                   "name": "game",
                   "range": [
-                    1658,
-                    1662
+                    1676,
+                    1680
                   ],
                   "loc": {
                     "start": {
@@ -1808,10 +1808,10 @@
                         "computed": false,
                         "object": {
                           "type": "Identifier",
-                          "name": "gameSockets",
+                          "name": "sendGameChange",
                           "range": [
-                            1673,
-                            1684
+                            1691,
+                            1705
                           ],
                           "loc": {
                             "start": {
@@ -1820,7 +1820,7 @@
                             },
                             "end": {
                               "line": 49,
-                              "column": 15
+                              "column": 18
                             }
                           }
                         },
@@ -1828,23 +1828,23 @@
                           "type": "Identifier",
                           "name": "modifyClientGameState",
                           "range": [
-                            1685,
-                            1706
+                            1706,
+                            1727
                           ],
                           "loc": {
                             "start": {
                               "line": 49,
-                              "column": 16
+                              "column": 19
                             },
                             "end": {
                               "line": 49,
-                              "column": 37
+                              "column": 40
                             }
                           }
                         },
                         "range": [
-                          1673,
-                          1706
+                          1691,
+                          1727
                         ],
                         "loc": {
                           "start": {
@@ -1853,7 +1853,7 @@
                           },
                           "end": {
                             "line": 49,
-                            "column": 37
+                            "column": 40
                           }
                         }
                       },
@@ -1862,17 +1862,17 @@
                           "type": "Identifier",
                           "name": "type",
                           "range": [
-                            1707,
-                            1711
+                            1728,
+                            1732
                           ],
                           "loc": {
                             "start": {
                               "line": 49,
-                              "column": 38
+                              "column": 41
                             },
                             "end": {
                               "line": 49,
-                              "column": 42
+                              "column": 45
                             }
                           }
                         },
@@ -1880,24 +1880,24 @@
                           "type": "Identifier",
                           "name": "game",
                           "range": [
-                            1713,
-                            1717
+                            1734,
+                            1738
                           ],
                           "loc": {
                             "start": {
                               "line": 49,
-                              "column": 44
+                              "column": 47
                             },
                             "end": {
                               "line": 49,
-                              "column": 48
+                              "column": 51
                             }
                           }
                         }
                       ],
                       "range": [
-                        1673,
-                        1718
+                        1691,
+                        1739
                       ],
                       "loc": {
                         "start": {
@@ -1906,13 +1906,13 @@
                         },
                         "end": {
                           "line": 49,
-                          "column": 49
+                          "column": 52
                         }
                       }
                     },
                     "range": [
-                      1673,
-                      1719
+                      1691,
+                      1740
                     ],
                     "loc": {
                       "start": {
@@ -1921,14 +1921,14 @@
                       },
                       "end": {
                         "line": 49,
-                        "column": 50
+                        "column": 53
                       }
                     }
                   }
                 ],
                 "range": [
-                  1667,
-                  1723
+                  1685,
+                  1744
                 ],
                 "loc": {
                   "start": {
@@ -1944,8 +1944,8 @@
               "generator": false,
               "expression": false,
               "range": [
-                1651,
-                1723
+                1669,
+                1744
               ],
               "loc": {
                 "start": {
@@ -1963,8 +1963,8 @@
             "shorthand": false,
             "computed": false,
             "range": [
-              1632,
-              1723
+              1650,
+              1744
             ],
             "loc": {
               "start": {
@@ -1979,8 +1979,8 @@
           }
         ],
         "range": [
-          56,
-          1725
+          77,
+          1747
         ],
         "loc": {
           "start": {
@@ -1996,8 +1996,8 @@
         "trailingComments": []
       },
       "range": [
-        41,
-        1726
+        62,
+        1748
       ],
       "loc": {
         "start": {
@@ -2014,7 +2014,7 @@
   "sourceType": "module",
   "range": [
     0,
-    1726
+    1748
   ],
   "loc": {
     "start": {
@@ -2031,8 +2031,8 @@
       "type": "Block",
       "value": "*\n   * Handles the addition of a player to a selected game\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   ",
       "range": [
-        60,
-        239
+        81,
+        260
       ],
       "loc": {
         "start": {
@@ -2049,8 +2049,8 @@
       "type": "Block",
       "value": "*\n   * Handles a player leaving a game\n   * @params {object} - a instance of the Games collection\n   * @params {string} - a game ID\n   * @params {object} - an instance of the User model\n   ",
       "range": [
-        360,
-        553
+        378,
+        571
       ],
       "loc": {
         "start": {
@@ -2067,8 +2067,8 @@
       "type": "Block",
       "value": "*\n   * Handles a user wanting to play a game. If there are available games,\n   the user will be added to an ongoing game. A new game will be created\n   * for the user otherwise.\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   ",
       "range": [
-        679,
-        977
+        697,
+        995
       ],
       "loc": {
         "start": {
@@ -2085,8 +2085,8 @@
       "type": "Block",
       "value": "*\n   * Handles the judgement of a player's guesses.\n   * Returns true for correct guesses, false for incorect guesses.\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   ",
       "range": [
-        1186,
-        1425
+        1204,
+        1443
       ],
       "loc": {
         "start": {

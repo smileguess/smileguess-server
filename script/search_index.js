@@ -558,6 +558,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "smileguess-server/config/gamesettings.js",
+    "file/smileguess-server/config/gameSettings.js.html",
+    "smileguess-server/config/gameSettings.js",
+    "file"
+  ],
+  [
     "smileguess-server/config/routes.js",
     "file/smileguess-server/config/routes.js.html",
     "smileguess-server/config/routes.js",
@@ -567,6 +573,12 @@ window.esdocSearchIndex = [
     "smileguess-server/config/sockets.js",
     "file/smileguess-server/config/sockets.js.html",
     "smileguess-server/config/sockets.js",
+    "file"
+  ],
+  [
+    "smileguess-server/config/solutions.js",
+    "file/smileguess-server/config/solutions.js.html",
+    "smileguess-server/config/solutions.js",
     "file"
   ],
   [
@@ -582,9 +594,9 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "smileguess-server/gamesettings.js",
-    "file/smileguess-server/gameSettings.js.html",
-    "smileguess-server/gameSettings.js",
+    "smileguess-server/controllers/utils.js",
+    "file/smileguess-server/controllers/utils.js.html",
+    "smileguess-server/controllers/utils.js",
     "file"
   ],
   [
@@ -630,28 +642,28 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "smileguess-server/models/game.js~game#gameid",
-    "class/smileguess-server/models/Game.js~Game.html#instance-member-gameId",
-    "smileguess-server/models/Game.js~Game#gameId",
-    "member"
-  ],
-  [
     "smileguess-server/models/game.js~game#getprompt",
     "class/smileguess-server/models/Game.js~Game.html#instance-method-getPrompt",
     "smileguess-server/models/Game.js~Game#getPrompt",
     "method"
   ],
   [
-    "smileguess-server/models/game.js~game#handledealerchange",
-    "class/smileguess-server/models/Game.js~Game.html#instance-method-handleDealerChange",
-    "smileguess-server/models/Game.js~Game#handleDealerChange",
-    "method"
+    "smileguess-server/models/game.js~game#id",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-id",
+    "smileguess-server/models/Game.js~Game#id",
+    "member"
   ],
   [
     "smileguess-server/models/game.js~game#io",
     "class/smileguess-server/models/Game.js~Game.html#instance-member-io",
     "smileguess-server/models/Game.js~Game#io",
     "member"
+  ],
+  [
+    "smileguess-server/models/game.js~game#newdealer",
+    "class/smileguess-server/models/Game.js~Game.html#instance-method-newDealer",
+    "smileguess-server/models/Game.js~Game#newDealer",
+    "method"
   ],
   [
     "smileguess-server/models/game.js~game#on",
@@ -669,18 +681,6 @@ window.esdocSearchIndex = [
     "smileguess-server/models/game.js~game#prompt",
     "class/smileguess-server/models/Game.js~Game.html#instance-member-prompt",
     "smileguess-server/models/Game.js~Game#prompt",
-    "member"
-  ],
-  [
-    "smileguess-server/models/game.js~game#promptfordisplay",
-    "class/smileguess-server/models/Game.js~Game.html#instance-member-promptForDisplay",
-    "smileguess-server/models/Game.js~Game#promptForDisplay",
-    "member"
-  ],
-  [
-    "smileguess-server/models/game.js~game#promptformatching",
-    "class/smileguess-server/models/Game.js~Game.html#instance-member-promptForMatching",
-    "smileguess-server/models/Game.js~Game#promptForMatching",
     "member"
   ],
   [
@@ -828,12 +828,6 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "smileguess-server/solutions.js",
-    "file/smileguess-server/solutions.js.html",
-    "smileguess-server/solutions.js",
-    "file"
-  ],
-  [
     "smileguess-server/spec/useragent.js",
     "file/smileguess-server/spec/UserAgent.js.html",
     "smileguess-server/spec/UserAgent.js",
@@ -867,12 +861,6 @@ window.esdocSearchIndex = [
     "smileguess-server/spec/testutils.js",
     "file/smileguess-server/spec/testUtils.js.html",
     "smileguess-server/spec/testUtils.js",
-    "file"
-  ],
-  [
-    "smileguess-server/utils.js",
-    "file/smileguess-server/utils.js.html",
-    "smileguess-server/utils.js",
     "file"
   ]
 ]

@@ -49,7 +49,7 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/controllers/GameController.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const User = require(&apos;../models/User&apos;);
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const sendGameChange = require(&apos;../sockets/sendGameChange&apos;);
 
 module.exports = {
   /**
@@ -58,7 +58,7 @@ module.exports = {
    * @params {object} - an instance of the User model
    */
   handlePlayerJoin: (gamesCollection, user) =&gt; {
-    return gamesCollection.getNextOpenGame().addPlayer(userId);
+    return gamesCollection.getNextOpenGame().addPlayer(user)
   },
   /**
    * Handles a player leaving a game
@@ -97,8 +97,8 @@ module.exports = {
   ),
 
   disseminateChange: (type, game) =&gt; {
-    gameSockets.modifyClientGameState(type, game);
-  }
+    sendGameChange.modifyClientGameState(type, game);
+  },
 };
 
 </code></pre>

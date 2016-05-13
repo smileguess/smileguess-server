@@ -49,126 +49,126 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/spec/socketTests.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const reporter = require(&apos;./support/reporter&apos;);
-const io = require(&apos;socket.io-client&apos;);
-const serverURL = &apos;http://127.0.0.1:1234&apos;;
-const sendGuessMessage = require(&apos;../sockets/sendGuessMessage&apos;);
-const sendClueMessage = require(&apos;../sockets/sendClueMessage&apos;);
-const sendPrompt = require(&apos;../sockets/sendPrompt&apos;);
-const sendWinner = require(&apos;../sockets/sendWinner&apos;);
-const testUtils = require(&apos;./testUtils&apos;);
-const sendPlayerJoinGame = require(&apos;../sockets/sendPlayerJoinGame&apos;);
-const User = require(&apos;../models/User&apos;);
-const Users = require(&apos;../collections/Users&apos;);
-const Games = require(&apos;../collections/Games&apos;);
-const settings = require(&apos;../gameSettings&apos;);
-const testUser1 = new User(&apos;testUser1ID&apos;);
-const GameController = require(&apos;../controllers/GameController&apos;);
-const request = require(&apos;request&apos;);
-let testUser = {};
-let testGame = {};
-testUtils.sendPlayRequest(null, (body) =&gt; {
-  testGame = body;
-});
-testUtils.sendUserRequest(null, (body) =&gt; {
-  testUser = body;
-});
-//TODO: send a user maker api call to instantiate users and or games for testing
-var socket;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">// const reporter = require(&apos;./support/reporter&apos;);
+// const io = require(&apos;socket.io-client&apos;);
+// const serverURL = &apos;http://127.0.0.1:1234&apos;;
+// const sendGuessMessage = require(&apos;../sockets/sendGuessMessage&apos;);
+// const sendClueMessage = require(&apos;../sockets/sendClueMessage&apos;);
+// const sendPrompt = require(&apos;../sockets/sendPrompt&apos;);
+// const sendWinner = require(&apos;../sockets/sendWinner&apos;);
+// const testUtils = require(&apos;./testUtils&apos;);
+// const sendPlayerJoinGame = require(&apos;../sockets/sendPlayerJoinGame&apos;);
+// const User = require(&apos;../models/User&apos;);
+// const Users = require(&apos;../collections/Users&apos;);
+// const Games = require(&apos;../collections/Games&apos;);
+// const settings = require(&apos;../gameSettings&apos;);
+// const testUser1 = new User(&apos;testUser1ID&apos;);
+// const GameController = require(&apos;../controllers/GameController&apos;);
+// const request = require(&apos;request&apos;);
+// let testUser = {};
+// let testGame = {};
+// testUtils.sendPlayRequest(null, (body) =&gt; {
+//   testGame = body;
+// });
+// testUtils.sendUserRequest(null, (body) =&gt; {
+//   testUser = body;
+// });
+// //TODO: send a user maker api call to instantiate users and or games for testing
+// var socket;
 
-describe(&apos;Socket responder functions&apos;, () =&gt; {
-  beforeEach((done) =&gt; {
-    socket = io.connect(serverURL, {
-      &apos;reconnection delay&apos;: 0,
-      &apos;reopen delay&apos;: 0,
-      &apos;force new connection&apos;: true,
-    });
-    socket.on(&apos;connect&apos;, () =&gt; {
-      socket.emit(&apos;action&apos;, {
-        type: &apos;server/joinGame&apos;,
-        gameId: 1,
-        userId: 1,
-      });
-      done();
-    });
-  });
+// describe(&apos;Socket responder functions&apos;, () =&gt; {
+//   beforeEach((done) =&gt; {
+//     socket = io.connect(serverURL, {
+//       &apos;reconnection delay&apos;: 0,
+//       &apos;reopen delay&apos;: 0,
+//       &apos;force new connection&apos;: true,
+//     });
+//     socket.on(&apos;connect&apos;, () =&gt; {
+//       socket.emit(&apos;action&apos;, {
+//         type: &apos;server/joinGame&apos;,
+//         gameId: 1,
+//         userId: 1,
+//       });
+//       done();
+//     });
+//   });
 
-  afterEach((done) =&gt; {
-    socket.disconnect();
-    done();
-  });
+//   afterEach((done) =&gt; {
+//     socket.disconnect();
+//     done();
+//   });
 
-  describe(&apos;sendGuessMessage&apos;, () =&gt; {
-    let actionType = &apos;SOCKET_GUESS_MESSAGE&apos;
-    let label = &apos;sendGuessMessage&apos;;
-    it(&apos;should be a function&apos;, () =&gt; {
-      expect(typeof sendGuessMessage).toBe(&apos;function&apos;);
-    });
-    it(&apos;should respond with an action called &apos; + actionType, (done) =&gt; {
-      socket.on(&apos;action&apos;, (response) =&gt; {
-        console.log(response);
-        if (response.type === actionType) {
-          expect(response.type).toBe(actionType);
-          expect(response.message).toBe(&apos;testGuessMessage&apos;);
-          done();
-        }
-      });
-      socket.emit(&apos;action&apos;, {
-        type: &apos;server/&apos; + label,
-        userId: 1,
-        gameId: 1,
-        message: &apos;testGuessMessage&apos;,
-      });
-    });
-  });
+//   describe(&apos;sendGuessMessage&apos;, () =&gt; {
+//     let actionType = &apos;SOCKET_GUESS_MESSAGE&apos;
+//     let label = &apos;sendGuessMessage&apos;;
+//     xit(&apos;should be a function&apos;, () =&gt; {
+//       expect(typeof sendGuessMessage).toBe(&apos;function&apos;);
+//     });
+//     xit(&apos;should respond with an action called &apos; + actionType, (done) =&gt; {
+//       socket.on(&apos;action&apos;, (response) =&gt; {
+//         console.log(response);
+//         if (response.type === actionType) {
+//           expect(response.type).toBe(actionType);
+//           expect(response.message).toBe(&apos;testGuessMessage&apos;);
+//           done();
+//         }
+//       });
+//       socket.emit(&apos;action&apos;, {
+//         type: &apos;server/&apos; + label,
+//         userId: 1,
+//         gameId: 1,
+//         message: &apos;testGuessMessage&apos;,
+//       });
+//     });
+//   });
 
-  describe(&apos;sendClueMessage&apos;, () =&gt; {
-    let actionType = &apos;SOCKET_CLUE_MESSAGE&apos;
-    let label = &apos;sendClueMessage&apos;;
-    xit(&apos;should be a function&apos;, () =&gt; {
-      expect(typeof sendClueMessage).toBe(&apos;function&apos;);
-    });
-    xit(&apos;should respond with an action called &apos; + actionType, (done) =&gt; {
-      socket.on(&apos;action&apos;, (response) =&gt; {
-        console.log(&apos;RESPONSE&apos;, response);
-        if (response.type === actionType) {
-          expect(response.userid).toBe(1);
-          expect(response.message).toBe(&apos;testClueMessage&apos;);
-          done();
-        }
-      });
-      socket.emit(&apos;action&apos;, {
-        type: &apos;server/&apos; + label,
-        gameId: 1,
-        userId: 1,
-        message: &apos;testClueMessage&apos;,
-      });
-    });
-  });
+//   describe(&apos;sendClueMessage&apos;, () =&gt; {
+//     let actionType = &apos;SOCKET_CLUE_MESSAGE&apos;
+//     let label = &apos;sendClueMessage&apos;;
+//     xit(&apos;should be a function&apos;, () =&gt; {
+//       expect(typeof sendClueMessage).toBe(&apos;function&apos;);
+//     });
+//     xit(&apos;should respond with an action called &apos; + actionType, (done) =&gt; {
+//       socket.on(&apos;action&apos;, (response) =&gt; {
+//         console.log(&apos;RESPONSE&apos;, response);
+//         if (response.type === actionType) {
+//           expect(response.userid).toBe(1);
+//           expect(response.message).toBe(&apos;testClueMessage&apos;);
+//           done();
+//         }
+//       });
+//       socket.emit(&apos;action&apos;, {
+//         type: &apos;server/&apos; + label,
+//         gameId: 1,
+//         userId: 1,
+//         message: &apos;testClueMessage&apos;,
+//       });
+//     });
+//   });
 
-  //problem is we are passing a different db to the sockets than this one
-  describe(&apos;Socket puts users in games&apos;, () =&gt; {
-    let actionType = &apos;SOCKET_JOIN_GAME&apos;
-    let label = &apos;joinGame&apos;;
-    xit(&apos;should be a function&apos;, () =&gt; {
-      expect(typeof sendClueMessage).toBe(&apos;function&apos;);
-    });
-    xit(&apos;should respond with an action called &apos; + actionType, (done) =&gt; {
-      socket.on(&apos;action&apos;, (response) =&gt; {
-        console.log(&apos;RESPONSE&apos;, response);
-        if (response.type === actionType) {
-          console.log(response);
+//   //problem is we are passing a different db to the sockets than this one
+//   describe(&apos;Socket puts users in games&apos;, () =&gt; {
+//     let actionType = &apos;SOCKET_JOIN_GAME&apos;
+//     let label = &apos;joinGame&apos;;
+//     xit(&apos;should be a function&apos;, () =&gt; {
+//       expect(typeof sendClueMessage).toBe(&apos;function&apos;);
+//     });
+//     xit(&apos;should respond with an action called &apos; + actionType, (done) =&gt; {
+//       socket.on(&apos;action&apos;, (response) =&gt; {
+//         console.log(&apos;RESPONSE&apos;, response);
+//         if (response.type === actionType) {
+//           console.log(response);
 
-        }
-      });
-      socket.emit(&apos;action&apos;, {
-        type: &apos;server/&apos; + label,
-        gameId: 1,
-        userId: 1,
-        deviceId: &apos;someDeviceId&apos;,
-      });
-    });
-  });
+//         }
+//       });
+//       socket.emit(&apos;action&apos;, {
+//         type: &apos;server/&apos; + label,
+//         gameId: 1,
+//         userId: 1,
+//         deviceId: &apos;someDeviceId&apos;,
+//       });
+//     });
+//   });
 
   // describe(&apos;sendPrompt&apos;, () =&gt; {
   //   let actionType = &apos;SOCKET_PROMPT&apos;
@@ -197,7 +197,7 @@ describe(&apos;Socket responder functions&apos;, () =&gt; {
   //   });
   // });
 
-});
+// });
 
 
 </code></pre>

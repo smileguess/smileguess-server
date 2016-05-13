@@ -50,6 +50,11 @@
 
 <div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="smileguess-server">smileguess-server</h1>
 <p>The server for the smileguess app</p>
+<p>When a user clicks &apos;join random game,&apos; he or she will be put into an active game, if one is available. If one is not available, a new game will be instantiated for him or her.</p>
+<p>When players join the game, they are pushed into the game&apos;s &apos;players&apos; array. A game will start when enough players are available to have a fun time. This variable resides in <code>config/gameSettings.js</code> with a default value of 3.</p>
+<p>After enough players have joined to satisfy game genesis, a dealer will be chosen at random.</p>
+<p>A category will be randomly chosen, then a solution will randomly be chosen within that category.</p>
+<p>As the dealer enters or removes emojis as clues, they will be pushed and popped to and from the &apos;this.clue&apos; array.</p>
 </div>
 </div>
 

@@ -49,13 +49,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Game from &apos;<span><a href="file/smileguess-server/models/Game.js.html#lineNumber31">./smileguess-server/models/Game.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Game from &apos;<span><a href="file/smileguess-server/models/Game.js.html#lineNumber13">./smileguess-server/models/Game.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/smileguess-server/models/Game.js.html#lineNumber31">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/smileguess-server/models/Game.js.html#lineNumber13">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -87,7 +87,7 @@ created, otherwise retrieved from the Games collection.</p>
     
   <div class="example-doc" data-ice="exampleDoc">
       
-      <pre class="prettyprint source-code"><code data-ice="exampleCode">const newGame = new Game(user);</code></pre>
+      <pre class="prettyprint source-code"><code data-ice="exampleCode">const newGame = new Game(gameId, io);</code></pre>
     </div>
 </div>
 
@@ -113,7 +113,7 @@ created, otherwise retrieved from the Games collection.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(userWhoStartsGame: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, gameId: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>)</span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(gameId: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
         </p>
       </div>
       <div>
@@ -198,7 +198,7 @@ created, otherwise retrieved from the Games collection.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-events">events</a></span></span><span data-ice="signature">: <span>object[ ]</span></span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-events">events</a></span></span><span data-ice="signature">: <span>array</span></span>
         </p>
       </div>
       <div>
@@ -224,7 +224,7 @@ created, otherwise retrieved from the Games collection.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-gameId">gameId</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-id">id</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
         </p>
       </div>
       <div>
@@ -250,13 +250,14 @@ created, otherwise retrieved from the Games collection.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-io">io</a></span></span><span data-ice="signature">: <span>*</span></span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-io">io</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>The io object used for sending socket messages to this game</p>
+</div>
       </div>
     </td>
     <td>
@@ -281,7 +282,7 @@ created, otherwise retrieved from the Games collection.</p>
       <div>
         
         
-        <div data-ice="description"><p>Collection of user instances in the game</p>
+        <div data-ice="description"><p>Collection of user instances in the game.</p>
 </div>
       </div>
     </td>
@@ -301,65 +302,14 @@ created, otherwise retrieved from the Games collection.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-prompt">prompt</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-prompt">prompt</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Defines the prompt that the &quot;dealer&quot;
-must communicate via emojis</p>
+        <div data-ice="description"><p>Defines the prompt that the &quot;dealer&quot; must communicate via emojis</p>
 </div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-promptForDisplay">promptForDisplay</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-promptForMatching">promptForMatching</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
       </div>
     </td>
     <td>
@@ -489,7 +439,7 @@ must communicate via emojis</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-handleDealerChange">handleDealerChange</a></span></span><span data-ice="signature">(userId: <span>*</span>): <span>*</span></span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-newDealer">newDealer</a></span></span><span data-ice="signature">(userId: <span>*</span>): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -625,11 +575,11 @@ must communicate via emojis</p>
     
     
     
-    <span data-ice="name">constructor</span><span data-ice="signature">(userWhoStartsGame: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, gameId: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>)</span>
+    <span data-ice="name">constructor</span><span data-ice="signature">(gameId: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, io: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber37">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber19">source</a></span></span>
     </span>
   </h3>
 
@@ -650,17 +600,17 @@ must communicate via emojis</p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">userWhoStartsGame</td>
-      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>an instance of the user model</p>
-</td>
-    </tr>
-<tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">gameId</td>
       <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"><p>the identifer of the new game</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">io</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>the socket connection pre-limited to the game&apos;s id via io.to(gameId)</p>
 </td>
     </tr>
 </tbody>
@@ -697,7 +647,7 @@ must communicate via emojis</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber88">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber71">source</a></span></span>
     </span>
   </h3>
 
@@ -738,7 +688,7 @@ must communicate via emojis</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber60">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber45">source</a></span></span>
     </span>
   </h3>
 
@@ -775,11 +725,11 @@ must communicate via emojis</p>
     
     
     
-    <span data-ice="name">events</span><span data-ice="signature">: <span>object[ ]</span></span>
+    <span data-ice="name">events</span><span data-ice="signature">: <span>array</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber93">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber76">source</a></span></span>
     </span>
   </h3>
 
@@ -810,17 +760,17 @@ must communicate via emojis</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-gameId">
+  <h3 data-ice="anchor" id="instance-member-id">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">gameId</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+    <span data-ice="name">id</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber42">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber24">source</a></span></span>
     </span>
   </h3>
 
@@ -857,18 +807,19 @@ must communicate via emojis</p>
     
     
     
-    <span data-ice="name">io</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">io</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber96">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber82">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>The io object used for sending socket messages to this game</p>
+</div>
 
   
 
@@ -901,14 +852,14 @@ must communicate via emojis</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber47">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber30">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Collection of user instances in the game</p>
+  <div data-ice="description"><p>Collection of user instances in the game.  This has an <code>all</code> attribute with all the players in a hash table keyed by id, and an <code>byId</code> attribute with all the players&apos; ids in an array.</p>
 </div>
 
   
@@ -938,100 +889,19 @@ must communicate via emojis</p>
     
     
     
-    <span data-ice="name">prompt</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span data-ice="name">prompt</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber66">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber51">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Defines the prompt that the &quot;dealer&quot;
-must communicate via emojis</p>
+  <div data-ice="description"><p>Defines the prompt that the &quot;dealer&quot; must communicate via emojis</p>
 </div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-promptForDisplay">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    <span data-ice="name">promptForDisplay</span><span data-ice="signature">: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber173">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-promptForMatching">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    <span data-ice="name">promptForMatching</span><span data-ice="signature">: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber174">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
 
   
 
@@ -1064,7 +934,7 @@ must communicate via emojis</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber55">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber39">source</a></span></span>
     </span>
   </h3>
 
@@ -1108,7 +978,7 @@ must communicate via emojis</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber151">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber143">source</a></span></span>
     </span>
   </h3>
 
@@ -1175,7 +1045,7 @@ must communicate via emojis</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber180">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber175">source</a></span></span>
     </span>
   </h3>
 
@@ -1242,7 +1112,7 @@ must communicate via emojis</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber170">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber163">source</a></span></span>
     </span>
   </h3>
 
@@ -1273,17 +1143,17 @@ must communicate via emojis</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-handleDealerChange">
+  <h3 data-ice="anchor" id="instance-method-newDealer">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">handleDealerChange</span><span data-ice="signature">(userId: <span>*</span>): <span>*</span></span>
+    <span data-ice="name">newDealer</span><span data-ice="signature">(userId: <span>*</span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber190">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber186">source</a></span></span>
     </span>
   </h3>
 
@@ -1350,7 +1220,7 @@ must communicate via emojis</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber103">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber90">source</a></span></span>
     </span>
   </h3>
 
@@ -1415,7 +1285,7 @@ must communicate via emojis</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber138">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber129">source</a></span></span>
     </span>
   </h3>
 
@@ -1482,7 +1352,7 @@ must communicate via emojis</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber111">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber99">source</a></span></span>
     </span>
   </h3>
 
@@ -1540,7 +1410,7 @@ must communicate via emojis</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber119">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber108">source</a></span></span>
     </span>
   </h3>
 

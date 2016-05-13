@@ -79,7 +79,7 @@ exports.generateTestUsers = (usersColletion, n) =&gt; {
 
 exports.populateNextOpenGameWithPlayers = (database, numberOfPlayers, arrayOfplayers) =&gt; {
   const testPlayers = arrayOfplayers || exports.generateTestUsers(database.users, numberOfPlayers);
-  return testPlayers.forEach((player) =&gt; GameController.handlePlayerJoin(database.games, player.userId));
+  return testPlayers.forEach((player) =&gt; GameController.handlePlayerJoin(database.games, player));
 };
 
 exports.sendUserRequest = (requestOptions, callback) =&gt; {

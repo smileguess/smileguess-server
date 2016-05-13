@@ -1765,10 +1765,10 @@
         },
         {
           "type": "Line",
-          "value": " GAME_NOTIFICATION",
+          "value": " GAME_MEMO",
           "range": [
             813,
-            833
+            825
           ],
           "loc": {
             "start": {
@@ -1777,7 +1777,7 @@
             },
             "end": {
               "line": 42,
-              "column": 20
+              "column": 12
             }
           }
         }
@@ -1892,10 +1892,10 @@
     },
     {
       "type": "Line",
-      "value": " GAME_NOTIFICATION",
+      "value": " GAME_MEMO",
       "range": [
         813,
-        833
+        825
       ],
       "loc": {
         "start": {
@@ -1904,7 +1904,7 @@
         },
         "end": {
           "line": 42,
-          "column": 20
+          "column": 12
         }
       }
     }
