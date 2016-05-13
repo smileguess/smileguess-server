@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const sendGameChange = require('../sockets/sendGameChange');
 
 module.exports = {
   /**
@@ -6,17 +6,17 @@ module.exports = {
    * @params {object} - a instance of the Games collection
    * @params {object} - an instance of the User model
    */
-  handlePlayerJoin: (collection, player) => (
-    collection.getNextOpenGame().addPlayer(player)
-  ),
+  handlePlayerJoin: (gamesCollection, user) => {
+    return gamesCollection.getNextOpenGame().addPlayer(user)
+  },
   /**
    * Handles a player leaving a game
    * @params {object} - a instance of the Games collection
    * @params {string} - a game ID
    * @params {object} - an instance of the User model
    */
-  handlePlayerLeave: (collection, gameId, player) => (
-    collection.retrieve(gameId).removePlayer(player)
+  handlePlayerLeave: (gamesCollection, gameId, userId) => (
+    gamesCollection.retrieve(gameId).removePlayer(userId)
   ),
   /**
    * Handles a user wanting to play a game. If there are available games,
@@ -25,12 +25,11 @@ module.exports = {
    * @params {object} - a instance of the Games collection
    * @params {object} - an instance of the User model
    */
-  play: (collection, userId, callback) => {
-    const player = new User(userId);
-    if (!collection.openGames.length) {
-      return callback(collection.createGame(player));
+  play: (gamesCollection, callback) => {
+    if (!gamesCollection.openGames.length) {
+      return callback(gamesCollection.createGame());
     }
-    return callback(collection.getNextOpenGame().addPlayer(player));
+    return callback(gamesCollection.getNextOpenGame());
   },
   /**
    * Handles the judgement of a player's guesses.
@@ -38,8 +37,16 @@ module.exports = {
    * @params {object} - a instance of the Games collection
    * @params {object} - an instance of the User model
    */
-  handleGuess: (collection, gameId, message) => (
-    collection.retrieve(gameId).checkGuess(message)
+  handleGuess: (gamesCollection, gameId, message) => (
+    gamesCollection.retrieve(gameId).checkGuess(message)
   ),
+
+  retrieve: (gamesCollection, gameId) => (
+    gamesCollection.retrieve(gameId)
+  ),
+
+  disseminateChange: (type, game) => {
+    sendGameChange.modifyClientGameState(type, game);
+  },
 };
 

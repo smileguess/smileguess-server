@@ -14,12 +14,13 @@ const dummy = require('./dummySocketData.js');
  * };
  */
 const sendClueMessage = (io, socket, action) => {
-  console.log('sending clue message');
-  io.to(dummy.gameId).emit('action', {
+  console.log('sending clue message. action:', action);
+  io.to(action.gameId).emit('action', {
     type: 'SOCKET_CLUE_MESSAGE',
-    userid: action.userid,
+    userid: action.userId,
     message: action.message,
   });
 };
+
 module.exports = sendClueMessage;
 
