@@ -1,11 +1,11 @@
 module.exports = {
-  getUser(userCollection, userId) {
+  get(userCollection, userId) {
     return userCollection.getOne(userId);
   },
-  newUser(req, res, userCollection, callback) {
-    if (callback) {
-      return callback(userCollection.createUser(req.params.deviceId));
+  create(req, res, userCollection, callback) {
+    if (!callback) {
+      return userCollection.createUser(req.params.deviceId);
     }
-    return userCollection.createUser(req.params.deviceId);
+    return callback(userCollection.createUser(req.params.deviceId));
   },
 };

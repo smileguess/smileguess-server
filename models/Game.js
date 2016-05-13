@@ -1,6 +1,6 @@
 const settings = require('../config/gameSettings');
 const utils = require('../controllers/utils');
-const solutions = require('../config/solutions');
+const prompts = require('../config/prompts');
 const random = utils.getRandomIntInclusive;
 
 /**
@@ -119,7 +119,7 @@ class Game {
     if (wasFull && this.seatsOpen > 0) {
       return this.trigger('nowAvailable', gameId, this.seatsOpen);
     }
-    return null;
+    return this;
   }
 
   /**
@@ -161,11 +161,12 @@ class Game {
    * Randomly chooses a world or phrase to be guessed
    */
   getPrompt() {
-    const categoryNumber = random(0, solutions.solutionsForDisplay.length - 1);
-    const solutionNumber = random(0, solutions.solutionsForDisplay[categoryNumber].length - 1);
-    this.prompt.forDisplay = solutions.solutionsForDisplay[categoryNumber][solutionNumber];
-    this.prompt.forMatching = solutions.simplifiedSolutions[categoryNumber][solutionNumber];
+    const categoryNumber = random(0, prompts.promptsForDisplay.length - 1);
+    const solutionNumber = random(0, prompts.promptsForDisplay[categoryNumber].length - 1);
+    this.prompt.forDisplay = prompts.promptsForDisplay[categoryNumber][solutionNumber];
+    this.prompt.forMatching = prompts.simplifiedprompts[categoryNumber][solutionNumber];
     this.trigger('newPrompt', 'newPrompt', this);
+    return this;
   }
 
   /**
@@ -187,7 +188,7 @@ class Game {
     this.dealerId = userId || this.players[random(1, this.players.length) - 1];
     this.trigger('newDealer', 'newDealer', this);
     this.getPrompt();
-    return this.dealerId;
+    return this;
   }
 };
 

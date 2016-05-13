@@ -3,19 +3,21 @@ const UserController = require('../controllers/UserController');
 
 module.exports = (app, db) => {
   app.get('/api/game/', (req, res) => {
-    GameController.play(db.games, (game) => res.json({
-      id: game.id,
-      players: {
-        all: game.players.all,
-        byId: game.players.byId,
-      },
-      dealerId: game.dealerId,
-      prompt: {
-        category: game.prompt.category,
-        forDisplay: game.prompt.forDisplay,
-      },
-      active: game.active,
-    }));
+    GameController.play(db.games, (game) => {
+      res.json({
+        id: game.id,
+        players: {
+          all: game.players.all,
+          byId: game.players.byId,
+        },
+        dealerId: game.dealerId,
+        prompt: {
+          category: game.prompt.category,
+          forDisplay: game.prompt.forDisplay,
+        },
+        active: game.active,
+      });
+    });
   });
 
   app.get('/api/user/:deviceId', (req, res) => {

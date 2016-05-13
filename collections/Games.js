@@ -1,5 +1,4 @@
 const Game = require('../models/Game');
-const GameCon = require('../controllers/GameController');
 module.exports = class Games {
   /**
   * Creates a collection of games
@@ -39,9 +38,7 @@ module.exports = class Games {
     newGame.on('empty', this.destroy.bind(this));
     newGame.on('full', this.moveToFullGames.bind(this));
     newGame.on('nowAvailable', this.moveToOpenGames.bind(this));
-    newGame.on('newDealer', GameCon.disseminateChange);
-    newGame.on('playerChange', this.updateQueue.bind(this), GameCon.disseminateChange);
-    newGame.on('newPrompt', GameCon.disseminateChange);
+    newGame.on('playerChange', this.updateQueue.bind(this));
     this.insert(newGame);
     return newGame;
   }

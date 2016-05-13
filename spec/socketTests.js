@@ -1,58 +1,55 @@
-// const reporter = require('./support/reporter');
-// const io = require('socket.io-client');
-// const serverURL = 'http://127.0.0.1:1234';
-// const sendGuessMessage = require('../sockets/sendGuessMessage');
-// const sendClueMessage = require('../sockets/sendClueMessage');
-// const sendPrompt = require('../sockets/sendPrompt');
-// const sendWinner = require('../sockets/sendWinner');
-// const testUtils = require('./testUtils');
-// const sendPlayerJoinGame = require('../sockets/sendPlayerJoinGame');
-// const User = require('../models/User');
-// const Users = require('../collections/Users');
-// const Games = require('../collections/Games');
-// const settings = require('../gameSettings');
-// const testUser1 = new User('testUser1ID');
-// const GameController = require('../controllers/GameController');
-// const request = require('request');
-// let testUser = {};
-// let testGame = {};
-// testUtils.sendPlayRequest(null, (body) => {
-//   testGame = body;
-// });
-// testUtils.sendUserRequest(null, (body) => {
-//   testUser = body;
-// });
-// //TODO: send a user maker api call to instantiate users and or games for testing
-// var socket;
+const reporter = require('./support/reporter');
+const io = require('socket.io-client');
+const serverURL = 'http://127.0.0.1:1234';
+const testUtils = require('./testUtils');
+const joinGame = require('../sockets/joinGame');
+const User = require('../models/User');
+const Users = require('../collections/Users');
+const Games = require('../collections/Games');
+const settings = require('../gameSettings');
+const testUser1 = new User('testUser1ID');
+const GameController = require('../controllers/GameController');
+const request = require('request');
+let testUser = {};
+let testGame = {};
 
-// describe('Socket responder functions', () => {
-//   beforeEach((done) => {
-//     socket = io.connect(serverURL, {
-//       'reconnection delay': 0,
-//       'reopen delay': 0,
-//       'force new connection': true,
-//     });
-//     socket.on('connect', () => {
-//       socket.emit('action', {
-//         type: 'server/joinGame',
-//         gameId: 1,
-//         userId: 1,
-//       });
-//       done();
-//     });
-//   });
+// Instantiate a game for testing
+testUtils.sendPlayRequest(null, (body) => {
+  testGame = body;
+});
+// Instantiate a user for testing
+testUtils.sendUserRequest(null, (body) => {
+  testUser = body;
+});
 
-//   afterEach((done) => {
-//     socket.disconnect();
-//     done();
-//   });
+describe('Socket responder functions', () => {
+  beforeEach((done) => {
+    socket = io.connect(serverURL, {
+      'reconnection delay': 0,
+      'reopen delay': 0,
+      'force new connection': true,
+    });
+    socket.on('connect', () => {
+      socket.emit('action', {
+        type: 'server/joinGame',
+        gameId: 1,
+        userId: 1,
+      });
+      done();
+    });
+  });
 
-//   describe('sendGuessMessage', () => {
-//     let actionType = 'SOCKET_GUESS_MESSAGE'
-//     let label = 'sendGuessMessage';
-//     xit('should be a function', () => {
-//       expect(typeof sendGuessMessage).toBe('function');
-//     });
+  // afterEach((done) => {
+  //   socket.disconnect();
+  //   done();
+  });
+  describe('join game socket room', () => {
+    expect(UserController.get(db.users, 1).socket).not.toBe(undefined);
+    let label = 'joinGame';
+    it('should be a function', () => {
+      expect(typeof joinGame).toBe('function');
+    });
+    // it('should impart users with socket objects')
 //     xit('should respond with an action called ' + actionType, (done) => {
 //       socket.on('action', (response) => {
 //         console.log(response);
@@ -62,12 +59,12 @@
 //           done();
 //         }
 //       });
-//       socket.emit('action', {
-//         type: 'server/' + label,
-//         userId: 1,
-//         gameId: 1,
-//         message: 'testGuessMessage',
-//       });
+      socket.emit('action', {
+        type: 'server/' + label,
+        userId: 1,
+        gameId: 1,
+      });
+  });
 //     });
 //   });
 
