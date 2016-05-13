@@ -1,38 +1,20 @@
-const settings = require('../gameSettings');
-const utils = require('../utils');
-const solutions = require('../solutions');
+const settings = require('../config/gameSettings');
+const utils = require('../controllers/utils');
+const solutions = require('../config/solutions');
 const random = utils.getRandomIntInclusive;
-/*
-  When a user clicks 'join random game,' he or she will be put
-  into an active game, if one is available. If one is not available,
-  a new game will be instantiated for him or her.
-
-  When players join the game, they are pushed into the game's 'players' array.
-  A game will start when enough players are available to have a fun time. This
-  variable resides in game-settings.js with a default value of 3.
-
-  After enough players have joined to satisfy game genesis, a dealer will be
-  chosen at random.
-
-  A category will be randomly chosen, then a solution will randomly be chosen
-  within that category.
-
-  As the dealer enters or removes emojis as clues, they will be pushed and
-  popped to and from the 'this.clue' array.
-*/
 
 /**
  * The Game model persists data about a single game room, including players, dealer
  * and other state information. Should be instantiated when a brand new game room is
  * created, otherwise retrieved from the Games collection.
  * @example
- * const newGame = new Game(user);
+ * const newGame = new Game(gameId, io);
  */
-module.exports = class Game {
+class Game {
   /**
    * Constructor to instantiate a new Game instance.
-   * @param {Object} userWhoStartsGame - an instance of the user model
    * @param {number} gameId - the identifer of the new game
+   * @param {object} io - the socket connection pre-limited to the game's id via io.to(gameId)
    */
   constructor(gameId, io) {
     /**
@@ -40,45 +22,46 @@ module.exports = class Game {
     * @type {number}
     */
     this.id = gameId;
+
     /**
-     * Collection of user instances in the game
+     * Collection of user instances in the game.  This has an `all` attribute with all the players in a hash table keyed by id, and an `byId` attribute with all the players' ids in an array.
      * @type {object[ ]}
      */
     this.players = {
       all: {},
       byId: [],
     };
+
     /**
     * Current number of available seats in the game
     * @type {number}
     */
     this.seatsOpen = settings.maxPlayers;
+
     /**
     * Specifies which player is currently creating clues with emojis
     * @type {object}
     */
     this.dealerId = null;
+
     /**
-    * Defines the prompt that the "dealer"
-    * must communicate via emojis
-    * @type {string}
+    * Defines the prompt that the "dealer" must communicate via emojis
+    * @type {object}
     */
     this.prompt = {
       /**
-      * Communicates the solution's category to all players
-      * @type {string}
+      * @property {string} prompt.category Communicates the solution's category to all players
       */
       category: null,
+
       /**
-      * Communicates the prompt to the dealer
-      * @type {string}
-      */
+       * @property {string} prompt.forDisplay Communicates the prompt to the dealer
+       */
       forDisplay: null,
+
       /**
-      * Prevents correct answers from being deemed
-      * incorrect due to capitilization, spacing, special characters, etc.
-      * @type {string}
-      */
+       * @property {string} prompt.forMatching Prevents correct answers from being deemed incorrect due to capitilization, spacing, special characters, etc.
+       */
       forMatching: null,
     };
     /**
@@ -88,11 +71,14 @@ module.exports = class Game {
     this.active = false;
     /**
     * Event listener callback functions to be invoked
-    * @type {object[ ]}
+    * @type {array}
     */
     this.events = [];
 
-
+    /**
+     * The io object used for sending socket messages to this game
+     * @type {object}
+     */
     this.io = io.to(this.id);
 
   }
@@ -105,6 +91,7 @@ module.exports = class Game {
     this.events[event] = this.events[event] || [];
     args.forEach(callback => this.events[event].push(callback));
   }
+
   /**
    * Triggers a callback associated with a given event
    * @param {string} - an event name
@@ -114,6 +101,7 @@ module.exports = class Game {
       this.events[event].forEach(callback => callback.apply(null, args));
     }
   }
+
   /**
    * Modifies the number of available seats in the game
    */
@@ -133,6 +121,7 @@ module.exports = class Game {
     }
     return null;
   }
+
   /**
    * Removes a player from the game
    * @params {number} - a user ID
@@ -146,9 +135,10 @@ module.exports = class Game {
     }
     return this;
   }
+
   /**
    * Adds a player to the game
-   * @params {number} - a user ID
+   * @params {object} - a user model
    */
   addPlayer(user) {
     if (this.players.byId.length < settings.maxPlayers) {
@@ -166,6 +156,7 @@ module.exports = class Game {
     }
     return this;
   }
+
   /**
    * Randomly chooses a world or phrase to be guessed
    */
@@ -176,6 +167,7 @@ module.exports = class Game {
     this.prompt.forMatching = solutions.simplifiedSolutions[categoryNumber][solutionNumber];
     this.trigger('newPrompt', 'newPrompt', this);
   }
+
   /**
    * Checks messages for correct guesses
    * @params {object} - an object containing a message and a reference to the sender
@@ -186,6 +178,7 @@ module.exports = class Game {
     }
     return false;
   }
+
   /**
    * Assigns the next dealer as the correct guesser
    * @params {string} - the user id of the next dealer
@@ -197,4 +190,6 @@ module.exports = class Game {
     return this.dealerId;
   }
 };
+
+module.exports = Game;
 
