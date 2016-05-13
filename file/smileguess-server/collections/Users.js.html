@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">smileguess-server/gameSettings.js | API Document</title>
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">smileguess-server/collections/Users.js | API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -48,12 +48,36 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/gameSettings.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">module.exports = {
-  minPlayers: 3,
-  maxPlayers: 6,
-  charsToAvoid: /-/g,
+<div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/collections/Users.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const User = require(&apos;../models/User&apos;);
+
+module.exports = class Users {
+  constructor() {
+    this.users = new Map();
+    this.totalUsersCreated = 0;
+  }
+
+  createUser(deviceId) {
+    const newUser = new User(++this.totalUsersCreated, deviceId);
+    this.addUserToCollection(newUser);
+    return newUser;
+  }
+
+  addUserToCollection(newUser) {
+    this.users.set(newUser.userId, newUser);
+    return User;
+  }
+
+  destroy(userId) {
+    this.users.delete(userId);
+    return null;
+  }
+
+  getOne(userId) {
+    return this.users.get(userId);
+  }
 };
+
 </code></pre>
 
 </div>

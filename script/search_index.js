@@ -6,21 +6,27 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "./smileguess-server/collections/games.js~games",
+    "class/smileguess-server/collections/Games.js~Games.html",
+    "<span>Games</span> <span class=\"search-result-import-path\">./smileguess-server/collections/Games.js</span>",
+    "class"
+  ],
+  [
     "./smileguess-server/models/user.js~user",
     "class/smileguess-server/models/User.js~User.html",
     "<span>User</span> <span class=\"search-result-import-path\">./smileguess-server/models/User.js</span>",
     "class"
   ],
   [
+    "./smileguess-server/collections/users.js~users",
+    "class/smileguess-server/collections/Users.js~Users.html",
+    "<span>Users</span> <span class=\"search-result-import-path\">./smileguess-server/collections/Users.js</span>",
+    "class"
+  ],
+  [
     "./smileguess-server/sockets/dummysocketdata.js~dummy",
     "variable/index.html#static-variable-dummy",
     "<span>dummy</span> <span class=\"search-result-import-path\">./smileguess-server/sockets/dummySocketData.js</span>",
-    "variable"
-  ],
-  [
-    "./smileguess-server/sockets/joinrandomgame.js~joinrandomgame",
-    "variable/index.html#static-variable-joinRandomGame",
-    "<span>joinRandomGame</span> <span class=\"search-result-import-path\">./smileguess-server/sockets/joinRandomGame.js</span>",
     "variable"
   ],
   [
@@ -51,6 +57,12 @@ window.esdocSearchIndex = [
     "./smileguess-server/sockets/sendplayerjoingame.js~sendplayerjoingame",
     "variable/index.html#static-variable-sendPlayerJoinGame",
     "<span>sendPlayerJoinGame</span> <span class=\"search-result-import-path\">./smileguess-server/sockets/sendPlayerJoinGame.js</span>",
+    "variable"
+  ],
+  [
+    "./smileguess-server/sockets/sendprompt.js~sendprompt",
+    "variable/index.html#static-variable-sendPrompt",
+    "<span>sendPrompt</span> <span class=\"search-result-import-path\">./smileguess-server/sockets/sendPrompt.js</span>",
     "variable"
   ],
   [
@@ -396,10 +408,154 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "smileguess-server/config/middleware.js",
-    "file/smileguess-server/config/middleware.js.html",
-    "smileguess-server/config/middleware.js",
+    "smileguess-server/collections/games.js~games#alltimegamecount",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-member-allTimeGameCount",
+    "smileguess-server/collections/Games.js~Games#allTimeGameCount",
+    "member"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#constructor",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-constructor-constructor",
+    "smileguess-server/collections/Games.js~Games#constructor",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#creategame",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-method-createGame",
+    "smileguess-server/collections/Games.js~Games#createGame",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#destroy",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-method-destroy",
+    "smileguess-server/collections/Games.js~Games#destroy",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#fullgames",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-member-fullGames",
+    "smileguess-server/collections/Games.js~Games#fullGames",
+    "member"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#generategameid",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-method-generateGameId",
+    "smileguess-server/collections/Games.js~Games#generateGameId",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#getnextopengame",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-method-getNextOpenGame",
+    "smileguess-server/collections/Games.js~Games#getNextOpenGame",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#insert",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-method-insert",
+    "smileguess-server/collections/Games.js~Games#insert",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#io",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-member-io",
+    "smileguess-server/collections/Games.js~Games#io",
+    "member"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#movetofullgames",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-method-moveToFullGames",
+    "smileguess-server/collections/Games.js~Games#moveToFullGames",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#movetoopengames",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-method-moveToOpenGames",
+    "smileguess-server/collections/Games.js~Games#moveToOpenGames",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#opengames",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-member-openGames",
+    "smileguess-server/collections/Games.js~Games#openGames",
+    "member"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#queue",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-method-queue",
+    "smileguess-server/collections/Games.js~Games#queue",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#removegamesummary",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-method-removeGameSummary",
+    "smileguess-server/collections/Games.js~Games#removeGameSummary",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#retrieve",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-method-retrieve",
+    "smileguess-server/collections/Games.js~Games#retrieve",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#storage",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-member-storage",
+    "smileguess-server/collections/Games.js~Games#storage",
+    "member"
+  ],
+  [
+    "smileguess-server/collections/games.js~games#updatequeue",
+    "class/smileguess-server/collections/Games.js~Games.html#instance-method-updateQueue",
+    "smileguess-server/collections/Games.js~Games#updateQueue",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/users.js",
+    "file/smileguess-server/collections/Users.js.html",
+    "smileguess-server/collections/Users.js",
     "file"
+  ],
+  [
+    "smileguess-server/collections/users.js~users#addusertocollection",
+    "class/smileguess-server/collections/Users.js~Users.html#instance-method-addUserToCollection",
+    "smileguess-server/collections/Users.js~Users#addUserToCollection",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/users.js~users#constructor",
+    "class/smileguess-server/collections/Users.js~Users.html#instance-constructor-constructor",
+    "smileguess-server/collections/Users.js~Users#constructor",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/users.js~users#createuser",
+    "class/smileguess-server/collections/Users.js~Users.html#instance-method-createUser",
+    "smileguess-server/collections/Users.js~Users#createUser",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/users.js~users#destroy",
+    "class/smileguess-server/collections/Users.js~Users.html#instance-method-destroy",
+    "smileguess-server/collections/Users.js~Users#destroy",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/users.js~users#getone",
+    "class/smileguess-server/collections/Users.js~Users.html#instance-method-getOne",
+    "smileguess-server/collections/Users.js~Users#getOne",
+    "method"
+  ],
+  [
+    "smileguess-server/collections/users.js~users#totaluserscreated",
+    "class/smileguess-server/collections/Users.js~Users.html#instance-member-totalUsersCreated",
+    "smileguess-server/collections/Users.js~Users#totalUsersCreated",
+    "member"
+  ],
+  [
+    "smileguess-server/collections/users.js~users#users",
+    "class/smileguess-server/collections/Users.js~Users.html#instance-member-users",
+    "smileguess-server/collections/Users.js~Users#users",
+    "member"
   ],
   [
     "smileguess-server/config/routes.js",
@@ -417,6 +573,12 @@ window.esdocSearchIndex = [
     "smileguess-server/controllers/gamecontroller.js",
     "file/smileguess-server/controllers/GameController.js.html",
     "smileguess-server/controllers/GameController.js",
+    "file"
+  ],
+  [
+    "smileguess-server/controllers/usercontroller.js",
+    "file/smileguess-server/controllers/UserController.js.html",
+    "smileguess-server/controllers/UserController.js",
     "file"
   ],
   [
@@ -444,18 +606,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "smileguess-server/models/game.js~game#assignfirstdealer",
-    "class/smileguess-server/models/Game.js~Game.html#instance-method-assignFirstDealer",
-    "smileguess-server/models/Game.js~Game#assignFirstDealer",
-    "method"
-  ],
-  [
-    "smileguess-server/models/game.js~game#category",
-    "class/smileguess-server/models/Game.js~Game.html#instance-member-category",
-    "smileguess-server/models/Game.js~Game#category",
-    "member"
-  ],
-  [
     "smileguess-server/models/game.js~game#checkguess",
     "class/smileguess-server/models/Game.js~Game.html#instance-method-checkGuess",
     "smileguess-server/models/Game.js~Game#checkGuess",
@@ -468,9 +618,15 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "smileguess-server/models/game.js~game#dealer",
-    "class/smileguess-server/models/Game.js~Game.html#instance-member-dealer",
-    "smileguess-server/models/Game.js~Game#dealer",
+    "smileguess-server/models/game.js~game#dealerid",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-dealerId",
+    "smileguess-server/models/Game.js~Game#dealerId",
+    "member"
+  ],
+  [
+    "smileguess-server/models/game.js~game#events",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-events",
+    "smileguess-server/models/Game.js~Game#events",
     "member"
   ],
   [
@@ -480,9 +636,9 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "smileguess-server/models/game.js~game#getsolution",
-    "class/smileguess-server/models/Game.js~Game.html#instance-method-getSolution",
-    "smileguess-server/models/Game.js~Game#getSolution",
+    "smileguess-server/models/game.js~game#getprompt",
+    "class/smileguess-server/models/Game.js~Game.html#instance-method-getPrompt",
+    "smileguess-server/models/Game.js~Game#getPrompt",
     "method"
   ],
   [
@@ -492,9 +648,39 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "smileguess-server/models/game.js~game#io",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-io",
+    "smileguess-server/models/Game.js~Game#io",
+    "member"
+  ],
+  [
+    "smileguess-server/models/game.js~game#on",
+    "class/smileguess-server/models/Game.js~Game.html#instance-method-on",
+    "smileguess-server/models/Game.js~Game#on",
+    "method"
+  ],
+  [
     "smileguess-server/models/game.js~game#players",
     "class/smileguess-server/models/Game.js~Game.html#instance-member-players",
     "smileguess-server/models/Game.js~Game#players",
+    "member"
+  ],
+  [
+    "smileguess-server/models/game.js~game#prompt",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-prompt",
+    "smileguess-server/models/Game.js~Game#prompt",
+    "member"
+  ],
+  [
+    "smileguess-server/models/game.js~game#promptfordisplay",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-promptForDisplay",
+    "smileguess-server/models/Game.js~Game#promptForDisplay",
+    "member"
+  ],
+  [
+    "smileguess-server/models/game.js~game#promptformatching",
+    "class/smileguess-server/models/Game.js~Game.html#instance-member-promptForMatching",
+    "smileguess-server/models/Game.js~Game#promptForMatching",
     "member"
   ],
   [
@@ -510,27 +696,9 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "smileguess-server/models/game.js~game#socketid",
-    "class/smileguess-server/models/Game.js~Game.html#instance-member-socketId",
-    "smileguess-server/models/Game.js~Game#socketId",
-    "member"
-  ],
-  [
-    "smileguess-server/models/game.js~game#solutionfordisplay",
-    "class/smileguess-server/models/Game.js~Game.html#instance-member-solutionForDisplay",
-    "smileguess-server/models/Game.js~Game#solutionForDisplay",
-    "member"
-  ],
-  [
-    "smileguess-server/models/game.js~game#solutionformatching",
-    "class/smileguess-server/models/Game.js~Game.html#instance-member-solutionForMatching",
-    "smileguess-server/models/Game.js~Game#solutionForMatching",
-    "member"
-  ],
-  [
-    "smileguess-server/models/game.js~game#updategameavailability",
-    "class/smileguess-server/models/Game.js~Game.html#instance-method-updateGameAvailability",
-    "smileguess-server/models/Game.js~Game#updateGameAvailability",
+    "smileguess-server/models/game.js~game#trigger",
+    "class/smileguess-server/models/Game.js~Game.html#instance-method-trigger",
+    "smileguess-server/models/Game.js~Game#trigger",
     "method"
   ],
   [
@@ -552,9 +720,39 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "smileguess-server/models/user.js~user#id",
-    "class/smileguess-server/models/User.js~User.html#instance-member-id",
-    "smileguess-server/models/User.js~User#id",
+    "smileguess-server/models/user.js~user#deviceid",
+    "class/smileguess-server/models/User.js~User.html#instance-member-deviceId",
+    "smileguess-server/models/User.js~User#deviceId",
+    "member"
+  ],
+  [
+    "smileguess-server/models/user.js~user#emojicoins",
+    "class/smileguess-server/models/User.js~User.html#instance-member-emojicoins",
+    "smileguess-server/models/User.js~User#emojicoins",
+    "member"
+  ],
+  [
+    "smileguess-server/models/user.js~user#picture",
+    "class/smileguess-server/models/User.js~User.html#instance-member-picture",
+    "smileguess-server/models/User.js~User#picture",
+    "member"
+  ],
+  [
+    "smileguess-server/models/user.js~user#points",
+    "class/smileguess-server/models/User.js~User.html#instance-member-points",
+    "smileguess-server/models/User.js~User#points",
+    "member"
+  ],
+  [
+    "smileguess-server/models/user.js~user#socket",
+    "class/smileguess-server/models/User.js~User.html#instance-member-socket",
+    "smileguess-server/models/User.js~User#socket",
+    "member"
+  ],
+  [
+    "smileguess-server/models/user.js~user#userid",
+    "class/smileguess-server/models/User.js~User.html#instance-member-userId",
+    "smileguess-server/models/User.js~User#userId",
     "member"
   ],
   [
@@ -564,15 +762,15 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "smileguess-server/models/user.js~user#wins",
+    "class/smileguess-server/models/User.js~User.html#instance-member-wins",
+    "smileguess-server/models/User.js~User#wins",
+    "member"
+  ],
+  [
     "smileguess-server/sockets/dummysocketdata.js",
     "file/smileguess-server/sockets/dummySocketData.js.html",
     "smileguess-server/sockets/dummySocketData.js",
-    "file"
-  ],
-  [
-    "smileguess-server/sockets/joinrandomgame.js",
-    "file/smileguess-server/sockets/joinRandomGame.js.html",
-    "smileguess-server/sockets/joinRandomGame.js",
     "file"
   ],
   [
@@ -594,6 +792,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "smileguess-server/sockets/sendgamechange.js",
+    "file/smileguess-server/sockets/sendGameChange.js.html",
+    "smileguess-server/sockets/sendGameChange.js",
+    "file"
+  ],
+  [
     "smileguess-server/sockets/sendguessmessage.js",
     "file/smileguess-server/sockets/sendGuessMessage.js.html",
     "smileguess-server/sockets/sendGuessMessage.js",
@@ -606,9 +810,21 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "smileguess-server/sockets/sendprompt.js",
+    "file/smileguess-server/sockets/sendPrompt.js.html",
+    "smileguess-server/sockets/sendPrompt.js",
+    "file"
+  ],
+  [
     "smileguess-server/sockets/sendwinner.js",
     "file/smileguess-server/sockets/sendWinner.js.html",
     "smileguess-server/sockets/sendWinner.js",
+    "file"
+  ],
+  [
+    "smileguess-server/sockets/socketutils.js",
+    "file/smileguess-server/sockets/socketUtils.js.html",
+    "smileguess-server/sockets/socketUtils.js",
     "file"
   ],
   [
@@ -621,6 +837,12 @@ window.esdocSearchIndex = [
     "smileguess-server/spec/useragent.js",
     "file/smileguess-server/spec/UserAgent.js.html",
     "smileguess-server/spec/UserAgent.js",
+    "file"
+  ],
+  [
+    "smileguess-server/spec/requesttest.js",
+    "file/smileguess-server/spec/requestTest.js.html",
+    "smileguess-server/spec/requestTest.js",
     "file"
   ],
   [
@@ -639,6 +861,12 @@ window.esdocSearchIndex = [
     "smileguess-server/spec/support/reporter.js",
     "file/smileguess-server/spec/support/reporter.js.html",
     "smileguess-server/spec/support/reporter.js",
+    "file"
+  ],
+  [
+    "smileguess-server/spec/testutils.js",
+    "file/smileguess-server/spec/testUtils.js.html",
+    "smileguess-server/spec/testUtils.js",
     "file"
   ],
   [

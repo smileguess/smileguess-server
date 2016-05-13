@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">User | API Document</title>
+  <title data-ice="title">Users | API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -49,17 +49,17 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import User from &apos;<span><a href="file/smileguess-server/models/User.js.html#lineNumber6">./smileguess-server/models/User.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Users from &apos;<span><a href="file/smileguess-server/collections/Users.js.html#lineNumber3">./smileguess-server/collections/Users.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/smileguess-server/models/User.js.html#lineNumber6">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/smileguess-server/collections/Users.js.html#lineNumber3">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
-  <h1 data-ice="name">User</h1>
+  <h1 data-ice="name">Users</h1>
 
   
 
@@ -103,14 +103,13 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(userId: <span>*</span>, deviceId: <span>*</span>)</span>
+           <span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html#instance-constructor-constructor">constructor</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Instantiates new users</p>
-</div>
+        
       </div>
     </td>
     <td>
@@ -136,7 +135,7 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html#instance-member-deviceId">deviceId</a></span></span><span data-ice="signature">: <span>*</span></span>
+           <span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html#instance-member-totalUsersCreated">totalUsersCreated</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
         </p>
       </div>
       <div>
@@ -161,7 +160,39 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html#instance-member-emojicoins">emojicoins</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+           <span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html#instance-member-users">users</a></span></span><span data-ice="signature">: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+</tbody>
+</table>
+</div>
+<div data-ice="methodSummary"><h2>Method Summary</h2><table class="summary" data-ice="summary">
+  <thead><tr><td data-ice="title" colspan="3">Public Methods</td></tr></thead>
+  <tbody>
+  
+  <tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html#instance-method-addUserToCollection">addUserToCollection</a></span></span><span data-ice="signature">(newUser: <span>*</span>): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -186,7 +217,7 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html#instance-member-picture">picture</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+           <span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html#instance-method-createUser">createUser</a></span></span><span data-ice="signature">(deviceId: <span>*</span>): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -211,7 +242,7 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html#instance-member-points">points</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+           <span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html#instance-method-destroy">destroy</a></span></span><span data-ice="signature">(userId: <span>*</span>): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -236,82 +267,7 @@
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html#instance-member-socket">socket</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html#instance-member-userId">userId</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html#instance-member-username">username</a></span></span><span data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html#instance-member-wins">wins</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+           <span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html#instance-method-getOne">getOne</a></span></span><span data-ice="signature">(userId: <span>*</span>): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -333,7 +289,6 @@
 
 
 
-
 <div data-ice="constructorDetails"><h2 data-ice="title">Public Constructors</h2>
 
 <div class="detail" data-ice="detail">
@@ -343,45 +298,22 @@
     
     
     
-    <span data-ice="name">constructor</span><span data-ice="signature">(userId: <span>*</span>, deviceId: <span>*</span>)</span>
+    <span data-ice="name">constructor</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/User.js.html#lineNumber11">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/collections/Users.js.html#lineNumber4">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Instantiates new users</p>
-</div>
+  
 
   
 
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">userId</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">deviceId</td>
-      <td data-ice="type"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
+  <div data-ice="properties">
 </div>
 
   
@@ -403,17 +335,17 @@
 <div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-deviceId">
+  <h3 data-ice="anchor" id="instance-member-totalUsersCreated">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">deviceId</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">totalUsersCreated</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/User.js.html#lineNumber13">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/collections/Users.js.html#lineNumber6">source</a></span></span>
     </span>
   </h3>
 
@@ -443,17 +375,17 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-emojicoins">
+  <h3 data-ice="anchor" id="instance-member-users">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">emojicoins</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+    <span data-ice="name">users</span><span data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/User.js.html#lineNumber18">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/collections/Users.js.html#lineNumber5">source</a></span></span>
     </span>
   </h3>
 
@@ -468,6 +400,75 @@
 </div>
 
   
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+</div>
+<div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
+
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-addUserToCollection">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">addUserToCollection</span><span data-ice="signature">(newUser: <span>*</span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/smileguess-server/collections/Users.js.html#lineNumber15">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">newUser</td>
+      <td data-ice="type"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span>*</span></td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -483,17 +484,17 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-picture">
+  <h3 data-ice="anchor" id="instance-method-createUser">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">picture</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span data-ice="name">createUser</span><span data-ice="signature">(deviceId: <span>*</span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/User.js.html#lineNumber19">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/collections/Users.js.html#lineNumber9">source</a></span></span>
     </span>
   </h3>
 
@@ -504,10 +505,36 @@
 
   
 
-  <div data-ice="properties">
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">deviceId</td>
+      <td data-ice="type"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span>*</span></td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -523,17 +550,17 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-points">
+  <h3 data-ice="anchor" id="instance-method-destroy">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">points</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+    <span data-ice="name">destroy</span><span data-ice="signature">(userId: <span>*</span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/User.js.html#lineNumber16">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/collections/Users.js.html#lineNumber20">source</a></span></span>
     </span>
   </h3>
 
@@ -544,10 +571,36 @@
 
   
 
-  <div data-ice="properties">
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">userId</td>
+      <td data-ice="type"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span>*</span></td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -563,17 +616,17 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-socket">
+  <h3 data-ice="anchor" id="instance-method-getOne">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">socket</span><span data-ice="signature">: <span>*</span></span>
+    <span data-ice="name">getOne</span><span data-ice="signature">(userId: <span>*</span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/User.js.html#lineNumber15">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/collections/Users.js.html#lineNumber25">source</a></span></span>
     </span>
   </h3>
 
@@ -584,130 +637,36 @@
 
   
 
-  <div data-ice="properties">
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">userId</td>
+      <td data-ice="type"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
 </div>
 
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span>*</span></td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
 </div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-userId">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    <span data-ice="name">userId</span><span data-ice="signature">: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/smileguess-server/models/User.js.html#lineNumber12">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-username">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    <span data-ice="name">username</span><span data-ice="signature">: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/smileguess-server/models/User.js.html#lineNumber14">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-wins">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    <span data-ice="name">wins</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/smileguess-server/models/User.js.html#lineNumber17">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
+  </div>
 
   
 
@@ -723,7 +682,6 @@
   
 </div>
 </div>
-
 </div>
 
 <footer class="footer">

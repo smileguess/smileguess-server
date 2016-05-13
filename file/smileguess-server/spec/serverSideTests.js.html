@@ -32,15 +32,17 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collections</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Games.js~Games.html">Games</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html">Users</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html">User</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">sockets</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dummy">dummy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-joinRandomGame">joinRandomGame</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onDisconnect">onDisconnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendGuessMessage">sendGuessMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPlayerJoinGame">sendPlayerJoinGame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPrompt">sendPrompt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendWinner">sendWinner</a></span></span></li>
 </ul>
 </div>
@@ -50,22 +52,29 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const reporter = require(&apos;./support/reporter&apos;);
 const request = require(&apos;request&apos;);
 const User = require(&apos;../models/User&apos;);
-const Game = require(&apos;../models/Game&apos;);
+const Users = require(&apos;../collections/Users&apos;);
 const Games = require(&apos;../collections/Games.js&apos;);
-const gameMethods = require(&apos;../controllers/GameController&apos;);
+const GameController = require(&apos;../controllers/GameController&apos;);
+const UserController = require(&apos;../controllers/UserController&apos;);
 const settings = require(&apos;../gameSettings&apos;);
+const testUtils = require(&apos;./testUtils&apos;);
 jasmine.getEnv().addReporter(reporter);
 
 const serverURL = &apos;http://127.0.0.1:1234&apos;;
+const joinOrStartGameURL = &apos;http://127.0.0.1:1234/api/game/&apos;;
 
-describe(&apos;Basic Server Functions&apos;, () =&gt; {
-  describe(&apos;Server&apos;, () =&gt; {
+let testDb = {
+  games: new Games(),
+  users: new Users(),
+};
+
+describe(&apos;Server Functions&apos;, () =&gt; {
+  describe(&apos;API&apos;, () =&gt; {
     it(&apos;will respond to a request at a nonexistant endpoint&apos;, (done) =&gt; {
       const options = {
         method: &apos;GET&apos;,
         uri: serverURL,
       };
-
       request(options, (error, res) =&gt; {
         if (error &amp;&amp; error.code === &apos;ECONNREFUSED&apos;) {
           throw new Error(&apos;Connection refused, are you sure your server is running?&apos;);
@@ -74,130 +83,178 @@ describe(&apos;Basic Server Functions&apos;, () =&gt; {
         done();
       });
     });
+    it(&apos;will respond with a game instance&apos;, (done) =&gt; {
+      testUtils.sendPlayRequest(null, (req, res, body) =&gt; {
+        const game = JSON.parse(body);
+        expect(game.hasOwnProperty(&apos;gameId&apos;)).toBe(true);
+        expect(game.hasOwnProperty(&apos;players&apos;)).toBe(true);
+        expect(game.hasOwnProperty(&apos;seatsOpen&apos;)).toBe(true);
+        done();
+      });
+    });
   });
 });
 
-describe(&apos;Models, Controllers and Collections: &apos;, () =&gt; {
-  let openGames = Games.openGames;
-  const fullGames = Games.fullGames;
-  const testUser1 = new User(&apos;user1ID&apos;);
-  const testUser2 = new User(&apos;user2ID&apos;);
-  const testUser3 = new User(&apos;user3ID&apos;);
-  const testUser4 = new User(&apos;user4ID&apos;);
-  const testUser5 = new User(&apos;user5ID&apos;);
-  const testUser6 = new User(&apos;user6ID&apos;);
-  const testGame1 = new Game(testUser1);
+describe(&apos;Models, Collections and Controllers: &apos;, () =&gt; {
+  beforeEach(() =&gt; {
+    testDb = {
+      games: new Games(),
+      users: new Users(),
+    };
+  });
 
   describe(&apos;User Model&apos;, () =&gt; {
     it(&apos;will correctly instantiate a new user&apos;, () =&gt; {
-      expect(testUser1.id).toBe(&apos;user1ID&apos;);
-      expect(typeof testUser1.username).toBe(&apos;string&apos;);
+      expect(testDb.users.createUser(&apos;hypotheticalDeviceId&apos;).userId).toBe(1);
+      expect(UserController.getUser(testDb.users, 1).username).not.toBe(undefined);
     });
   });
 
-  describe(&apos;Game: Model, Collection and Controllers&apos;, () =&gt; {
-
-    it(&apos;will correctly instantiate a new game&apos;, () =&gt; { 
-      expect(testGame1.players[0].id).toBe(&apos;user1ID&apos;);
+  describe(&apos;Game Model&apos;, () =&gt; {
+    it(&apos;will correctly instantiate a new game&apos;, () =&gt; {
+      testDb.games.createGame();
+      expect(testDb.games.getNextOpenGame().hasOwnProperty(&apos;gameId&apos;)).toBe(true);
+      expect(testDb.games.getNextOpenGame().hasOwnProperty(&apos;players&apos;)).toBe(true);
+      expect(testDb.games.getNextOpenGame().hasOwnProperty(&apos;seatsOpen&apos;)).toBe(true);
+      expect(testDb.games.getNextOpenGame().hasOwnProperty(&apos;dealer&apos;)).toBe(true);
+      expect(testDb.games.getNextOpenGame().hasOwnProperty(&apos;events&apos;)).toBe(true);
     });
 
-    it(&apos;will place a user in a game&apos;, () =&gt; {
-      const testUser2 = new User(&apos;user2ID&apos;);
-      testGame1.addPlayer(testUser2);
-      expect(testGame1.players[0].id).toBe(&apos;user1ID&apos;);
-      expect(testGame1.players[1].id).toBe(&apos;user2ID&apos;);
+    it(&apos;will place a player in a game&apos;, () =&gt; {
+      testDb.games.createGame();
+      testUtils.populateNextOpenGameWithPlayers(testDb, 2)
+      expect(testDb.games.getNextOpenGame().players[0]).toBe(1);
+      expect(testDb.games.getNextOpenGame().players[1]).toBe(2);
     });
     it(&apos;will remove a player from a game&apos;, () =&gt; {
-      testGame1.removePlayer(testUser1);
-      expect(testGame1.players.length).toBe(1);
-    })
+      const testGame = testDb.games.createGame();
+      testUtils.populateNextOpenGameWithPlayers(testDb, 2)
+      expect(testGame.players.length).toEqual(2);
+
+
+      GameController.handlePlayerLeave(testDb.games, 1, 1);
+      expect(testGame.players.length).toBe(1);
+    });
     it(&apos;will adjust the number of seats available after adding players&apos;, () =&gt; {
-      testGame1.addPlayer(testUser2);
-      testGame1.addPlayer(testUser3);
-      expect(testGame1.seatsOpen).toBe(settings.maxPlayers - 3);
+      const testGame = testDb.games.createGame();
+      testUtils.populateNextOpenGameWithPlayers(testDb, 1);
+      expect(testGame.seatsOpen).toEqual(settings.maxPlayers - 1);
+
+      testUtils.populateNextOpenGameWithPlayers(testDb, 1);
+      expect(testGame.seatsOpen).toEqual(settings.maxPlayers - testGame.players.length);
     });
     it(&apos;will adjust the number of seats available after removing players&apos;, () =&gt; {
-      testGame1.removePlayer(testUser2);
-      testGame1.removePlayer(testUser3);
-      expect(testGame1.seatsOpen).toBe(settings.maxPlayers - 1);
-    });
-    it(&apos;will quarantine full games&apos;, () =&gt; {
-      testGame1.addPlayer(testUser2);
-      testGame1.addPlayer(testUser3);
-      testGame1.addPlayer(testUser4);
-      testGame1.addPlayer(testUser5);
-      testGame1.addPlayer(testUser6);
-      expect(Games.fullGames.length).toBe(1);
-    });
-    it(&apos;will aggregate games with seats available&apos;, () =&gt; {
-      testGame1.removePlayer(testUser6);
-      expect(openGames.length).toBe(1);
-    });
-    it(&apos;will remove games from openGames when they are no longer open and add games to fullGames&apos;, () =&gt; {
-      expect(fullGames.length).toBe(0);
-      expect(openGames.length).toBe(1);
+      const testGame = testDb.games.createGame();
+      testUtils.populateNextOpenGameWithPlayers(testDb, 2);
+      expect(testGame.seatsOpen).toEqual(settings.maxPlayers - 2);
 
-      testGame1.addPlayer(testUser6);
-
-      expect(fullGames.length).toBe(1);
-      expect(openGames.length).toBe(0);
-    });
-    it(&apos;will remove games from fullGames when a seat is open, and add games to openGames&apos;, () =&gt; {
-      testGame1.removePlayer(testUser6);
-      expect(fullGames.length).toBe(0);
-      expect(openGames.length).toBe(1);
-    });
-    it(&apos;will order open games by number of seats available&apos;, () =&gt; {
-      const testGame2 = new Game(testUser2);
-      testGame2.updateGameAvailability();
-      Games.sort(openGames);
-      expect(openGames[0].seatsOpen &lt; openGames[1].seatsOpen).toBe(true);
-    });
-    it(&apos;will place users in the game with the most seats available&apos;, () =&gt; {
-      gameMethods.joinOrStartGame(testUser2);
-      expect(openGames[1].seatsOpen).toBe(4);
-    });
-    it(&apos;will create a new game if no seats are available&apos;, () =&gt; {
-      gameMethods.joinOrStartGame(testUser2);
-      gameMethods.joinOrStartGame(testUser3);
-      gameMethods.joinOrStartGame(testUser4);
-      gameMethods.joinOrStartGame(testUser5);
-      gameMethods.joinOrStartGame(testUser6);
-
-      expect(openGames.length).toBe(0);
-      expect(openGames.length + fullGames.length).toBe(2);
-
-      gameMethods.joinOrStartGame(testUser6);
-
-      expect(openGames.length + fullGames.length).toBe(3);
+      GameController.handlePlayerLeave(testDb.games, 1, 2);
+      expect(testGame.seatsOpen).toEqual(settings.maxPlayers - 1);
     });
     it(&apos;will start a game after enough players have joined&apos;, () =&gt; {
-      expect(openGames[openGames.length - 1].active).toBe(false);
-      for (let i = 1; i &lt; settings.minPlayers; i++) {
-        gameMethods.joinOrStartGame(testUser4);
-      }
-      expect(openGames[openGames.length - 1].active).toBe(true);
+      testDb.games.createGame();
+      testUtils.populateNextOpenGameWithPlayers(testDb, settings.minPlayers - 1);
+      expect(testDb.games.getNextOpenGame().active).toBe(false);
+
+      testUtils.populateNextOpenGameWithPlayers(testDb, 1);
+      expect(testDb.games.getNextOpenGame().active).toBe(true);
     });
     it(&apos;will assign the first dealer&apos;, () =&gt; {
-      expect(openGames[openGames.length - 1].dealer).not.toBe(null);
+      testDb.games.createGame();
+      testUtils.populateNextOpenGameWithPlayers(testDb, settings.minPlayers);
+      expect(testDb.games.openGames[0].dealer).not.toBe(null);
     });
-    it(&apos;will assign a random solution from a random category&apos;, () =&gt; {
-      console.log(openGames[openGames.length - 1].solutionForDisplay);
-      expect(openGames[openGames.length - 1].solutionForDisplay).not.toBe(null);
-      expect(openGames[openGames.length - 1].solutionForMatching).not.toBe(null);
+    it(&apos;will assign a random prompt from a random category&apos;, () =&gt; {
+      testDb.games.createGame();
+      testUtils.populateNextOpenGameWithPlayers(testDb, settings.minPlayers);
+      expect(testDb.games.openGames[0].prompt.forDisplay).not.toBe(null);
+      expect(testDb.games.openGames[0].prompt.forMatching).not.toBe(null);
+    });
+    it(&apos;will check guesses&apos;, () =&gt; {
+      const testGuess = {
+        type: &apos;SOCKET_GUESS_MESSAGE&apos;,
+        userid: &apos;user1ID&apos;,
+        message: &apos;NOT A CORRECT GUESS&apos;,
+      };
+      testDb.games.createGame();
+      testUtils.populateNextOpenGameWithPlayers(testDb, settings.minPlayers);
+      expect(GameController.handleGuess(testDb.games, 1, testGuess.message)).toBe(false);
+
+      prompt = testDb.games.getNextOpenGame().prompt.forMatching.toLowerCase();
+      expect(GameController.handleGuess(testDb.games, 1, prompt)).not.toBe(false);
+    });
+  });
+
+  describe(&apos;Game Collection&apos;, () =&gt; {
+    it(&apos;will retrieve a game by game id&apos;, () =&gt; {
+      testDb.games.createGame();
+      expect(testDb.games.retrieve(1)).not.toBe(undefined);
+    });
+    it(&apos;will quarantine full games&apos;, () =&gt; {
+      testDb.games.createGame();
+      testUtils.populateNextOpenGameWithPlayers(testDb, settings.maxPlayers - 1);
+      expect(testDb.games.fullGames.length).toEqual(0);
+
+      GameController.handlePlayerJoin(testDb.games, testUtils.generateTestUsers(testDb.users, 1)[0].userId);
+      expect(testDb.games.fullGames.length).toEqual(1);
+    });
+    it(&apos;will aggregate games with seats available&apos;, () =&gt; {
+      testDb.games.createGame();
+      testDb.games.createGame();
+      expect(testDb.games.openGames.length).toEqual(2);
+    });
+    it(&apos;will move games from openGames to fullGames when they are full&apos;, () =&gt; {
+      testDb.games.createGame();
+      testUtils.populateNextOpenGameWithPlayers(testDb, settings.maxPlayers - 1);
+      expect(testDb.games.fullGames.length).toEqual(0);
+      console.log(testDb.games.fullGames.length, testDb.games.openGames.length);
+      GameController.handlePlayerJoin(testDb.games, testUtils.generateTestUsers(testDb.users, 1)[0].userId);
+      console.log(testDb.games.fullGames.length, testDb.games.openGames.length);
+      expect(testDb.games.fullGames.length).toEqual(1);
+      expect(testDb.games.openGames.length).toEqual(0);
+    });
+    it(&apos;will move games from fullGames to openGames when a seat becomes available&apos;, () =&gt; {
+      testDb.games.createGame();
+      expect(testDb.games.fullGames.length).toEqual(0);
+      testUtils.populateNextOpenGameWithPlayers(testDb, settings.maxPlayers);
+      expect(testDb.games.fullGames.length).toEqual(1);
+    });
+    it(&apos;will order open games by number of seats available&apos;, () =&gt; {
+      testDb.games.createGame();
+      testDb.games.createGame();
+      testUtils.populateNextOpenGameWithPlayers(testDb, 3);
+
+      expect(testDb.games.retrieve(testDb.games.openGames[0]).seatsOpen).toEqual(4);
+      expect(testDb.games.retrieve(testDb.games.openGames[1]).seatsOpen).toEqual(5);
+    });
+    it(&apos;will place users in the game with the most seats available&apos;, () =&gt; {
+      testDb.games.createGame();
+      testDb.games.createGame();
+      testUtils.populateNextOpenGameWithPlayers(testDb, 4);
+      expect(testDb.games.openGames[0][1]).toEqual(testDb.games.openGames[1][1]);
+    });
+    it(&apos;will create a new game if no seats are available&apos;, () =&gt; {
+      GameController.play(testDb.games, (game) =&gt; {
+        testUtils.populateNextOpenGameWithPlayers(testDb, 1);
+        expect(game.players[0]).toEqual(1);
+      });
     });
     it(&apos;will destroy the game if all players leave&apos;, () =&gt; {
-      openGames[0].removePlayer(testUser4);
-      openGames[0].removePlayer(testUser4);
-      expect(openGames.length).toBe(1);
-      openGames[0].removePlayer(testUser6);
-      expect(openGames.length).toBe(0);
-    });
-    xit(&apos;will check guesses&apos;, () =&gt; {
-      // game method built, but waiting until message functions are built to test
+      testDb.games.createGame();
+      expect(testDb.games.openGames.length).toEqual(1);
+      expect(typeof testDb.games.retrieve(testDb.games.openGames[0])).toBe(&apos;object&apos;);
+      console.log(testDb.games.getNextOpenGame())
+      GameController.handlePlayerLeave(testDb.games, 1, 1);
+      console.log(testDb.games.openGames);
+      expect(testDb.games.openGames.length).toEqual(0);
+      expect(testDb.games.retrieve(testDb.games.openGames[0])).toBe(undefined);
     });
   });
 });
+
+module.exports = {
+
+};
 </code></pre>
 
 </div>

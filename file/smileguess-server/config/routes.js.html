@@ -32,26 +32,44 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collections</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Games.js~Games.html">Games</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html">Users</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html">User</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">sockets</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dummy">dummy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-joinRandomGame">joinRandomGame</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onDisconnect">onDisconnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendGuessMessage">sendGuessMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPlayerJoinGame">sendPlayerJoinGame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPrompt">sendPrompt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendWinner">sendWinner</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/config/routes.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const express = require(&apos;express&apos;);
-const gameController = require(&apos;../controllers/GameController&apos;);
-const app = express();
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const GameController = require(&apos;../controllers/GameController&apos;);
+const UserController = require(&apos;../controllers/UserController&apos;);
 
-app.post(&apos;/api/randomgame:userid&apos;, gameController.joinOrStartGame());
+module.exports = (app, db) =&gt; {
+  app.get(&apos;/api/game/&apos;, (req, res) =&gt; {
+    GameController.play(db.games, (game) =&gt; res.json(game));
+  });
+
+  app.get(&apos;/api/user/:deviceId&apos;, (req, res) =&gt; {
+    UserController.newUser(req, res, db.users, (user) =&gt; {
+      res.json({
+        userId: user.userId,
+        username: user.username,
+        points: user.points,
+        wins: user.wins,
+        emojicoins: user.emojicoins,
+        picture: user.picture,
+      });
+    });
+  });
+};
 </code></pre>
 
 </div>

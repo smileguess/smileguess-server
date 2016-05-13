@@ -417,82 +417,6 @@
     {
       "type": "ExportDefaultDeclaration",
       "declaration": {
-        "type": "Identifier",
-        "name": "onConnect",
-        "range": [
-          447,
-          456
-        ],
-        "loc": {
-          "start": {
-            "line": 17,
-            "column": 15
-          },
-          "end": {
-            "line": 17,
-            "column": 24
-          }
-        },
-        "leadingComments": [
-          {
-            "type": "Block",
-            "value": "*\n * TODO: Expect that the client will make a REST call \n * to server to get the game data upon entering a game\n ",
-            "range": [
-              313,
-              430
-            ],
-            "loc": {
-              "start": {
-                "line": 12,
-                "column": 0
-              },
-              "end": {
-                "line": 15,
-                "column": 3
-              }
-            }
-          }
-        ],
-        "trailingComments": []
-      },
-      "range": [
-        432,
-        457
-      ],
-      "loc": {
-        "start": {
-          "line": 17,
-          "column": 0
-        },
-        "end": {
-          "line": 17,
-          "column": 25
-        }
-      },
-      "leadingComments": [
-        {
-          "type": "Block",
-          "value": "*\n * TODO: Expect that the client will make a REST call \n * to server to get the game data upon entering a game\n ",
-          "range": [
-            313,
-            430
-          ],
-          "loc": {
-            "start": {
-              "line": 12,
-              "column": 0
-            },
-            "end": {
-              "line": 15,
-              "column": 3
-            }
-          }
-        }
-      ]
-    },
-    {
-      "type": "ExportDefaultDeclaration",
-      "declaration": {
         "type": "VariableDeclaration",
         "declarations": [
           {
@@ -812,7 +736,7 @@
   "sourceType": "module",
   "range": [
     0,
-    457
+    312
   ],
   "loc": {
     "start": {
@@ -820,7 +744,7 @@
       "column": 0
     },
     "end": {
-      "line": 17,
+      "line": 11,
       "column": 25
     }
   },

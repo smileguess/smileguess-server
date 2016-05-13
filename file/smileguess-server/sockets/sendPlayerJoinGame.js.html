@@ -32,22 +32,25 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collections</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Games.js~Games.html">Games</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html">Users</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html">User</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">sockets</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dummy">dummy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-joinRandomGame">joinRandomGame</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onDisconnect">onDisconnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendGuessMessage">sendGuessMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPlayerJoinGame">sendPlayerJoinGame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPrompt">sendPrompt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendWinner">sendWinner</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/sockets/sendPlayerJoinGame.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const dummy = require(&apos;./dummySocketData.js&apos;);
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const GameController = require(&apos;../controllers/GameController&apos;);
+const UserController = require(&apos;../controllers/UserController&apos;);
 
 /**
  * This function sends a message letting the users of a
@@ -56,14 +59,27 @@
  * @param {Object} socket - the users socket connection
  * @param {Object} user - the user object of the user joining
  */
-const sendPlayerJoinGame = (io, socket, user) =&gt; {
-  io.to(dummy.gameId).emit(&apos;action&apos;, {
+const sendPlayerJoinGame = (io, socket, action, db) =&gt; {
+  console.log(&apos;SOCKET_PLAYER_JOIN_GAME CALLED&apos;);
+
+  let user = action.userId ? UserController.getUser(db.users, action.userId) : null;
+  if (!user) {
+    user = UserController.newUser(null, null, db.users);
+  }
+
+  console.log(user);
+  user.socket = socket;
+  GameController.handlePlayerJoin(db.games, user.userId);
+
+  socket.join(action.gameId);
+  socket.broadcast.to(action.gameId).emit(&apos;action&apos;, {
     type: &apos;SOCKET_PLAYER_JOIN_GAME&apos;,
-    user: user,
+    user: db.users.getOne(user.userId),
+    game: GameController.retrieve(db.games, action.gameId),
   });
 };
-module.exports = sendPlayerJoinGame;
 
+module.exports = sendPlayerJoinGame;
 </code></pre>
 
 </div>

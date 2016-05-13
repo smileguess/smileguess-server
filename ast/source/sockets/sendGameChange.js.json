@@ -1,0 +1,625 @@
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "declarations": [
+        {
+          "type": "VariableDeclarator",
+          "id": {
+            "type": "Identifier",
+            "name": "socketUtils",
+            "range": [
+              6,
+              17
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 6
+              },
+              "end": {
+                "line": 1,
+                "column": 17
+              }
+            }
+          },
+          "init": {
+            "type": "CallExpression",
+            "callee": {
+              "type": "Identifier",
+              "name": "require",
+              "range": [
+                20,
+                27
+              ],
+              "loc": {
+                "start": {
+                  "line": 1,
+                  "column": 20
+                },
+                "end": {
+                  "line": 1,
+                  "column": 27
+                }
+              }
+            },
+            "arguments": [
+              {
+                "type": "Literal",
+                "value": "./socketUtils",
+                "raw": "'./socketUtils'",
+                "range": [
+                  28,
+                  43
+                ],
+                "loc": {
+                  "start": {
+                    "line": 1,
+                    "column": 28
+                  },
+                  "end": {
+                    "line": 1,
+                    "column": 43
+                  }
+                }
+              }
+            ],
+            "range": [
+              20,
+              44
+            ],
+            "loc": {
+              "start": {
+                "line": 1,
+                "column": 20
+              },
+              "end": {
+                "line": 1,
+                "column": 44
+              }
+            }
+          },
+          "range": [
+            6,
+            44
+          ],
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 6
+            },
+            "end": {
+              "line": 1,
+              "column": 44
+            }
+          }
+        }
+      ],
+      "kind": "const",
+      "range": [
+        0,
+        45
+      ],
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 0
+        },
+        "end": {
+          "line": 1,
+          "column": 45
+        }
+      }
+    },
+    {
+      "type": "ExpressionStatement",
+      "expression": {
+        "type": "AssignmentExpression",
+        "operator": "=",
+        "left": {
+          "type": "MemberExpression",
+          "computed": false,
+          "object": {
+            "type": "Identifier",
+            "name": "exports",
+            "range": [
+              47,
+              54
+            ],
+            "loc": {
+              "start": {
+                "line": 3,
+                "column": 0
+              },
+              "end": {
+                "line": 3,
+                "column": 7
+              }
+            }
+          },
+          "property": {
+            "type": "Identifier",
+            "name": "modifyClientGameState",
+            "range": [
+              55,
+              76
+            ],
+            "loc": {
+              "start": {
+                "line": 3,
+                "column": 8
+              },
+              "end": {
+                "line": 3,
+                "column": 29
+              }
+            }
+          },
+          "range": [
+            47,
+            76
+          ],
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 0
+            },
+            "end": {
+              "line": 3,
+              "column": 29
+            }
+          }
+        },
+        "right": {
+          "type": "ArrowFunctionExpression",
+          "id": null,
+          "params": [
+            {
+              "type": "Identifier",
+              "name": "event",
+              "range": [
+                80,
+                85
+              ],
+              "loc": {
+                "start": {
+                  "line": 3,
+                  "column": 33
+                },
+                "end": {
+                  "line": 3,
+                  "column": 38
+                }
+              }
+            },
+            {
+              "type": "Identifier",
+              "name": "game",
+              "range": [
+                87,
+                91
+              ],
+              "loc": {
+                "start": {
+                  "line": 3,
+                  "column": 40
+                },
+                "end": {
+                  "line": 3,
+                  "column": 44
+                }
+              }
+            }
+          ],
+          "body": {
+            "type": "BlockStatement",
+            "body": [
+              {
+                "type": "VariableDeclaration",
+                "declarations": [
+                  {
+                    "type": "VariableDeclarator",
+                    "id": {
+                      "type": "Identifier",
+                      "name": "action",
+                      "range": [
+                        106,
+                        112
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 4,
+                          "column": 8
+                        },
+                        "end": {
+                          "line": 4,
+                          "column": 14
+                        }
+                      }
+                    },
+                    "init": {
+                      "type": "CallExpression",
+                      "callee": {
+                        "type": "MemberExpression",
+                        "computed": false,
+                        "object": {
+                          "type": "Identifier",
+                          "name": "socketUtils",
+                          "range": [
+                            115,
+                            126
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 4,
+                              "column": 17
+                            },
+                            "end": {
+                              "line": 4,
+                              "column": 28
+                            }
+                          }
+                        },
+                        "property": {
+                          "type": "Identifier",
+                          "name": "createGameChangeAction",
+                          "range": [
+                            127,
+                            149
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 4,
+                              "column": 29
+                            },
+                            "end": {
+                              "line": 4,
+                              "column": 51
+                            }
+                          }
+                        },
+                        "range": [
+                          115,
+                          149
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 4,
+                            "column": 17
+                          },
+                          "end": {
+                            "line": 4,
+                            "column": 51
+                          }
+                        }
+                      },
+                      "arguments": [
+                        {
+                          "type": "Identifier",
+                          "name": "event",
+                          "range": [
+                            150,
+                            155
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 4,
+                              "column": 52
+                            },
+                            "end": {
+                              "line": 4,
+                              "column": 57
+                            }
+                          }
+                        },
+                        {
+                          "type": "Identifier",
+                          "name": "game",
+                          "range": [
+                            157,
+                            161
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 4,
+                              "column": 59
+                            },
+                            "end": {
+                              "line": 4,
+                              "column": 63
+                            }
+                          }
+                        }
+                      ],
+                      "range": [
+                        115,
+                        162
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 4,
+                          "column": 17
+                        },
+                        "end": {
+                          "line": 4,
+                          "column": 64
+                        }
+                      }
+                    },
+                    "range": [
+                      106,
+                      162
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 4,
+                        "column": 8
+                      },
+                      "end": {
+                        "line": 4,
+                        "column": 64
+                      }
+                    }
+                  }
+                ],
+                "kind": "const",
+                "range": [
+                  100,
+                  163
+                ],
+                "loc": {
+                  "start": {
+                    "line": 4,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 4,
+                    "column": 65
+                  }
+                }
+              },
+              {
+                "type": "ExpressionStatement",
+                "expression": {
+                  "type": "CallExpression",
+                  "callee": {
+                    "type": "MemberExpression",
+                    "computed": false,
+                    "object": {
+                      "type": "MemberExpression",
+                      "computed": false,
+                      "object": {
+                        "type": "Identifier",
+                        "name": "game",
+                        "range": [
+                          166,
+                          170
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 5,
+                            "column": 2
+                          },
+                          "end": {
+                            "line": 5,
+                            "column": 6
+                          }
+                        }
+                      },
+                      "property": {
+                        "type": "Identifier",
+                        "name": "io",
+                        "range": [
+                          171,
+                          173
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 5,
+                            "column": 7
+                          },
+                          "end": {
+                            "line": 5,
+                            "column": 9
+                          }
+                        }
+                      },
+                      "range": [
+                        166,
+                        173
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 5,
+                          "column": 2
+                        },
+                        "end": {
+                          "line": 5,
+                          "column": 9
+                        }
+                      }
+                    },
+                    "property": {
+                      "type": "Identifier",
+                      "name": "emit",
+                      "range": [
+                        174,
+                        178
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 5,
+                          "column": 10
+                        },
+                        "end": {
+                          "line": 5,
+                          "column": 14
+                        }
+                      }
+                    },
+                    "range": [
+                      166,
+                      178
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 5,
+                        "column": 2
+                      },
+                      "end": {
+                        "line": 5,
+                        "column": 14
+                      }
+                    }
+                  },
+                  "arguments": [
+                    {
+                      "type": "Literal",
+                      "value": "action",
+                      "raw": "'action'",
+                      "range": [
+                        179,
+                        187
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 5,
+                          "column": 15
+                        },
+                        "end": {
+                          "line": 5,
+                          "column": 23
+                        }
+                      }
+                    },
+                    {
+                      "type": "Identifier",
+                      "name": "action",
+                      "range": [
+                        189,
+                        195
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 5,
+                          "column": 25
+                        },
+                        "end": {
+                          "line": 5,
+                          "column": 31
+                        }
+                      }
+                    }
+                  ],
+                  "range": [
+                    166,
+                    196
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 5,
+                      "column": 2
+                    },
+                    "end": {
+                      "line": 5,
+                      "column": 32
+                    }
+                  }
+                },
+                "range": [
+                  166,
+                  197
+                ],
+                "loc": {
+                  "start": {
+                    "line": 5,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 5,
+                    "column": 33
+                  }
+                }
+              }
+            ],
+            "range": [
+              96,
+              199
+            ],
+            "loc": {
+              "start": {
+                "line": 3,
+                "column": 49
+              },
+              "end": {
+                "line": 6,
+                "column": 1
+              }
+            }
+          },
+          "generator": false,
+          "expression": false,
+          "range": [
+            79,
+            199
+          ],
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 32
+            },
+            "end": {
+              "line": 6,
+              "column": 1
+            }
+          }
+        },
+        "range": [
+          47,
+          199
+        ],
+        "loc": {
+          "start": {
+            "line": 3,
+            "column": 0
+          },
+          "end": {
+            "line": 6,
+            "column": 1
+          }
+        }
+      },
+      "range": [
+        47,
+        200
+      ],
+      "loc": {
+        "start": {
+          "line": 3,
+          "column": 0
+        },
+        "end": {
+          "line": 6,
+          "column": 2
+        }
+      }
+    }
+  ],
+  "sourceType": "module",
+  "range": [
+    0,
+    200
+  ],
+  "loc": {
+    "start": {
+      "line": 1,
+      "column": 0
+    },
+    "end": {
+      "line": 6,
+      "column": 2
+    }
+  },
+  "comments": []
+}

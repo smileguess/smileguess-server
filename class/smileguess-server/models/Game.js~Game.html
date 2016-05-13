@@ -32,28 +32,30 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collections</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Games.js~Games.html">Games</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html">Users</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html">User</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">sockets</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dummy">dummy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-joinRandomGame">joinRandomGame</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onDisconnect">onDisconnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendGuessMessage">sendGuessMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPlayerJoinGame">sendPlayerJoinGame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPrompt">sendPrompt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendWinner">sendWinner</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Game from &apos;<span><a href="file/smileguess-server/models/Game.js.html#lineNumber36">./smileguess-server/models/Game.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import Game from &apos;<span><a href="file/smileguess-server/models/Game.js.html#lineNumber31">./smileguess-server/models/Game.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/smileguess-server/models/Game.js.html#lineNumber36">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/smileguess-server/models/Game.js.html#lineNumber31">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -111,7 +113,7 @@ created, otherwise retrieved from the Games collection.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(userWhoStartsGame: <span>*</span>)</span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-constructor-constructor">constructor</a></span></span><span data-ice="signature">(userWhoStartsGame: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, gameId: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>)</span>
         </p>
       </div>
       <div>
@@ -150,7 +152,7 @@ created, otherwise retrieved from the Games collection.</p>
       <div>
         
         
-        <div data-ice="description"><p>This property will prevent the game from running until sufficient players have joined</p>
+        <div data-ice="description"><p>Prevents the game from running until sufficient players have joined</p>
 </div>
       </div>
     </td>
@@ -170,13 +172,13 @@ created, otherwise retrieved from the Games collection.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-category">category</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-dealerId">dealerId</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>This property will communicate the solution&apos;s category to all players</p>
+        <div data-ice="description"><p>Specifies which player is currently creating clues with emojis</p>
 </div>
       </div>
     </td>
@@ -196,13 +198,14 @@ created, otherwise retrieved from the Games collection.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-dealer">dealer</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-events">events</a></span></span><span data-ice="signature">: <span>object[ ]</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Event listener callback functions to be invoked</p>
+</div>
       </div>
     </td>
     <td>
@@ -222,6 +225,32 @@ created, otherwise retrieved from the Games collection.</p>
       <div>
         <p>
            <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-gameId">gameId</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Game identifier</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-io">io</a></span></span><span data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -252,6 +281,84 @@ created, otherwise retrieved from the Games collection.</p>
       <div>
         
         
+        <div data-ice="description"><p>Collection of user instances in the game</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-prompt">prompt</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Defines the prompt that the &quot;dealer&quot;
+must communicate via emojis</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-promptForDisplay">promptForDisplay</a></span></span><span data-ice="signature">: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-promptForMatching">promptForMatching</a></span></span><span data-ice="signature">: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
         
       </div>
     </td>
@@ -277,85 +384,7 @@ created, otherwise retrieved from the Games collection.</p>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-socketId">socketId</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-solutionForDisplay">solutionForDisplay</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>This property defines the &quot;solution&quot; that the &quot;dealer&quot;
-must communicate via emojis</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-member-solutionForMatching">solutionForMatching</a></span></span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>This property prevents correct answers from being deemed
-incorrect due to capitilization, special characters, etc.</p>
+        <div data-ice="description"><p>Current number of available seats in the game</p>
 </div>
       </div>
     </td>
@@ -382,13 +411,14 @@ incorrect due to capitilization, special characters, etc.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-addPlayer">addPlayer</a></span></span><span data-ice="signature">(user: <span>*</span>)</span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-addPlayer">addPlayer</a></span></span><span data-ice="signature">(user: <span>*</span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Adds a player to the game</p>
+</div>
       </div>
     </td>
     <td>
@@ -407,13 +437,14 @@ incorrect due to capitilization, special characters, etc.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-assignFirstDealer">assignFirstDealer</a></span></span><span data-ice="signature">()</span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-checkGuess">checkGuess</a></span></span><span data-ice="signature">(message: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Checks messages for correct guesses</p>
+</div>
       </div>
     </td>
     <td>
@@ -432,13 +463,14 @@ incorrect due to capitilization, special characters, etc.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-checkGuess">checkGuess</a></span></span><span data-ice="signature">(message: <span>*</span>)</span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-getPrompt">getPrompt</a></span></span><span data-ice="signature">()</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Randomly chooses a world or phrase to be guessed</p>
+</div>
       </div>
     </td>
     <td>
@@ -457,13 +489,14 @@ incorrect due to capitilization, special characters, etc.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-getSolution">getSolution</a></span></span><span data-ice="signature">()</span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-handleDealerChange">handleDealerChange</a></span></span><span data-ice="signature">(userId: <span>*</span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Assigns the next dealer as the correct guesser</p>
+</div>
       </div>
     </td>
     <td>
@@ -482,13 +515,14 @@ incorrect due to capitilization, special characters, etc.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-handleDealerChange">handleDealerChange</a></span></span><span data-ice="signature">(user: <span>*</span>)</span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-on">on</a></span></span><span data-ice="signature">(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, gameId: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Adds event listeners</p>
+</div>
       </div>
     </td>
     <td>
@@ -507,13 +541,14 @@ incorrect due to capitilization, special characters, etc.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-removePlayer">removePlayer</a></span></span><span data-ice="signature">(user: <span>*</span>)</span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-removePlayer">removePlayer</a></span></span><span data-ice="signature">(userId: <span>*</span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Removes a player from the game</p>
+</div>
       </div>
     </td>
     <td>
@@ -532,13 +567,14 @@ incorrect due to capitilization, special characters, etc.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-updateGameAvailability">updateGameAvailability</a></span></span><span data-ice="signature">()</span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-trigger">trigger</a></span></span><span data-ice="signature">(-: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Triggers a callback associated with a given event</p>
+</div>
       </div>
     </td>
     <td>
@@ -557,13 +593,14 @@ incorrect due to capitilization, special characters, etc.</p>
     <td>
       <div>
         <p>
-           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-updateOpenSeats">updateOpenSeats</a></span></span><span data-ice="signature">()</span>
+           <span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html#instance-method-updateOpenSeats">updateOpenSeats</a></span></span><span data-ice="signature">(): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Modifies the number of available seats in the game</p>
+</div>
       </div>
     </td>
     <td>
@@ -588,11 +625,11 @@ incorrect due to capitilization, special characters, etc.</p>
     
     
     
-    <span data-ice="name">constructor</span><span data-ice="signature">(userWhoStartsGame: <span>*</span>)</span>
+    <span data-ice="name">constructor</span><span data-ice="signature">(userWhoStartsGame: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, gameId: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber40">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber37">source</a></span></span>
     </span>
   </h3>
 
@@ -614,9 +651,17 @@ incorrect due to capitilization, special characters, etc.</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" data-depth="0">userWhoStartsGame</td>
-      <td data-ice="type"><span>*</span></td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>an instance of the user model</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">gameId</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>the identifer of the new game</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -652,14 +697,14 @@ incorrect due to capitilization, special characters, etc.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber82">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber88">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>This property will prevent the game from running until sufficient players have joined</p>
+  <div data-ice="description"><p>Prevents the game from running until sufficient players have joined</p>
 </div>
 
   
@@ -683,54 +728,13 @@ incorrect due to capitilization, special characters, etc.</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-category">
+  <h3 data-ice="anchor" id="instance-member-dealerId">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">category</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber77">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>This property will communicate the solution&apos;s category to all players</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-dealer">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    <span data-ice="name">dealer</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
+    <span data-ice="name">dealerId</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></span>
     <span class="right-info">
       
       
@@ -741,7 +745,49 @@ incorrect due to capitilization, special characters, etc.</p>
   
   
   
+  <div data-ice="description"><p>Specifies which player is currently creating clues with emojis</p>
+</div>
+
   
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-events">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">events</span><span data-ice="signature">: <span>object[ ]</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber93">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Event listener callback functions to be invoked</p>
+</div>
 
   
 
@@ -774,7 +820,48 @@ incorrect due to capitilization, special characters, etc.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber44">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber42">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Game identifier</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-io">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">io</span><span data-ice="signature">: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber96">source</a></span></span>
     </span>
   </h3>
 
@@ -814,7 +901,130 @@ incorrect due to capitilization, special characters, etc.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber52">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber47">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Collection of user instances in the game</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-prompt">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">prompt</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber66">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Defines the prompt that the &quot;dealer&quot;
+must communicate via emojis</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-promptForDisplay">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">promptForDisplay</span><span data-ice="signature">: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber173">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-promptForMatching">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">promptForMatching</span><span data-ice="signature">: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber174">source</a></span></span>
     </span>
   </h3>
 
@@ -854,137 +1064,14 @@ incorrect due to capitilization, special characters, etc.</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber56">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber55">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-socketId">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    <span data-ice="name">socketId</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber48">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-solutionForDisplay">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    <span data-ice="name">solutionForDisplay</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber66">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>This property defines the &quot;solution&quot; that the &quot;dealer&quot;
-must communicate via emojis</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-solutionForMatching">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    <span data-ice="name">solutionForMatching</span><span data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber72">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>This property prevents correct answers from being deemed
-incorrect due to capitilization, special characters, etc.</p>
+  <div data-ice="description"><p>Current number of available seats in the game</p>
 </div>
 
   
@@ -1017,18 +1104,19 @@ incorrect due to capitilization, special characters, etc.</p>
     
     
     
-    <span data-ice="name">addPlayer</span><span data-ice="signature">(user: <span>*</span>)</span>
+    <span data-ice="name">addPlayer</span><span data-ice="signature">(user: <span>*</span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber97">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber151">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Adds a player to the game</p>
+</div>
 
   
 
@@ -1051,47 +1139,17 @@ incorrect due to capitilization, special characters, etc.</p>
 </div>
 </div>
 
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span>*</span></td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
 </div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-assignFirstDealer">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    <span data-ice="name">assignFirstDealer</span><span data-ice="signature">()</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber128">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
+  </div>
 
   
 
@@ -1113,18 +1171,19 @@ incorrect due to capitilization, special characters, etc.</p>
     
     
     
-    <span data-ice="name">checkGuess</span><span data-ice="signature">(message: <span>*</span>)</span>
+    <span data-ice="name">checkGuess</span><span data-ice="signature">(message: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber139">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber180">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Checks messages for correct guesses</p>
+</div>
 
   
 
@@ -1147,7 +1206,17 @@ incorrect due to capitilization, special characters, etc.</p>
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -1163,24 +1232,25 @@ incorrect due to capitilization, special characters, etc.</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-getSolution">
+  <h3 data-ice="anchor" id="instance-method-getPrompt">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">getSolution</span><span data-ice="signature">()</span>
+    <span data-ice="name">getPrompt</span><span data-ice="signature">()</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber132">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber170">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Randomly chooses a world or phrase to be guessed</p>
+</div>
 
   
 
@@ -1209,18 +1279,19 @@ incorrect due to capitilization, special characters, etc.</p>
     
     
     
-    <span data-ice="name">handleDealerChange</span><span data-ice="signature">(user: <span>*</span>)</span>
+    <span data-ice="name">handleDealerChange</span><span data-ice="signature">(userId: <span>*</span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber146">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber190">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Assigns the next dealer as the correct guesser</p>
+</div>
 
   
 
@@ -1233,10 +1304,85 @@ incorrect due to capitilization, special characters, etc.</p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">user</td>
+      <td data-ice="name" data-depth="0">userId</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span>*</span></td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-on">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    <span data-ice="name">on</span><span data-ice="signature">(event: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, gameId: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber103">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Adds event listeners</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">event</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>an event name</p>
+</td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">gameId</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>a function to invoke upon an event</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1265,18 +1411,19 @@ incorrect due to capitilization, special characters, etc.</p>
     
     
     
-    <span data-ice="name">removePlayer</span><span data-ice="signature">(user: <span>*</span>)</span>
+    <span data-ice="name">removePlayer</span><span data-ice="signature">(userId: <span>*</span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber91">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber138">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Removes a player from the game</p>
+</div>
 
   
 
@@ -1289,7 +1436,7 @@ incorrect due to capitilization, special characters, etc.</p>
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" data-depth="0">user</td>
+      <td data-ice="name" data-depth="0">userId</td>
       <td data-ice="type"><span>*</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
@@ -1299,7 +1446,17 @@ incorrect due to capitilization, special characters, etc.</p>
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span>*</span></td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -1315,28 +1472,46 @@ incorrect due to capitilization, special characters, etc.</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-updateGameAvailability">
+  <h3 data-ice="anchor" id="instance-method-trigger">
     <span class="access" data-ice="access">public</span>
     
     
     
     
-    <span data-ice="name">updateGameAvailability</span><span data-ice="signature">()</span>
+    <span data-ice="name">trigger</span><span data-ice="signature">(-: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber112">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber111">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Triggers a callback associated with a given event</p>
+</div>
 
   
 
-  <div data-ice="properties">
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" data-depth="0">-</td>
+      <td data-ice="type"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>an event name</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
 </div>
 
   
@@ -1361,25 +1536,36 @@ incorrect due to capitilization, special characters, etc.</p>
     
     
     
-    <span data-ice="name">updateOpenSeats</span><span data-ice="signature">()</span>
+    <span data-ice="name">updateOpenSeats</span><span data-ice="signature">(): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber87">source</a></span></span>
+      <span data-ice="source"><span><a href="file/smileguess-server/models/Game.js.html#lineNumber119">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Modifies the number of available seats in the game</p>
+</div>
 
   
 
   <div data-ice="properties">
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tr>
+        <td class="return-type" data-ice="returnType"><span>*</span></td>
+        
+      </tr>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 

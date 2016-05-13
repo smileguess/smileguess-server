@@ -32,36 +32,73 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collections</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Games.js~Games.html">Games</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html">Users</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html">User</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">sockets</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dummy">dummy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-joinRandomGame">joinRandomGame</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onDisconnect">onDisconnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendGuessMessage">sendGuessMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPlayerJoinGame">sendPlayerJoinGame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPrompt">sendPrompt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendWinner">sendWinner</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/controllers/GameController.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const Game = require(&apos;../models/Game&apos;);
-const Games = require(&apos;../collections/Games&apos;);
-
-const openGames = Games.openGames;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const User = require(&apos;../models/User&apos;);
 
 module.exports = {
-  joinOrStartGame: (user) =&gt; {
-    if (openGames.length &gt; 0) {
-      openGames[openGames.length - 1].addPlayer(user);
-      Games.sort(openGames);
-    } else {
-      const newGame = new Game(user);
-      newGame.updateGameAvailability();
-    }
+  /**
+   * Handles the addition of a player to a selected game
+   * @params {object} - a instance of the Games collection
+   * @params {object} - an instance of the User model
+   */
+  handlePlayerJoin: (gamesCollection, user) =&gt; {
+    return gamesCollection.getNextOpenGame().addPlayer(userId);
   },
+  /**
+   * Handles a player leaving a game
+   * @params {object} - a instance of the Games collection
+   * @params {string} - a game ID
+   * @params {object} - an instance of the User model
+   */
+  handlePlayerLeave: (gamesCollection, gameId, userId) =&gt; (
+    gamesCollection.retrieve(gameId).removePlayer(userId)
+  ),
+  /**
+   * Handles a user wanting to play a game. If there are available games,
+   the user will be added to an ongoing game. A new game will be created
+   * for the user otherwise.
+   * @params {object} - a instance of the Games collection
+   * @params {object} - an instance of the User model
+   */
+  play: (gamesCollection, callback) =&gt; {
+    if (!gamesCollection.openGames.length) {
+      return callback(gamesCollection.createGame());
+    }
+    return callback(gamesCollection.getNextOpenGame());
+  },
+  /**
+   * Handles the judgement of a player&apos;s guesses.
+   * Returns true for correct guesses, false for incorect guesses.
+   * @params {object} - a instance of the Games collection
+   * @params {object} - an instance of the User model
+   */
+  handleGuess: (gamesCollection, gameId, message) =&gt; (
+    gamesCollection.retrieve(gameId).checkGuess(message)
+  ),
+
+  retrieve: (gamesCollection, gameId) =&gt; (
+    gamesCollection.retrieve(gameId)
+  ),
+
+  disseminateChange: (type, game) =&gt; {
+    gameSockets.modifyClientGameState(type, game);
+  }
 };
 
 </code></pre>

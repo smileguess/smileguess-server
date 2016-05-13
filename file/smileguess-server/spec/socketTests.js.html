@@ -32,31 +32,50 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collections</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Games.js~Games.html">Games</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html">Users</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html">User</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">sockets</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dummy">dummy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-joinRandomGame">joinRandomGame</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onDisconnect">onDisconnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendGuessMessage">sendGuessMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPlayerJoinGame">sendPlayerJoinGame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPrompt">sendPrompt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendWinner">sendWinner</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/spec/socketTests.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const reporter = require(&apos;./support/reporter.js&apos;);
-jasmine.getEnv().addReporter(reporter);
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const reporter = require(&apos;./support/reporter&apos;);
 const io = require(&apos;socket.io-client&apos;);
 const serverURL = &apos;http://127.0.0.1:1234&apos;;
-
-const sendGuessMessage = require(&apos;../sockets/sendGuessMessage.js&apos;);
-const sendClueMessage = require(&apos;../sockets/sendClueMessage.js&apos;);
-const sendWinner = require(&apos;../sockets/sendWinner.js&apos;);
-
+const sendGuessMessage = require(&apos;../sockets/sendGuessMessage&apos;);
+const sendClueMessage = require(&apos;../sockets/sendClueMessage&apos;);
+const sendPrompt = require(&apos;../sockets/sendPrompt&apos;);
+const sendWinner = require(&apos;../sockets/sendWinner&apos;);
+const testUtils = require(&apos;./testUtils&apos;);
+const sendPlayerJoinGame = require(&apos;../sockets/sendPlayerJoinGame&apos;);
+const User = require(&apos;../models/User&apos;);
+const Users = require(&apos;../collections/Users&apos;);
+const Games = require(&apos;../collections/Games&apos;);
+const settings = require(&apos;../gameSettings&apos;);
+const testUser1 = new User(&apos;testUser1ID&apos;);
+const GameController = require(&apos;../controllers/GameController&apos;);
+const request = require(&apos;request&apos;);
+let testUser = {};
+let testGame = {};
+testUtils.sendPlayRequest(null, (body) =&gt; {
+  testGame = body;
+});
+testUtils.sendUserRequest(null, (body) =&gt; {
+  testUser = body;
+});
+//TODO: send a user maker api call to instantiate users and or games for testing
 var socket;
+
 describe(&apos;Socket responder functions&apos;, () =&gt; {
   beforeEach((done) =&gt; {
     socket = io.connect(serverURL, {
@@ -66,8 +85,9 @@ describe(&apos;Socket responder functions&apos;, () =&gt; {
     });
     socket.on(&apos;connect&apos;, () =&gt; {
       socket.emit(&apos;action&apos;, {
-        type: &apos;server/joinRandomGame&apos;,
-        user: { id: 5, username: &apos;testUser&apos; },
+        type: &apos;server/joinGame&apos;,
+        gameId: 1,
+        userId: 1,
       });
       done();
     });
@@ -86,17 +106,18 @@ describe(&apos;Socket responder functions&apos;, () =&gt; {
     });
     it(&apos;should respond with an action called &apos; + actionType, (done) =&gt; {
       socket.on(&apos;action&apos;, (response) =&gt; {
+        console.log(response);
         if (response.type === actionType) {
           expect(response.type).toBe(actionType);
-          expect(response.userid).toBe(5);
           expect(response.message).toBe(&apos;testGuessMessage&apos;);
           done();
         }
       });
       socket.emit(&apos;action&apos;, {
         type: &apos;server/&apos; + label,
-        userid: 5,
-        message: &apos;testGuessMessage&apos;
+        userId: 1,
+        gameId: 1,
+        message: &apos;testGuessMessage&apos;,
       });
     });
   });
@@ -104,24 +125,77 @@ describe(&apos;Socket responder functions&apos;, () =&gt; {
   describe(&apos;sendClueMessage&apos;, () =&gt; {
     let actionType = &apos;SOCKET_CLUE_MESSAGE&apos;
     let label = &apos;sendClueMessage&apos;;
-    it(&apos;should be a function&apos;, () =&gt; {
+    xit(&apos;should be a function&apos;, () =&gt; {
       expect(typeof sendClueMessage).toBe(&apos;function&apos;);
     });
-    it(&apos;should respond with an action called &apos; + actionType, (done) =&gt; {
+    xit(&apos;should respond with an action called &apos; + actionType, (done) =&gt; {
       socket.on(&apos;action&apos;, (response) =&gt; {
+        console.log(&apos;RESPONSE&apos;, response);
         if (response.type === actionType) {
-          expect(response.userid).toBe(5);
+          expect(response.userid).toBe(1);
           expect(response.message).toBe(&apos;testClueMessage&apos;);
           done();
         }
       });
       socket.emit(&apos;action&apos;, {
         type: &apos;server/&apos; + label,
-        userid: 5,
-        message: &apos;testClueMessage&apos;
+        gameId: 1,
+        userId: 1,
+        message: &apos;testClueMessage&apos;,
       });
     });
   });
+
+  //problem is we are passing a different db to the sockets than this one
+  describe(&apos;Socket puts users in games&apos;, () =&gt; {
+    let actionType = &apos;SOCKET_JOIN_GAME&apos;
+    let label = &apos;joinGame&apos;;
+    xit(&apos;should be a function&apos;, () =&gt; {
+      expect(typeof sendClueMessage).toBe(&apos;function&apos;);
+    });
+    xit(&apos;should respond with an action called &apos; + actionType, (done) =&gt; {
+      socket.on(&apos;action&apos;, (response) =&gt; {
+        console.log(&apos;RESPONSE&apos;, response);
+        if (response.type === actionType) {
+          console.log(response);
+
+        }
+      });
+      socket.emit(&apos;action&apos;, {
+        type: &apos;server/&apos; + label,
+        gameId: 1,
+        userId: 1,
+        deviceId: &apos;someDeviceId&apos;,
+      });
+    });
+  });
+
+  // describe(&apos;sendPrompt&apos;, () =&gt; {
+  //   let actionType = &apos;SOCKET_PROMPT&apos;
+  //   let label = &apos;sendPrompt&apos;;
+  //   it(&apos;should be a function&apos;, () =&gt; {
+  //     expect(typeof sendPrompt).toBe(&apos;function&apos;);
+  //   });
+  //   it(`send a prompt to only the current dealer ${actionType}`, (done) =&gt; {
+  //     db.createGame(testUser1);
+  //     expect(db.getNextOpenGame().promptForDisplay).toBe(null);
+  //     testMethods.populateGameWithPlayers(db, settings.minPlayers - 1);
+  //     expect(db.getNextOpenGame().promptForDisplay).not.toBe(null);
+  //     const prompt = db.getNextOpenGame().promptForDisplay;
+  //     socket.on(&apos;action&apos;, (response) =&gt; {
+  //       if (response.type === actionType) {
+  //         // expect(response.userid).toBe(5);
+  //         // expect(response.message).toBe(&apos;testClueMessage&apos;);
+  //         done();
+  //       }
+  //     });
+  //     socket.emit(&apos;action&apos;, {
+  //       type: &apos;server/&apos; + label,
+  //       dealerIndex: 5,
+  //     });
+  //     done();
+  //   });
+  // });
 
 });
 

@@ -32,31 +32,158 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collections</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Games.js~Games.html">Games</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html">Users</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html">User</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">sockets</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dummy">dummy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-joinRandomGame">joinRandomGame</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onDisconnect">onDisconnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendGuessMessage">sendGuessMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPlayerJoinGame">sendPlayerJoinGame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPrompt">sendPrompt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendWinner">sendWinner</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/collections/Games.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">// may want to store games in a hash table later, with references
-// to games stored in the full/open games arrays
-module.exports = {
-  fullGames: [],
-  openGames: [],
-  sort: (gameCollection) =&gt; {
-    gameCollection.sort((game1, game2) =&gt; (
-      game1.seatsOpen &gt; game2.seatsOpen
-    ));
-  },
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const Game = require(&apos;../models/Game&apos;);
+
+module.exports = class Games {
+  /**
+  * Creates a collection of games
+  */
+  constructor(io) {
+    /**
+    * Map for storing game instances, referenced by game ID
+    * @type {map}
+    */
+    this.storage = new Map();
+    /**
+    * Collection of game ID&apos;s that are not available to join
+    * @type {number[]}
+    */
+    this.fullGames = [];
+    /**
+    * Queue of game ID&apos;s that are available to join
+    * @type {array[]}
+    */
+    this.openGames = [];
+    /**
+    * Counter for number of games created. Used for creating game ID&apos;s
+    * @type {object}
+    */
+    this.allTimeGameCount = 0;
+
+
+
+    this.io = io;
+  }
+  /**
+   * Instantiates a new game instance
+   * @params {object} - a User instance
+   */
+  createGame(firstPlayer) {
+    const gameId = this.generateGameId();
+    const newGame = new Game(gameId, this.io.to(gameId));
+    newGame.on(&apos;playerChange&apos;, this.updateQueue.bind(this), GameCon.disseminateChange);
+    newGame.on(&apos;empty&apos;, this.destroy.bind(this));
+    newGame.on(&apos;full&apos;, this.moveToFullGames.bind(this));
+    newGame.on(&apos;nowAvailable&apos;, this.moveToOpenGames.bind(this));
+    newGame.on(&apos;newDealer&apos;, GameCon.disseminateChange);
+    this.insert(newGame);
+    return newGame;
+  }
+  /**
+   * Creates an identifer for a new game instance
+   */
+  generateGameId() {
+    this.allTimeGameCount++;
+    const gameId = this.allTimeGameCount;
+    return gameId;
+  }
+  /**
+   * Stores a game instance
+   * @params {object} - an instantiation of the Game model
+   */
+  insert(game) {
+    this.storage.set(game.gameId, game);
+    this.queue(game.gameId);
+    return game;
+  }
+  /**
+   * Retrieves a game instance with a given ID
+   * @params {number} - a game ID
+   */
+  retrieve(gameId) {
+    return this.storage.get(gameId);
+  }
+  /**
+   * Deletes a game instance
+   * @params {string} - a game identifier
+   */
+  destroy(gameId) {
+    this.storage.delete(gameId);
+    this.removeGameSummary(this.openGames, gameId);
+    return null;
+  }
+  /**
+   * Queues a game in order of next available game for new players
+   * @params {number} - a game ID
+   */
+  queue(gameId) {
+    this.openGames.push(gameId);
+    this.updateQueue();
+  }
+  /**
+   * sorts games by number of seats available
+   */
+  updateQueue() {
+    return this.openGames.sort((game1, game2) =&gt; (
+      this.storage.get(game1).seatsOpen &gt; this.storage.get(game2).seatsOpen)
+    );
+  }
+  /**
+   * Classifes a game as full
+   * @params {number} - a game ID
+   */
+  moveToFullGames(gameId) {
+    this.fullGames.push(gameId);
+    this.openGames.forEach((game) =&gt; {
+      this.openGames.splice(this.openGames.indexOf(gameId), 1);
+    });
+  }
+  /**
+   * Queues games as seats become available
+   */
+  moveToOpenGames(gameId) {
+    this.openGames.push(gameId);
+    this.updateQueue();
+    this.fullGames.forEach((game) =&gt; {
+      this.fullGames.splice(game, 1);
+    });
+  }
+  /**
+   * Removes a game summary from openGames
+   * @params {array} - a collection of game summaries
+   * @params {string} - a game identifier
+   */
+  removeGameSummary(subCollection, gameId) {
+    subCollection.forEach((summary) =&gt; {
+      if (summary === gameId) {
+        subCollection.splice(subCollection.indexOf(summary), 1);
+      }
+    });
+    return subCollection;
+  }
+  /**
+   * Retrieves the next game referenced in the queue for adding players
+   */
+  getNextOpenGame() {
+    return this.retrieve(this.openGames[this.openGames.length - 1]);
+  }
 };
 </code></pre>
 

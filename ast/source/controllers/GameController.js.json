@@ -8,7 +8,7 @@
           "type": "VariableDeclarator",
           "id": {
             "type": "Identifier",
-            "name": "Game",
+            "name": "User",
             "range": [
               6,
               10
@@ -47,8 +47,8 @@
             "arguments": [
               {
                 "type": "Literal",
-                "value": "../models/Game",
-                "raw": "'../models/Game'",
+                "value": "../models/User",
+                "raw": "'../models/User'",
                 "range": [
                   21,
                   37
@@ -113,226 +113,6 @@
       }
     },
     {
-      "type": "VariableDeclaration",
-      "declarations": [
-        {
-          "type": "VariableDeclarator",
-          "id": {
-            "type": "Identifier",
-            "name": "Games",
-            "range": [
-              46,
-              51
-            ],
-            "loc": {
-              "start": {
-                "line": 2,
-                "column": 6
-              },
-              "end": {
-                "line": 2,
-                "column": 11
-              }
-            }
-          },
-          "init": {
-            "type": "CallExpression",
-            "callee": {
-              "type": "Identifier",
-              "name": "require",
-              "range": [
-                54,
-                61
-              ],
-              "loc": {
-                "start": {
-                  "line": 2,
-                  "column": 14
-                },
-                "end": {
-                  "line": 2,
-                  "column": 21
-                }
-              }
-            },
-            "arguments": [
-              {
-                "type": "Literal",
-                "value": "../collections/Games",
-                "raw": "'../collections/Games'",
-                "range": [
-                  62,
-                  84
-                ],
-                "loc": {
-                  "start": {
-                    "line": 2,
-                    "column": 22
-                  },
-                  "end": {
-                    "line": 2,
-                    "column": 44
-                  }
-                }
-              }
-            ],
-            "range": [
-              54,
-              85
-            ],
-            "loc": {
-              "start": {
-                "line": 2,
-                "column": 14
-              },
-              "end": {
-                "line": 2,
-                "column": 45
-              }
-            }
-          },
-          "range": [
-            46,
-            85
-          ],
-          "loc": {
-            "start": {
-              "line": 2,
-              "column": 6
-            },
-            "end": {
-              "line": 2,
-              "column": 45
-            }
-          }
-        }
-      ],
-      "kind": "const",
-      "range": [
-        40,
-        86
-      ],
-      "loc": {
-        "start": {
-          "line": 2,
-          "column": 0
-        },
-        "end": {
-          "line": 2,
-          "column": 46
-        }
-      }
-    },
-    {
-      "type": "VariableDeclaration",
-      "declarations": [
-        {
-          "type": "VariableDeclarator",
-          "id": {
-            "type": "Identifier",
-            "name": "openGames",
-            "range": [
-              94,
-              103
-            ],
-            "loc": {
-              "start": {
-                "line": 4,
-                "column": 6
-              },
-              "end": {
-                "line": 4,
-                "column": 15
-              }
-            }
-          },
-          "init": {
-            "type": "MemberExpression",
-            "computed": false,
-            "object": {
-              "type": "Identifier",
-              "name": "Games",
-              "range": [
-                106,
-                111
-              ],
-              "loc": {
-                "start": {
-                  "line": 4,
-                  "column": 18
-                },
-                "end": {
-                  "line": 4,
-                  "column": 23
-                }
-              }
-            },
-            "property": {
-              "type": "Identifier",
-              "name": "openGames",
-              "range": [
-                112,
-                121
-              ],
-              "loc": {
-                "start": {
-                  "line": 4,
-                  "column": 24
-                },
-                "end": {
-                  "line": 4,
-                  "column": 33
-                }
-              }
-            },
-            "range": [
-              106,
-              121
-            ],
-            "loc": {
-              "start": {
-                "line": 4,
-                "column": 18
-              },
-              "end": {
-                "line": 4,
-                "column": 33
-              }
-            }
-          },
-          "range": [
-            94,
-            121
-          ],
-          "loc": {
-            "start": {
-              "line": 4,
-              "column": 6
-            },
-            "end": {
-              "line": 4,
-              "column": 33
-            }
-          }
-        }
-      ],
-      "kind": "const",
-      "range": [
-        88,
-        122
-      ],
-      "loc": {
-        "start": {
-          "line": 4,
-          "column": 0
-        },
-        "end": {
-          "line": 4,
-          "column": 34
-        }
-      }
-    },
-    {
       "type": "ExportDefaultDeclaration",
       "declaration": {
         "type": "ObjectExpression",
@@ -341,19 +121,19 @@
             "type": "Property",
             "key": {
               "type": "Identifier",
-              "name": "joinOrStartGame",
+              "name": "handlePlayerJoin",
               "range": [
-                143,
-                158
+                242,
+                258
               ],
               "loc": {
                 "start": {
-                  "line": 7,
+                  "line": 9,
                   "column": 2
                 },
                 "end": {
-                  "line": 7,
-                  "column": 17
+                  "line": 9,
+                  "column": 18
                 }
               }
             },
@@ -363,19 +143,634 @@
               "params": [
                 {
                   "type": "Identifier",
-                  "name": "user",
+                  "name": "gamesCollection",
                   "range": [
-                    161,
-                    165
+                    261,
+                    276
                   ],
                   "loc": {
                     "start": {
-                      "line": 7,
-                      "column": 20
+                      "line": 9,
+                      "column": 21
                     },
                     "end": {
-                      "line": 7,
+                      "line": 9,
+                      "column": 36
+                    }
+                  }
+                },
+                {
+                  "type": "Identifier",
+                  "name": "user",
+                  "range": [
+                    278,
+                    282
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 9,
+                      "column": 38
+                    },
+                    "end": {
+                      "line": 9,
+                      "column": 42
+                    }
+                  }
+                }
+              ],
+              "body": {
+                "type": "BlockStatement",
+                "body": [
+                  {
+                    "type": "ReturnStatement",
+                    "argument": {
+                      "type": "CallExpression",
+                      "callee": {
+                        "type": "MemberExpression",
+                        "computed": false,
+                        "object": {
+                          "type": "CallExpression",
+                          "callee": {
+                            "type": "MemberExpression",
+                            "computed": false,
+                            "object": {
+                              "type": "Identifier",
+                              "name": "gamesCollection",
+                              "range": [
+                                300,
+                                315
+                              ],
+                              "loc": {
+                                "start": {
+                                  "line": 10,
+                                  "column": 11
+                                },
+                                "end": {
+                                  "line": 10,
+                                  "column": 26
+                                }
+                              }
+                            },
+                            "property": {
+                              "type": "Identifier",
+                              "name": "getNextOpenGame",
+                              "range": [
+                                316,
+                                331
+                              ],
+                              "loc": {
+                                "start": {
+                                  "line": 10,
+                                  "column": 27
+                                },
+                                "end": {
+                                  "line": 10,
+                                  "column": 42
+                                }
+                              }
+                            },
+                            "range": [
+                              300,
+                              331
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 10,
+                                "column": 11
+                              },
+                              "end": {
+                                "line": 10,
+                                "column": 42
+                              }
+                            }
+                          },
+                          "arguments": [],
+                          "range": [
+                            300,
+                            333
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 10,
+                              "column": 11
+                            },
+                            "end": {
+                              "line": 10,
+                              "column": 44
+                            }
+                          }
+                        },
+                        "property": {
+                          "type": "Identifier",
+                          "name": "addPlayer",
+                          "range": [
+                            334,
+                            343
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 10,
+                              "column": 45
+                            },
+                            "end": {
+                              "line": 10,
+                              "column": 54
+                            }
+                          }
+                        },
+                        "range": [
+                          300,
+                          343
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 10,
+                            "column": 11
+                          },
+                          "end": {
+                            "line": 10,
+                            "column": 54
+                          }
+                        }
+                      },
+                      "arguments": [
+                        {
+                          "type": "Identifier",
+                          "name": "userId",
+                          "range": [
+                            344,
+                            350
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 10,
+                              "column": 55
+                            },
+                            "end": {
+                              "line": 10,
+                              "column": 61
+                            }
+                          }
+                        }
+                      ],
+                      "range": [
+                        300,
+                        351
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 10,
+                          "column": 11
+                        },
+                        "end": {
+                          "line": 10,
+                          "column": 62
+                        }
+                      }
+                    },
+                    "range": [
+                      293,
+                      352
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 10,
+                        "column": 4
+                      },
+                      "end": {
+                        "line": 10,
+                        "column": 63
+                      }
+                    }
+                  }
+                ],
+                "range": [
+                  287,
+                  356
+                ],
+                "loc": {
+                  "start": {
+                    "line": 9,
+                    "column": 47
+                  },
+                  "end": {
+                    "line": 11,
+                    "column": 3
+                  }
+                }
+              },
+              "generator": false,
+              "expression": false,
+              "range": [
+                260,
+                356
+              ],
+              "loc": {
+                "start": {
+                  "line": 9,
+                  "column": 20
+                },
+                "end": {
+                  "line": 11,
+                  "column": 3
+                }
+              }
+            },
+            "kind": "init",
+            "method": false,
+            "shorthand": false,
+            "computed": false,
+            "range": [
+              242,
+              356
+            ],
+            "loc": {
+              "start": {
+                "line": 9,
+                "column": 2
+              },
+              "end": {
+                "line": 11,
+                "column": 3
+              }
+            },
+            "leadingComments": [
+              {
+                "type": "Block",
+                "value": "*\n   * Handles the addition of a player to a selected game\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   ",
+                "range": [
+                  60,
+                  239
+                ],
+                "loc": {
+                  "start": {
+                    "line": 4,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 8,
+                    "column": 5
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "Property",
+            "key": {
+              "type": "Identifier",
+              "name": "handlePlayerLeave",
+              "range": [
+                556,
+                573
+              ],
+              "loc": {
+                "start": {
+                  "line": 18,
+                  "column": 2
+                },
+                "end": {
+                  "line": 18,
+                  "column": 19
+                }
+              }
+            },
+            "value": {
+              "type": "ArrowFunctionExpression",
+              "id": null,
+              "params": [
+                {
+                  "type": "Identifier",
+                  "name": "gamesCollection",
+                  "range": [
+                    576,
+                    591
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 18,
+                      "column": 22
+                    },
+                    "end": {
+                      "line": 18,
+                      "column": 37
+                    }
+                  }
+                },
+                {
+                  "type": "Identifier",
+                  "name": "gameId",
+                  "range": [
+                    593,
+                    599
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 18,
+                      "column": 39
+                    },
+                    "end": {
+                      "line": 18,
+                      "column": 45
+                    }
+                  }
+                },
+                {
+                  "type": "Identifier",
+                  "name": "userId",
+                  "range": [
+                    601,
+                    607
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 18,
+                      "column": 47
+                    },
+                    "end": {
+                      "line": 18,
+                      "column": 53
+                    }
+                  }
+                }
+              ],
+              "body": {
+                "type": "CallExpression",
+                "callee": {
+                  "type": "MemberExpression",
+                  "computed": false,
+                  "object": {
+                    "type": "CallExpression",
+                    "callee": {
+                      "type": "MemberExpression",
+                      "computed": false,
+                      "object": {
+                        "type": "Identifier",
+                        "name": "gamesCollection",
+                        "range": [
+                          618,
+                          633
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 19,
+                            "column": 4
+                          },
+                          "end": {
+                            "line": 19,
+                            "column": 19
+                          }
+                        }
+                      },
+                      "property": {
+                        "type": "Identifier",
+                        "name": "retrieve",
+                        "range": [
+                          634,
+                          642
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 19,
+                            "column": 20
+                          },
+                          "end": {
+                            "line": 19,
+                            "column": 28
+                          }
+                        }
+                      },
+                      "range": [
+                        618,
+                        642
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 19,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 19,
+                          "column": 28
+                        }
+                      }
+                    },
+                    "arguments": [
+                      {
+                        "type": "Identifier",
+                        "name": "gameId",
+                        "range": [
+                          643,
+                          649
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 19,
+                            "column": 29
+                          },
+                          "end": {
+                            "line": 19,
+                            "column": 35
+                          }
+                        }
+                      }
+                    ],
+                    "range": [
+                      618,
+                      650
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 19,
+                        "column": 4
+                      },
+                      "end": {
+                        "line": 19,
+                        "column": 36
+                      }
+                    }
+                  },
+                  "property": {
+                    "type": "Identifier",
+                    "name": "removePlayer",
+                    "range": [
+                      651,
+                      663
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 19,
+                        "column": 37
+                      },
+                      "end": {
+                        "line": 19,
+                        "column": 49
+                      }
+                    }
+                  },
+                  "range": [
+                    618,
+                    663
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 19,
+                      "column": 4
+                    },
+                    "end": {
+                      "line": 19,
+                      "column": 49
+                    }
+                  }
+                },
+                "arguments": [
+                  {
+                    "type": "Identifier",
+                    "name": "userId",
+                    "range": [
+                      664,
+                      670
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 19,
+                        "column": 50
+                      },
+                      "end": {
+                        "line": 19,
+                        "column": 56
+                      }
+                    }
+                  }
+                ],
+                "range": [
+                  618,
+                  671
+                ],
+                "loc": {
+                  "start": {
+                    "line": 19,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 19,
+                    "column": 57
+                  }
+                }
+              },
+              "generator": false,
+              "expression": true,
+              "range": [
+                575,
+                675
+              ],
+              "loc": {
+                "start": {
+                  "line": 18,
+                  "column": 21
+                },
+                "end": {
+                  "line": 20,
+                  "column": 3
+                }
+              }
+            },
+            "kind": "init",
+            "method": false,
+            "shorthand": false,
+            "computed": false,
+            "range": [
+              556,
+              675
+            ],
+            "loc": {
+              "start": {
+                "line": 18,
+                "column": 2
+              },
+              "end": {
+                "line": 20,
+                "column": 3
+              }
+            },
+            "leadingComments": [
+              {
+                "type": "Block",
+                "value": "*\n   * Handles a player leaving a game\n   * @params {object} - a instance of the Games collection\n   * @params {string} - a game ID\n   * @params {object} - an instance of the User model\n   ",
+                "range": [
+                  360,
+                  553
+                ],
+                "loc": {
+                  "start": {
+                    "line": 12,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 17,
+                    "column": 5
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "Property",
+            "key": {
+              "type": "Identifier",
+              "name": "play",
+              "range": [
+                980,
+                984
+              ],
+              "loc": {
+                "start": {
+                  "line": 28,
+                  "column": 2
+                },
+                "end": {
+                  "line": 28,
+                  "column": 6
+                }
+              }
+            },
+            "value": {
+              "type": "ArrowFunctionExpression",
+              "id": null,
+              "params": [
+                {
+                  "type": "Identifier",
+                  "name": "gamesCollection",
+                  "range": [
+                    987,
+                    1002
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 28,
+                      "column": 9
+                    },
+                    "end": {
+                      "line": 28,
                       "column": 24
+                    }
+                  }
+                },
+                {
+                  "type": "Identifier",
+                  "name": "callback",
+                  "range": [
+                    1004,
+                    1012
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 28,
+                      "column": 26
+                    },
+                    "end": {
+                      "line": 28,
+                      "column": 34
                     }
                   }
                 }
@@ -386,26 +781,62 @@
                   {
                     "type": "IfStatement",
                     "test": {
-                      "type": "BinaryExpression",
-                      "operator": ">",
-                      "left": {
+                      "type": "UnaryExpression",
+                      "operator": "!",
+                      "argument": {
                         "type": "MemberExpression",
                         "computed": false,
                         "object": {
-                          "type": "Identifier",
-                          "name": "openGames",
+                          "type": "MemberExpression",
+                          "computed": false,
+                          "object": {
+                            "type": "Identifier",
+                            "name": "gamesCollection",
+                            "range": [
+                              1028,
+                              1043
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 29,
+                                "column": 9
+                              },
+                              "end": {
+                                "line": 29,
+                                "column": 24
+                              }
+                            }
+                          },
+                          "property": {
+                            "type": "Identifier",
+                            "name": "openGames",
+                            "range": [
+                              1044,
+                              1053
+                            ],
+                            "loc": {
+                              "start": {
+                                "line": 29,
+                                "column": 25
+                              },
+                              "end": {
+                                "line": 29,
+                                "column": 34
+                              }
+                            }
+                          },
                           "range": [
-                            180,
-                            189
+                            1028,
+                            1053
                           ],
                           "loc": {
                             "start": {
-                              "line": 8,
-                              "column": 8
+                              "line": 29,
+                              "column": 9
                             },
                             "end": {
-                              "line": 8,
-                              "column": 17
+                              "line": 29,
+                              "column": 34
                             }
                           }
                         },
@@ -413,66 +844,48 @@
                           "type": "Identifier",
                           "name": "length",
                           "range": [
-                            190,
-                            196
+                            1054,
+                            1060
                           ],
                           "loc": {
                             "start": {
-                              "line": 8,
-                              "column": 18
+                              "line": 29,
+                              "column": 35
                             },
                             "end": {
-                              "line": 8,
-                              "column": 24
+                              "line": 29,
+                              "column": 41
                             }
                           }
                         },
                         "range": [
-                          180,
-                          196
+                          1028,
+                          1060
                         ],
                         "loc": {
                           "start": {
-                            "line": 8,
-                            "column": 8
+                            "line": 29,
+                            "column": 9
                           },
                           "end": {
-                            "line": 8,
-                            "column": 24
+                            "line": 29,
+                            "column": 41
                           }
                         }
                       },
-                      "right": {
-                        "type": "Literal",
-                        "value": 0,
-                        "raw": "0",
-                        "range": [
-                          199,
-                          200
-                        ],
-                        "loc": {
-                          "start": {
-                            "line": 8,
-                            "column": 27
-                          },
-                          "end": {
-                            "line": 8,
-                            "column": 28
-                          }
-                        }
-                      },
+                      "prefix": true,
                       "range": [
-                        180,
-                        200
+                        1027,
+                        1060
                       ],
                       "loc": {
                         "start": {
-                          "line": 8,
+                          "line": 29,
                           "column": 8
                         },
                         "end": {
-                          "line": 8,
-                          "column": 28
+                          "line": 29,
+                          "column": 41
                         }
                       }
                     },
@@ -480,591 +893,301 @@
                       "type": "BlockStatement",
                       "body": [
                         {
-                          "type": "ExpressionStatement",
-                          "expression": {
+                          "type": "ReturnStatement",
+                          "argument": {
                             "type": "CallExpression",
                             "callee": {
-                              "type": "MemberExpression",
-                              "computed": false,
-                              "object": {
-                                "type": "MemberExpression",
-                                "computed": true,
-                                "object": {
-                                  "type": "Identifier",
-                                  "name": "openGames",
-                                  "range": [
-                                    210,
-                                    219
-                                  ],
-                                  "loc": {
-                                    "start": {
-                                      "line": 9,
-                                      "column": 6
-                                    },
-                                    "end": {
-                                      "line": 9,
-                                      "column": 15
-                                    }
-                                  }
-                                },
-                                "property": {
-                                  "type": "BinaryExpression",
-                                  "operator": "-",
-                                  "left": {
-                                    "type": "MemberExpression",
-                                    "computed": false,
-                                    "object": {
-                                      "type": "Identifier",
-                                      "name": "openGames",
-                                      "range": [
-                                        220,
-                                        229
-                                      ],
-                                      "loc": {
-                                        "start": {
-                                          "line": 9,
-                                          "column": 16
-                                        },
-                                        "end": {
-                                          "line": 9,
-                                          "column": 25
-                                        }
-                                      }
-                                    },
-                                    "property": {
-                                      "type": "Identifier",
-                                      "name": "length",
-                                      "range": [
-                                        230,
-                                        236
-                                      ],
-                                      "loc": {
-                                        "start": {
-                                          "line": 9,
-                                          "column": 26
-                                        },
-                                        "end": {
-                                          "line": 9,
-                                          "column": 32
-                                        }
-                                      }
-                                    },
-                                    "range": [
-                                      220,
-                                      236
-                                    ],
-                                    "loc": {
-                                      "start": {
-                                        "line": 9,
-                                        "column": 16
-                                      },
-                                      "end": {
-                                        "line": 9,
-                                        "column": 32
-                                      }
-                                    }
-                                  },
-                                  "right": {
-                                    "type": "Literal",
-                                    "value": 1,
-                                    "raw": "1",
-                                    "range": [
-                                      239,
-                                      240
-                                    ],
-                                    "loc": {
-                                      "start": {
-                                        "line": 9,
-                                        "column": 35
-                                      },
-                                      "end": {
-                                        "line": 9,
-                                        "column": 36
-                                      }
-                                    }
-                                  },
-                                  "range": [
-                                    220,
-                                    240
-                                  ],
-                                  "loc": {
-                                    "start": {
-                                      "line": 9,
-                                      "column": 16
-                                    },
-                                    "end": {
-                                      "line": 9,
-                                      "column": 36
-                                    }
-                                  }
-                                },
-                                "range": [
-                                  210,
-                                  241
-                                ],
-                                "loc": {
-                                  "start": {
-                                    "line": 9,
-                                    "column": 6
-                                  },
-                                  "end": {
-                                    "line": 9,
-                                    "column": 37
-                                  }
-                                }
-                              },
-                              "property": {
-                                "type": "Identifier",
-                                "name": "addPlayer",
-                                "range": [
-                                  242,
-                                  251
-                                ],
-                                "loc": {
-                                  "start": {
-                                    "line": 9,
-                                    "column": 38
-                                  },
-                                  "end": {
-                                    "line": 9,
-                                    "column": 47
-                                  }
-                                }
-                              },
+                              "type": "Identifier",
+                              "name": "callback",
                               "range": [
-                                210,
-                                251
+                                1077,
+                                1085
                               ],
                               "loc": {
                                 "start": {
-                                  "line": 9,
-                                  "column": 6
+                                  "line": 30,
+                                  "column": 13
                                 },
                                 "end": {
-                                  "line": 9,
-                                  "column": 47
+                                  "line": 30,
+                                  "column": 21
                                 }
                               }
                             },
                             "arguments": [
                               {
-                                "type": "Identifier",
-                                "name": "user",
-                                "range": [
-                                  252,
-                                  256
-                                ],
-                                "loc": {
-                                  "start": {
-                                    "line": 9,
-                                    "column": 48
+                                "type": "CallExpression",
+                                "callee": {
+                                  "type": "MemberExpression",
+                                  "computed": false,
+                                  "object": {
+                                    "type": "Identifier",
+                                    "name": "gamesCollection",
+                                    "range": [
+                                      1086,
+                                      1101
+                                    ],
+                                    "loc": {
+                                      "start": {
+                                        "line": 30,
+                                        "column": 22
+                                      },
+                                      "end": {
+                                        "line": 30,
+                                        "column": 37
+                                      }
+                                    }
                                   },
-                                  "end": {
-                                    "line": 9,
-                                    "column": 52
-                                  }
-                                }
-                              }
-                            ],
-                            "range": [
-                              210,
-                              257
-                            ],
-                            "loc": {
-                              "start": {
-                                "line": 9,
-                                "column": 6
-                              },
-                              "end": {
-                                "line": 9,
-                                "column": 53
-                              }
-                            }
-                          },
-                          "range": [
-                            210,
-                            258
-                          ],
-                          "loc": {
-                            "start": {
-                              "line": 9,
-                              "column": 6
-                            },
-                            "end": {
-                              "line": 9,
-                              "column": 54
-                            }
-                          }
-                        },
-                        {
-                          "type": "ExpressionStatement",
-                          "expression": {
-                            "type": "CallExpression",
-                            "callee": {
-                              "type": "MemberExpression",
-                              "computed": false,
-                              "object": {
-                                "type": "Identifier",
-                                "name": "Games",
-                                "range": [
-                                  265,
-                                  270
-                                ],
-                                "loc": {
-                                  "start": {
-                                    "line": 10,
-                                    "column": 6
+                                  "property": {
+                                    "type": "Identifier",
+                                    "name": "createGame",
+                                    "range": [
+                                      1102,
+                                      1112
+                                    ],
+                                    "loc": {
+                                      "start": {
+                                        "line": 30,
+                                        "column": 38
+                                      },
+                                      "end": {
+                                        "line": 30,
+                                        "column": 48
+                                      }
+                                    }
                                   },
-                                  "end": {
-                                    "line": 10,
-                                    "column": 11
+                                  "range": [
+                                    1086,
+                                    1112
+                                  ],
+                                  "loc": {
+                                    "start": {
+                                      "line": 30,
+                                      "column": 22
+                                    },
+                                    "end": {
+                                      "line": 30,
+                                      "column": 48
+                                    }
                                   }
-                                }
-                              },
-                              "property": {
-                                "type": "Identifier",
-                                "name": "sort",
-                                "range": [
-                                  271,
-                                  275
-                                ],
-                                "loc": {
-                                  "start": {
-                                    "line": 10,
-                                    "column": 12
-                                  },
-                                  "end": {
-                                    "line": 10,
-                                    "column": 16
-                                  }
-                                }
-                              },
-                              "range": [
-                                265,
-                                275
-                              ],
-                              "loc": {
-                                "start": {
-                                  "line": 10,
-                                  "column": 6
                                 },
-                                "end": {
-                                  "line": 10,
-                                  "column": 16
-                                }
-                              }
-                            },
-                            "arguments": [
-                              {
-                                "type": "Identifier",
-                                "name": "openGames",
+                                "arguments": [],
                                 "range": [
-                                  276,
-                                  285
+                                  1086,
+                                  1114
                                 ],
                                 "loc": {
                                   "start": {
-                                    "line": 10,
-                                    "column": 17
+                                    "line": 30,
+                                    "column": 22
                                   },
                                   "end": {
-                                    "line": 10,
-                                    "column": 26
+                                    "line": 30,
+                                    "column": 50
                                   }
                                 }
                               }
                             ],
                             "range": [
-                              265,
-                              286
+                              1077,
+                              1115
                             ],
                             "loc": {
                               "start": {
-                                "line": 10,
-                                "column": 6
+                                "line": 30,
+                                "column": 13
                               },
                               "end": {
-                                "line": 10,
-                                "column": 27
+                                "line": 30,
+                                "column": 51
                               }
                             }
                           },
                           "range": [
-                            265,
-                            287
+                            1070,
+                            1116
                           ],
                           "loc": {
                             "start": {
-                              "line": 10,
+                              "line": 30,
                               "column": 6
                             },
                             "end": {
-                              "line": 10,
-                              "column": 28
+                              "line": 30,
+                              "column": 52
                             }
                           }
                         }
                       ],
                       "range": [
-                        202,
-                        293
+                        1062,
+                        1122
                       ],
                       "loc": {
                         "start": {
-                          "line": 8,
-                          "column": 30
+                          "line": 29,
+                          "column": 43
                         },
                         "end": {
-                          "line": 11,
+                          "line": 31,
                           "column": 5
                         }
                       }
                     },
-                    "alternate": {
-                      "type": "BlockStatement",
-                      "body": [
-                        {
-                          "type": "VariableDeclaration",
-                          "declarations": [
-                            {
-                              "type": "VariableDeclarator",
-                              "id": {
-                                "type": "Identifier",
-                                "name": "newGame",
-                                "range": [
-                                  313,
-                                  320
-                                ],
-                                "loc": {
-                                  "start": {
-                                    "line": 12,
-                                    "column": 12
-                                  },
-                                  "end": {
-                                    "line": 12,
-                                    "column": 19
-                                  }
-                                }
-                              },
-                              "init": {
-                                "type": "NewExpression",
-                                "callee": {
-                                  "type": "Identifier",
-                                  "name": "Game",
-                                  "range": [
-                                    327,
-                                    331
-                                  ],
-                                  "loc": {
-                                    "start": {
-                                      "line": 12,
-                                      "column": 26
-                                    },
-                                    "end": {
-                                      "line": 12,
-                                      "column": 30
-                                    }
-                                  }
-                                },
-                                "arguments": [
-                                  {
-                                    "type": "Identifier",
-                                    "name": "user",
-                                    "range": [
-                                      332,
-                                      336
-                                    ],
-                                    "loc": {
-                                      "start": {
-                                        "line": 12,
-                                        "column": 31
-                                      },
-                                      "end": {
-                                        "line": 12,
-                                        "column": 35
-                                      }
-                                    }
-                                  }
-                                ],
-                                "range": [
-                                  323,
-                                  337
-                                ],
-                                "loc": {
-                                  "start": {
-                                    "line": 12,
-                                    "column": 22
-                                  },
-                                  "end": {
-                                    "line": 12,
-                                    "column": 36
-                                  }
-                                }
-                              },
-                              "range": [
-                                313,
-                                337
-                              ],
-                              "loc": {
-                                "start": {
-                                  "line": 12,
-                                  "column": 12
-                                },
-                                "end": {
-                                  "line": 12,
-                                  "column": 36
-                                }
-                              }
-                            }
-                          ],
-                          "kind": "const",
-                          "range": [
-                            307,
-                            338
-                          ],
-                          "loc": {
-                            "start": {
-                              "line": 12,
-                              "column": 6
-                            },
-                            "end": {
-                              "line": 12,
-                              "column": 37
-                            }
+                    "alternate": null,
+                    "range": [
+                      1023,
+                      1122
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 29,
+                        "column": 4
+                      },
+                      "end": {
+                        "line": 31,
+                        "column": 5
+                      }
+                    }
+                  },
+                  {
+                    "type": "ReturnStatement",
+                    "argument": {
+                      "type": "CallExpression",
+                      "callee": {
+                        "type": "Identifier",
+                        "name": "callback",
+                        "range": [
+                          1134,
+                          1142
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 32,
+                            "column": 11
+                          },
+                          "end": {
+                            "line": 32,
+                            "column": 19
                           }
-                        },
+                        }
+                      },
+                      "arguments": [
                         {
-                          "type": "ExpressionStatement",
-                          "expression": {
-                            "type": "CallExpression",
-                            "callee": {
-                              "type": "MemberExpression",
-                              "computed": false,
-                              "object": {
-                                "type": "Identifier",
-                                "name": "newGame",
-                                "range": [
-                                  345,
-                                  352
-                                ],
-                                "loc": {
-                                  "start": {
-                                    "line": 13,
-                                    "column": 6
-                                  },
-                                  "end": {
-                                    "line": 13,
-                                    "column": 13
-                                  }
-                                }
-                              },
-                              "property": {
-                                "type": "Identifier",
-                                "name": "updateGameAvailability",
-                                "range": [
-                                  353,
-                                  375
-                                ],
-                                "loc": {
-                                  "start": {
-                                    "line": 13,
-                                    "column": 14
-                                  },
-                                  "end": {
-                                    "line": 13,
-                                    "column": 36
-                                  }
-                                }
-                              },
+                          "type": "CallExpression",
+                          "callee": {
+                            "type": "MemberExpression",
+                            "computed": false,
+                            "object": {
+                              "type": "Identifier",
+                              "name": "gamesCollection",
                               "range": [
-                                345,
-                                375
+                                1143,
+                                1158
                               ],
                               "loc": {
                                 "start": {
-                                  "line": 13,
-                                  "column": 6
+                                  "line": 32,
+                                  "column": 20
                                 },
                                 "end": {
-                                  "line": 13,
-                                  "column": 36
+                                  "line": 32,
+                                  "column": 35
                                 }
                               }
                             },
-                            "arguments": [],
+                            "property": {
+                              "type": "Identifier",
+                              "name": "getNextOpenGame",
+                              "range": [
+                                1159,
+                                1174
+                              ],
+                              "loc": {
+                                "start": {
+                                  "line": 32,
+                                  "column": 36
+                                },
+                                "end": {
+                                  "line": 32,
+                                  "column": 51
+                                }
+                              }
+                            },
                             "range": [
-                              345,
-                              377
+                              1143,
+                              1174
                             ],
                             "loc": {
                               "start": {
-                                "line": 13,
-                                "column": 6
+                                "line": 32,
+                                "column": 20
                               },
                               "end": {
-                                "line": 13,
-                                "column": 38
+                                "line": 32,
+                                "column": 51
                               }
                             }
                           },
+                          "arguments": [],
                           "range": [
-                            345,
-                            378
+                            1143,
+                            1176
                           ],
                           "loc": {
                             "start": {
-                              "line": 13,
-                              "column": 6
+                              "line": 32,
+                              "column": 20
                             },
                             "end": {
-                              "line": 13,
-                              "column": 39
+                              "line": 32,
+                              "column": 53
                             }
                           }
                         }
                       ],
                       "range": [
-                        299,
-                        384
+                        1134,
+                        1177
                       ],
                       "loc": {
                         "start": {
-                          "line": 11,
+                          "line": 32,
                           "column": 11
                         },
                         "end": {
-                          "line": 14,
-                          "column": 5
+                          "line": 32,
+                          "column": 54
                         }
                       }
                     },
                     "range": [
-                      176,
-                      384
+                      1127,
+                      1178
                     ],
                     "loc": {
                       "start": {
-                        "line": 8,
+                        "line": 32,
                         "column": 4
                       },
                       "end": {
-                        "line": 14,
-                        "column": 5
+                        "line": 32,
+                        "column": 55
                       }
                     }
                   }
                 ],
                 "range": [
-                  170,
-                  388
+                  1017,
+                  1182
                 ],
                 "loc": {
                   "start": {
-                    "line": 7,
-                    "column": 29
+                    "line": 28,
+                    "column": 39
                   },
                   "end": {
-                    "line": 15,
+                    "line": 33,
                     "column": 3
                   }
                 }
@@ -1072,16 +1195,16 @@
               "generator": false,
               "expression": false,
               "range": [
-                160,
-                388
+                986,
+                1182
               ],
               "loc": {
                 "start": {
-                  "line": 7,
-                  "column": 19
+                  "line": 28,
+                  "column": 8
                 },
                 "end": {
-                  "line": 15,
+                  "line": 33,
                   "column": 3
                 }
               }
@@ -1091,32 +1214,781 @@
             "shorthand": false,
             "computed": false,
             "range": [
-              143,
-              388
+              980,
+              1182
             ],
             "loc": {
               "start": {
-                "line": 7,
+                "line": 28,
                 "column": 2
               },
               "end": {
-                "line": 15,
+                "line": 33,
+                "column": 3
+              }
+            },
+            "leadingComments": [
+              {
+                "type": "Block",
+                "value": "*\n   * Handles a user wanting to play a game. If there are available games,\n   the user will be added to an ongoing game. A new game will be created\n   * for the user otherwise.\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   ",
+                "range": [
+                  679,
+                  977
+                ],
+                "loc": {
+                  "start": {
+                    "line": 21,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 27,
+                    "column": 5
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "Property",
+            "key": {
+              "type": "Identifier",
+              "name": "handleGuess",
+              "range": [
+                1428,
+                1439
+              ],
+              "loc": {
+                "start": {
+                  "line": 40,
+                  "column": 2
+                },
+                "end": {
+                  "line": 40,
+                  "column": 13
+                }
+              }
+            },
+            "value": {
+              "type": "ArrowFunctionExpression",
+              "id": null,
+              "params": [
+                {
+                  "type": "Identifier",
+                  "name": "gamesCollection",
+                  "range": [
+                    1442,
+                    1457
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 40,
+                      "column": 16
+                    },
+                    "end": {
+                      "line": 40,
+                      "column": 31
+                    }
+                  }
+                },
+                {
+                  "type": "Identifier",
+                  "name": "gameId",
+                  "range": [
+                    1459,
+                    1465
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 40,
+                      "column": 33
+                    },
+                    "end": {
+                      "line": 40,
+                      "column": 39
+                    }
+                  }
+                },
+                {
+                  "type": "Identifier",
+                  "name": "message",
+                  "range": [
+                    1467,
+                    1474
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 40,
+                      "column": 41
+                    },
+                    "end": {
+                      "line": 40,
+                      "column": 48
+                    }
+                  }
+                }
+              ],
+              "body": {
+                "type": "CallExpression",
+                "callee": {
+                  "type": "MemberExpression",
+                  "computed": false,
+                  "object": {
+                    "type": "CallExpression",
+                    "callee": {
+                      "type": "MemberExpression",
+                      "computed": false,
+                      "object": {
+                        "type": "Identifier",
+                        "name": "gamesCollection",
+                        "range": [
+                          1485,
+                          1500
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 41,
+                            "column": 4
+                          },
+                          "end": {
+                            "line": 41,
+                            "column": 19
+                          }
+                        }
+                      },
+                      "property": {
+                        "type": "Identifier",
+                        "name": "retrieve",
+                        "range": [
+                          1501,
+                          1509
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 41,
+                            "column": 20
+                          },
+                          "end": {
+                            "line": 41,
+                            "column": 28
+                          }
+                        }
+                      },
+                      "range": [
+                        1485,
+                        1509
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 41,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 41,
+                          "column": 28
+                        }
+                      }
+                    },
+                    "arguments": [
+                      {
+                        "type": "Identifier",
+                        "name": "gameId",
+                        "range": [
+                          1510,
+                          1516
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 41,
+                            "column": 29
+                          },
+                          "end": {
+                            "line": 41,
+                            "column": 35
+                          }
+                        }
+                      }
+                    ],
+                    "range": [
+                      1485,
+                      1517
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 41,
+                        "column": 4
+                      },
+                      "end": {
+                        "line": 41,
+                        "column": 36
+                      }
+                    }
+                  },
+                  "property": {
+                    "type": "Identifier",
+                    "name": "checkGuess",
+                    "range": [
+                      1518,
+                      1528
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 41,
+                        "column": 37
+                      },
+                      "end": {
+                        "line": 41,
+                        "column": 47
+                      }
+                    }
+                  },
+                  "range": [
+                    1485,
+                    1528
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 41,
+                      "column": 4
+                    },
+                    "end": {
+                      "line": 41,
+                      "column": 47
+                    }
+                  }
+                },
+                "arguments": [
+                  {
+                    "type": "Identifier",
+                    "name": "message",
+                    "range": [
+                      1529,
+                      1536
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 41,
+                        "column": 48
+                      },
+                      "end": {
+                        "line": 41,
+                        "column": 55
+                      }
+                    }
+                  }
+                ],
+                "range": [
+                  1485,
+                  1537
+                ],
+                "loc": {
+                  "start": {
+                    "line": 41,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 41,
+                    "column": 56
+                  }
+                }
+              },
+              "generator": false,
+              "expression": true,
+              "range": [
+                1441,
+                1541
+              ],
+              "loc": {
+                "start": {
+                  "line": 40,
+                  "column": 15
+                },
+                "end": {
+                  "line": 42,
+                  "column": 3
+                }
+              }
+            },
+            "kind": "init",
+            "method": false,
+            "shorthand": false,
+            "computed": false,
+            "range": [
+              1428,
+              1541
+            ],
+            "loc": {
+              "start": {
+                "line": 40,
+                "column": 2
+              },
+              "end": {
+                "line": 42,
+                "column": 3
+              }
+            },
+            "leadingComments": [
+              {
+                "type": "Block",
+                "value": "*\n   * Handles the judgement of a player's guesses.\n   * Returns true for correct guesses, false for incorect guesses.\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   ",
+                "range": [
+                  1186,
+                  1425
+                ],
+                "loc": {
+                  "start": {
+                    "line": 34,
+                    "column": 2
+                  },
+                  "end": {
+                    "line": 39,
+                    "column": 5
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "type": "Property",
+            "key": {
+              "type": "Identifier",
+              "name": "retrieve",
+              "range": [
+                1546,
+                1554
+              ],
+              "loc": {
+                "start": {
+                  "line": 44,
+                  "column": 2
+                },
+                "end": {
+                  "line": 44,
+                  "column": 10
+                }
+              }
+            },
+            "value": {
+              "type": "ArrowFunctionExpression",
+              "id": null,
+              "params": [
+                {
+                  "type": "Identifier",
+                  "name": "gamesCollection",
+                  "range": [
+                    1557,
+                    1572
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 44,
+                      "column": 13
+                    },
+                    "end": {
+                      "line": 44,
+                      "column": 28
+                    }
+                  }
+                },
+                {
+                  "type": "Identifier",
+                  "name": "gameId",
+                  "range": [
+                    1574,
+                    1580
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 44,
+                      "column": 30
+                    },
+                    "end": {
+                      "line": 44,
+                      "column": 36
+                    }
+                  }
+                }
+              ],
+              "body": {
+                "type": "CallExpression",
+                "callee": {
+                  "type": "MemberExpression",
+                  "computed": false,
+                  "object": {
+                    "type": "Identifier",
+                    "name": "gamesCollection",
+                    "range": [
+                      1591,
+                      1606
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 45,
+                        "column": 4
+                      },
+                      "end": {
+                        "line": 45,
+                        "column": 19
+                      }
+                    }
+                  },
+                  "property": {
+                    "type": "Identifier",
+                    "name": "retrieve",
+                    "range": [
+                      1607,
+                      1615
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 45,
+                        "column": 20
+                      },
+                      "end": {
+                        "line": 45,
+                        "column": 28
+                      }
+                    }
+                  },
+                  "range": [
+                    1591,
+                    1615
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 45,
+                      "column": 4
+                    },
+                    "end": {
+                      "line": 45,
+                      "column": 28
+                    }
+                  }
+                },
+                "arguments": [
+                  {
+                    "type": "Identifier",
+                    "name": "gameId",
+                    "range": [
+                      1616,
+                      1622
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 45,
+                        "column": 29
+                      },
+                      "end": {
+                        "line": 45,
+                        "column": 35
+                      }
+                    }
+                  }
+                ],
+                "range": [
+                  1591,
+                  1623
+                ],
+                "loc": {
+                  "start": {
+                    "line": 45,
+                    "column": 4
+                  },
+                  "end": {
+                    "line": 45,
+                    "column": 36
+                  }
+                }
+              },
+              "generator": false,
+              "expression": true,
+              "range": [
+                1556,
+                1627
+              ],
+              "loc": {
+                "start": {
+                  "line": 44,
+                  "column": 12
+                },
+                "end": {
+                  "line": 46,
+                  "column": 3
+                }
+              }
+            },
+            "kind": "init",
+            "method": false,
+            "shorthand": false,
+            "computed": false,
+            "range": [
+              1546,
+              1627
+            ],
+            "loc": {
+              "start": {
+                "line": 44,
+                "column": 2
+              },
+              "end": {
+                "line": 46,
+                "column": 3
+              }
+            }
+          },
+          {
+            "type": "Property",
+            "key": {
+              "type": "Identifier",
+              "name": "disseminateChange",
+              "range": [
+                1632,
+                1649
+              ],
+              "loc": {
+                "start": {
+                  "line": 48,
+                  "column": 2
+                },
+                "end": {
+                  "line": 48,
+                  "column": 19
+                }
+              }
+            },
+            "value": {
+              "type": "ArrowFunctionExpression",
+              "id": null,
+              "params": [
+                {
+                  "type": "Identifier",
+                  "name": "type",
+                  "range": [
+                    1652,
+                    1656
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 48,
+                      "column": 22
+                    },
+                    "end": {
+                      "line": 48,
+                      "column": 26
+                    }
+                  }
+                },
+                {
+                  "type": "Identifier",
+                  "name": "game",
+                  "range": [
+                    1658,
+                    1662
+                  ],
+                  "loc": {
+                    "start": {
+                      "line": 48,
+                      "column": 28
+                    },
+                    "end": {
+                      "line": 48,
+                      "column": 32
+                    }
+                  }
+                }
+              ],
+              "body": {
+                "type": "BlockStatement",
+                "body": [
+                  {
+                    "type": "ExpressionStatement",
+                    "expression": {
+                      "type": "CallExpression",
+                      "callee": {
+                        "type": "MemberExpression",
+                        "computed": false,
+                        "object": {
+                          "type": "Identifier",
+                          "name": "gameSockets",
+                          "range": [
+                            1673,
+                            1684
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 49,
+                              "column": 4
+                            },
+                            "end": {
+                              "line": 49,
+                              "column": 15
+                            }
+                          }
+                        },
+                        "property": {
+                          "type": "Identifier",
+                          "name": "modifyClientGameState",
+                          "range": [
+                            1685,
+                            1706
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 49,
+                              "column": 16
+                            },
+                            "end": {
+                              "line": 49,
+                              "column": 37
+                            }
+                          }
+                        },
+                        "range": [
+                          1673,
+                          1706
+                        ],
+                        "loc": {
+                          "start": {
+                            "line": 49,
+                            "column": 4
+                          },
+                          "end": {
+                            "line": 49,
+                            "column": 37
+                          }
+                        }
+                      },
+                      "arguments": [
+                        {
+                          "type": "Identifier",
+                          "name": "type",
+                          "range": [
+                            1707,
+                            1711
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 49,
+                              "column": 38
+                            },
+                            "end": {
+                              "line": 49,
+                              "column": 42
+                            }
+                          }
+                        },
+                        {
+                          "type": "Identifier",
+                          "name": "game",
+                          "range": [
+                            1713,
+                            1717
+                          ],
+                          "loc": {
+                            "start": {
+                              "line": 49,
+                              "column": 44
+                            },
+                            "end": {
+                              "line": 49,
+                              "column": 48
+                            }
+                          }
+                        }
+                      ],
+                      "range": [
+                        1673,
+                        1718
+                      ],
+                      "loc": {
+                        "start": {
+                          "line": 49,
+                          "column": 4
+                        },
+                        "end": {
+                          "line": 49,
+                          "column": 49
+                        }
+                      }
+                    },
+                    "range": [
+                      1673,
+                      1719
+                    ],
+                    "loc": {
+                      "start": {
+                        "line": 49,
+                        "column": 4
+                      },
+                      "end": {
+                        "line": 49,
+                        "column": 50
+                      }
+                    }
+                  }
+                ],
+                "range": [
+                  1667,
+                  1723
+                ],
+                "loc": {
+                  "start": {
+                    "line": 48,
+                    "column": 37
+                  },
+                  "end": {
+                    "line": 50,
+                    "column": 3
+                  }
+                }
+              },
+              "generator": false,
+              "expression": false,
+              "range": [
+                1651,
+                1723
+              ],
+              "loc": {
+                "start": {
+                  "line": 48,
+                  "column": 21
+                },
+                "end": {
+                  "line": 50,
+                  "column": 3
+                }
+              }
+            },
+            "kind": "init",
+            "method": false,
+            "shorthand": false,
+            "computed": false,
+            "range": [
+              1632,
+              1723
+            ],
+            "loc": {
+              "start": {
+                "line": 48,
+                "column": 2
+              },
+              "end": {
+                "line": 50,
                 "column": 3
               }
             }
           }
         ],
         "range": [
-          139,
-          391
+          56,
+          1725
         ],
         "loc": {
           "start": {
-            "line": 6,
+            "line": 3,
             "column": 15
           },
           "end": {
-            "line": 16,
+            "line": 51,
             "column": 1
           }
         },
@@ -1124,16 +1996,16 @@
         "trailingComments": []
       },
       "range": [
-        124,
-        392
+        41,
+        1726
       ],
       "loc": {
         "start": {
-          "line": 6,
+          "line": 3,
           "column": 0
         },
         "end": {
-          "line": 16,
+          "line": 51,
           "column": 2
         }
       }
@@ -1142,7 +2014,7 @@
   "sourceType": "module",
   "range": [
     0,
-    392
+    1726
   ],
   "loc": {
     "start": {
@@ -1150,9 +2022,82 @@
       "column": 0
     },
     "end": {
-      "line": 16,
+      "line": 51,
       "column": 2
     }
   },
-  "comments": []
+  "comments": [
+    {
+      "type": "Block",
+      "value": "*\n   * Handles the addition of a player to a selected game\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   ",
+      "range": [
+        60,
+        239
+      ],
+      "loc": {
+        "start": {
+          "line": 4,
+          "column": 2
+        },
+        "end": {
+          "line": 8,
+          "column": 5
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n   * Handles a player leaving a game\n   * @params {object} - a instance of the Games collection\n   * @params {string} - a game ID\n   * @params {object} - an instance of the User model\n   ",
+      "range": [
+        360,
+        553
+      ],
+      "loc": {
+        "start": {
+          "line": 12,
+          "column": 2
+        },
+        "end": {
+          "line": 17,
+          "column": 5
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n   * Handles a user wanting to play a game. If there are available games,\n   the user will be added to an ongoing game. A new game will be created\n   * for the user otherwise.\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   ",
+      "range": [
+        679,
+        977
+      ],
+      "loc": {
+        "start": {
+          "line": 21,
+          "column": 2
+        },
+        "end": {
+          "line": 27,
+          "column": 5
+        }
+      }
+    },
+    {
+      "type": "Block",
+      "value": "*\n   * Handles the judgement of a player's guesses.\n   * Returns true for correct guesses, false for incorect guesses.\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   ",
+      "range": [
+        1186,
+        1425
+      ],
+      "loc": {
+        "start": {
+          "line": 34,
+          "column": 2
+        },
+        "end": {
+          "line": 39,
+          "column": 5
+        }
+      }
+    }
+  ]
 }

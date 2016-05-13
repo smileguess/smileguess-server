@@ -32,15 +32,17 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
+  <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">collections</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Games.js~Games.html">Games</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/collections/Users.js~Users.html">Users</a></span></span></li>
+<li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">models</div><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/Game.js~Game.html">Game</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/smileguess-server/models/User.js~User.html">User</a></span></span></li>
 <li data-ice="doc"><div data-ice="dirPath" class="nav-dir-path">sockets</div><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-dummy">dummy</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-joinRandomGame">joinRandomGame</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onConnect">onConnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-onDisconnect">onDisconnect</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendClueMessage">sendClueMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendGuessMessage">sendGuessMessage</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPlayerJoinGame">sendPlayerJoinGame</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendPrompt">sendPrompt</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-sendWinner">sendWinner</a></span></span></li>
 </ul>
 </div>
@@ -51,26 +53,25 @@
 const onDisconnect = require(&apos;../sockets/onDisconnect.js&apos;);
 const sendGuessMessage = require(&apos;../sockets/sendGuessMessage.js&apos;);
 const sendClueMessage = require(&apos;../sockets/sendClueMessage.js&apos;);
-const joinRandomGame = require(&apos;../sockets/joinRandomGame.js&apos;);
+const sendPlayerJoinGame = require(&apos;../sockets/sendPlayerJoinGame.js&apos;);
+const sendPrompt = require(&apos;../sockets/sendPrompt&apos;);
 
-const ioCreate = require(&apos;socket.io&apos;);
-
-module.exports = (app) =&gt; {
-  const io = ioCreate.listen(app);
+module.exports = (io, db) =&gt; {
   io.on(&apos;connection&apos;, (socket) =&gt; {
     onConnect(io, socket);
-
     socket.on(&apos;disconnect&apos;, () =&gt; {
       onDisconnect(io, socket);
     });
     socket.on(&apos;action&apos;, (action) =&gt; {
       switch (action.type) {
         case &apos;server/sendGuessMessage&apos;:
-          return sendGuessMessage(io, socket, action);
+          return sendGuessMessage(io, socket, action, db);
         case &apos;server/sendClueMessage&apos;:
           return sendClueMessage(io, socket, action);
-        case &apos;server/joinRandomGame&apos;:
-          return joinRandomGame(io, socket, action);
+        case &apos;server/joinGame&apos;:
+          return sendPlayerJoinGame(io, socket, action, db);
+        case &apos;server/sendPrompt&apos;:
+          return sendPrompt(io, socket, action);
         default:
           return null;
       }

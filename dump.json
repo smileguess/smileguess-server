@@ -9,33 +9,20 @@
     "longname": "smileguess-server/collections/Games.js",
     "access": null,
     "description": null,
-    "lineNumber": 3,
-    "content": "// may want to store games in a hash table later, with references\n// to games stored in the full/open games arrays\nmodule.exports = {\n  fullGames: [],\n  openGames: [],\n  sort: (gameCollection) => {\n    gameCollection.sort((game1, game2) => (\n      game1.seatsOpen > game2.seatsOpen\n    ));\n  },\n};\n"
+    "lineNumber": 1,
+    "content": "const Game = require('../models/Game');\n\nmodule.exports = class Games {\n  /**\n  * Creates a collection of games\n  */\n  constructor(io) {\n    /**\n    * Map for storing game instances, referenced by game ID\n    * @type {map}\n    */\n    this.storage = new Map();\n    /**\n    * Collection of game ID's that are not available to join\n    * @type {number[]}\n    */\n    this.fullGames = [];\n    /**\n    * Queue of game ID's that are available to join\n    * @type {array[]}\n    */\n    this.openGames = [];\n    /**\n    * Counter for number of games created. Used for creating game ID's\n    * @type {object}\n    */\n    this.allTimeGameCount = 0;\n\n\n\n    this.io = io;\n  }\n  /**\n   * Instantiates a new game instance\n   * @params {object} - a User instance\n   */\n  createGame(firstPlayer) {\n    const gameId = this.generateGameId();\n    const newGame = new Game(gameId, this.io.to(gameId));\n    newGame.on('playerChange', this.updateQueue.bind(this), GameCon.disseminateChange);\n    newGame.on('empty', this.destroy.bind(this));\n    newGame.on('full', this.moveToFullGames.bind(this));\n    newGame.on('nowAvailable', this.moveToOpenGames.bind(this));\n    newGame.on('newDealer', GameCon.disseminateChange);\n    this.insert(newGame);\n    return newGame;\n  }\n  /**\n   * Creates an identifer for a new game instance\n   */\n  generateGameId() {\n    this.allTimeGameCount++;\n    const gameId = this.allTimeGameCount;\n    return gameId;\n  }\n  /**\n   * Stores a game instance\n   * @params {object} - an instantiation of the Game model\n   */\n  insert(game) {\n    this.storage.set(game.gameId, game);\n    this.queue(game.gameId);\n    return game;\n  }\n  /**\n   * Retrieves a game instance with a given ID\n   * @params {number} - a game ID\n   */\n  retrieve(gameId) {\n    return this.storage.get(gameId);\n  }\n  /**\n   * Deletes a game instance\n   * @params {string} - a game identifier\n   */\n  destroy(gameId) {\n    this.storage.delete(gameId);\n    this.removeGameSummary(this.openGames, gameId);\n    return null;\n  }\n  /**\n   * Queues a game in order of next available game for new players\n   * @params {number} - a game ID\n   */\n  queue(gameId) {\n    this.openGames.push(gameId);\n    this.updateQueue();\n  }\n  /**\n   * sorts games by number of seats available\n   */\n  updateQueue() {\n    return this.openGames.sort((game1, game2) => (\n      this.storage.get(game1).seatsOpen > this.storage.get(game2).seatsOpen)\n    );\n  }\n  /**\n   * Classifes a game as full\n   * @params {number} - a game ID\n   */\n  moveToFullGames(gameId) {\n    this.fullGames.push(gameId);\n    this.openGames.forEach((game) => {\n      this.openGames.splice(this.openGames.indexOf(gameId), 1);\n    });\n  }\n  /**\n   * Queues games as seats become available\n   */\n  moveToOpenGames(gameId) {\n    this.openGames.push(gameId);\n    this.updateQueue();\n    this.fullGames.forEach((game) => {\n      this.fullGames.splice(game, 1);\n    });\n  }\n  /**\n   * Removes a game summary from openGames\n   * @params {array} - a collection of game summaries\n   * @params {string} - a game identifier\n   */\n  removeGameSummary(subCollection, gameId) {\n    subCollection.forEach((summary) => {\n      if (summary === gameId) {\n        subCollection.splice(subCollection.indexOf(summary), 1);\n      }\n    });\n    return subCollection;\n  }\n  /**\n   * Retrieves the next game referenced in the queue for adding players\n   */\n  getNextOpenGame() {\n    return this.retrieve(this.openGames[this.openGames.length - 1]);\n  }\n};\n"
   },
   {
     "__docId__": 1,
-    "kind": "file",
-    "static": true,
-    "variation": null,
-    "name": "smileguess-server/config/middleware.js",
-    "memberof": null,
-    "longname": "smileguess-server/config/middleware.js",
-    "access": null,
-    "description": null,
-    "lineNumber": 1,
-    "content": "const bodyParser = require('body-parser');\n\nmodule.exports = (app) => {\n  app.use(bodyParser.urlencoded({ extended: true }));\n  app.use(bodyParser.json());\n};\n\n"
-  },
-  {
-    "__docId__": 2,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "bodyParser",
-    "memberof": "smileguess-server/config/middleware.js",
-    "longname": "smileguess-server/config/middleware.js~bodyParser",
+    "name": "Game",
+    "memberof": "smileguess-server/collections/Games.js",
+    "longname": "smileguess-server/collections/Games.js~Game",
     "access": null,
     "export": false,
-    "importPath": "./smileguess-server/config/middleware.js",
+    "importPath": "./smileguess-server/collections/Games.js",
     "importStyle": null,
     "description": null,
     "lineNumber": 1,
@@ -47,7 +34,655 @@
     }
   },
   {
+    "__docId__": 2,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Games",
+    "memberof": "smileguess-server/collections/Games.js",
+    "longname": "smileguess-server/collections/Games.js~Games",
+    "access": null,
+    "export": true,
+    "importPath": "./smileguess-server/collections/Games.js",
+    "importStyle": "Games",
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "interface": false
+  },
+  {
     "__docId__": 3,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#constructor",
+    "access": null,
+    "description": "Creates a collection of games",
+    "lineNumber": 7,
+    "params": [
+      {
+        "name": "io",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 4,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "storage",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#storage",
+    "access": null,
+    "description": "Map for storing game instances, referenced by game ID",
+    "lineNumber": 12,
+    "type": {
+      "nullable": null,
+      "types": [
+        "map"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 5,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "fullGames",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#fullGames",
+    "access": null,
+    "description": "Collection of game ID's that are not available to join",
+    "lineNumber": 17,
+    "type": {
+      "nullable": null,
+      "types": [
+        "number[]"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 6,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "openGames",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#openGames",
+    "access": null,
+    "description": "Queue of game ID's that are available to join",
+    "lineNumber": 22,
+    "type": {
+      "nullable": null,
+      "types": [
+        "array[]"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 7,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "allTimeGameCount",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#allTimeGameCount",
+    "access": null,
+    "description": "Counter for number of games created. Used for creating game ID's",
+    "lineNumber": 27,
+    "type": {
+      "nullable": null,
+      "types": [
+        "object"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 8,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "io",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#io",
+    "access": null,
+    "description": null,
+    "lineNumber": 31,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 9,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "createGame",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#createGame",
+    "access": null,
+    "description": "Instantiates a new game instance",
+    "lineNumber": 37,
+    "unknown": [
+      {
+        "tagName": "@params",
+        "tagValue": "{object} - a User instance"
+      }
+    ],
+    "params": [
+      {
+        "name": "firstPlayer",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 10,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "generateGameId",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#generateGameId",
+    "access": null,
+    "description": "Creates an identifer for a new game instance",
+    "lineNumber": 51,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 11,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "insert",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#insert",
+    "access": null,
+    "description": "Stores a game instance",
+    "lineNumber": 60,
+    "unknown": [
+      {
+        "tagName": "@params",
+        "tagValue": "{object} - an instantiation of the Game model"
+      }
+    ],
+    "params": [
+      {
+        "name": "game",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 12,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "retrieve",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#retrieve",
+    "access": null,
+    "description": "Retrieves a game instance with a given ID",
+    "lineNumber": 69,
+    "unknown": [
+      {
+        "tagName": "@params",
+        "tagValue": "{number} - a game ID"
+      }
+    ],
+    "params": [
+      {
+        "name": "gameId",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 13,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "destroy",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#destroy",
+    "access": null,
+    "description": "Deletes a game instance",
+    "lineNumber": 76,
+    "unknown": [
+      {
+        "tagName": "@params",
+        "tagValue": "{string} - a game identifier"
+      }
+    ],
+    "params": [
+      {
+        "name": "gameId",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 14,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "queue",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#queue",
+    "access": null,
+    "description": "Queues a game in order of next available game for new players",
+    "lineNumber": 85,
+    "unknown": [
+      {
+        "tagName": "@params",
+        "tagValue": "{number} - a game ID"
+      }
+    ],
+    "params": [
+      {
+        "name": "gameId",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 15,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "updateQueue",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#updateQueue",
+    "access": null,
+    "description": "sorts games by number of seats available",
+    "lineNumber": 92,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 16,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "moveToFullGames",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#moveToFullGames",
+    "access": null,
+    "description": "Classifes a game as full",
+    "lineNumber": 101,
+    "unknown": [
+      {
+        "tagName": "@params",
+        "tagValue": "{number} - a game ID"
+      }
+    ],
+    "params": [
+      {
+        "name": "gameId",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 17,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "moveToOpenGames",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#moveToOpenGames",
+    "access": null,
+    "description": "Queues games as seats become available",
+    "lineNumber": 110,
+    "params": [
+      {
+        "name": "gameId",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 18,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "removeGameSummary",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#removeGameSummary",
+    "access": null,
+    "description": "Removes a game summary from openGames",
+    "lineNumber": 122,
+    "unknown": [
+      {
+        "tagName": "@params",
+        "tagValue": "{array} - a collection of game summaries"
+      },
+      {
+        "tagName": "@params",
+        "tagValue": "{string} - a game identifier"
+      }
+    ],
+    "params": [
+      {
+        "name": "subCollection",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "gameId",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 19,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getNextOpenGame",
+    "memberof": "smileguess-server/collections/Games.js~Games",
+    "longname": "smileguess-server/collections/Games.js~Games#getNextOpenGame",
+    "access": null,
+    "description": "Retrieves the next game referenced in the queue for adding players",
+    "lineNumber": 133,
+    "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 20,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "smileguess-server/collections/Users.js",
+    "memberof": null,
+    "longname": "smileguess-server/collections/Users.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "const User = require('../models/User');\n\nmodule.exports = class Users {\n  constructor() {\n    this.users = new Map();\n    this.totalUsersCreated = 0;\n  }\n\n  createUser(deviceId) {\n    const newUser = new User(++this.totalUsersCreated, deviceId);\n    this.addUserToCollection(newUser);\n    return newUser;\n  }\n\n  addUserToCollection(newUser) {\n    this.users.set(newUser.userId, newUser);\n    return User;\n  }\n\n  destroy(userId) {\n    this.users.delete(userId);\n    return null;\n  }\n\n  getOne(userId) {\n    return this.users.get(userId);\n  }\n};\n\n"
+  },
+  {
+    "__docId__": 21,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "User",
+    "memberof": "smileguess-server/collections/Users.js",
+    "longname": "smileguess-server/collections/Users.js~User",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/collections/Users.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 1,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 22,
+    "kind": "class",
+    "static": true,
+    "variation": null,
+    "name": "Users",
+    "memberof": "smileguess-server/collections/Users.js",
+    "longname": "smileguess-server/collections/Users.js~Users",
+    "access": null,
+    "export": true,
+    "importPath": "./smileguess-server/collections/Users.js",
+    "importStyle": "Users",
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "interface": false
+  },
+  {
+    "__docId__": 23,
+    "kind": "constructor",
+    "static": false,
+    "variation": null,
+    "name": "constructor",
+    "memberof": "smileguess-server/collections/Users.js~Users",
+    "longname": "smileguess-server/collections/Users.js~Users#constructor",
+    "access": null,
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "params": [],
+    "generator": false
+  },
+  {
+    "__docId__": 24,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "users",
+    "memberof": "smileguess-server/collections/Users.js~Users",
+    "longname": "smileguess-server/collections/Users.js~Users#users",
+    "access": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 25,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "totalUsersCreated",
+    "memberof": "smileguess-server/collections/Users.js~Users",
+    "longname": "smileguess-server/collections/Users.js~Users#totalUsersCreated",
+    "access": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "type": {
+      "types": [
+        "number"
+      ]
+    }
+  },
+  {
+    "__docId__": 26,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "createUser",
+    "memberof": "smileguess-server/collections/Users.js~Users",
+    "longname": "smileguess-server/collections/Users.js~Users#createUser",
+    "access": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "params": [
+      {
+        "name": "deviceId",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 27,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "addUserToCollection",
+    "memberof": "smileguess-server/collections/Users.js~Users",
+    "longname": "smileguess-server/collections/Users.js~Users#addUserToCollection",
+    "access": null,
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "params": [
+      {
+        "name": "newUser",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 28,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "destroy",
+    "memberof": "smileguess-server/collections/Users.js~Users",
+    "longname": "smileguess-server/collections/Users.js~Users#destroy",
+    "access": null,
+    "description": null,
+    "lineNumber": 20,
+    "undocument": true,
+    "params": [
+      {
+        "name": "userId",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 29,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getOne",
+    "memberof": "smileguess-server/collections/Users.js~Users",
+    "longname": "smileguess-server/collections/Users.js~Users#getOne",
+    "access": null,
+    "description": null,
+    "lineNumber": 25,
+    "undocument": true,
+    "params": [
+      {
+        "name": "userId",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 30,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -57,16 +692,16 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const express = require('express');\nconst gameController = require('../controllers/GameController');\nconst app = express();\n\napp.post('/api/randomgame:userid', gameController.joinOrStartGame());\n"
+    "content": "const GameController = require('../controllers/GameController');\nconst UserController = require('../controllers/UserController');\n\nmodule.exports = (app, db) => {\n  app.get('/api/game/', (req, res) => {\n    GameController.play(db.games, (game) => res.json(game));\n  });\n\n  app.get('/api/user/:deviceId', (req, res) => {\n    UserController.newUser(req, res, db.users, (user) => {\n      res.json({\n        userId: user.userId,\n        username: user.username,\n        points: user.points,\n        wins: user.wins,\n        emojicoins: user.emojicoins,\n        picture: user.picture,\n      });\n    });\n  });\n};\n"
   },
   {
-    "__docId__": 4,
+    "__docId__": 31,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "express",
+    "name": "GameController",
     "memberof": "smileguess-server/config/routes.js",
-    "longname": "smileguess-server/config/routes.js~express",
+    "longname": "smileguess-server/config/routes.js~GameController",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/config/routes.js",
@@ -81,13 +716,13 @@
     }
   },
   {
-    "__docId__": 5,
+    "__docId__": 32,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "gameController",
+    "name": "UserController",
     "memberof": "smileguess-server/config/routes.js",
-    "longname": "smileguess-server/config/routes.js~gameController",
+    "longname": "smileguess-server/config/routes.js~UserController",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/config/routes.js",
@@ -102,28 +737,7 @@
     }
   },
   {
-    "__docId__": 6,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "app",
-    "memberof": "smileguess-server/config/routes.js",
-    "longname": "smileguess-server/config/routes.js~app",
-    "access": null,
-    "export": false,
-    "importPath": "./smileguess-server/config/routes.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 3,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 7,
+    "__docId__": 33,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -133,10 +747,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const onConnect = require('../sockets/onConnect.js');\nconst onDisconnect = require('../sockets/onDisconnect.js');\nconst sendGuessMessage = require('../sockets/sendGuessMessage.js');\nconst sendClueMessage = require('../sockets/sendClueMessage.js');\nconst joinRandomGame = require('../sockets/joinRandomGame.js');\n\nconst ioCreate = require('socket.io');\n\nmodule.exports = (app) => {\n  const io = ioCreate.listen(app);\n  io.on('connection', (socket) => {\n    onConnect(io, socket);\n\n    socket.on('disconnect', () => {\n      onDisconnect(io, socket);\n    });\n    socket.on('action', (action) => {\n      switch (action.type) {\n        case 'server/sendGuessMessage':\n          return sendGuessMessage(io, socket, action);\n        case 'server/sendClueMessage':\n          return sendClueMessage(io, socket, action);\n        case 'server/joinRandomGame':\n          return joinRandomGame(io, socket, action);\n        default:\n          return null;\n      }\n    });\n  });\n};\n\n"
+    "content": "const onConnect = require('../sockets/onConnect.js');\nconst onDisconnect = require('../sockets/onDisconnect.js');\nconst sendGuessMessage = require('../sockets/sendGuessMessage.js');\nconst sendClueMessage = require('../sockets/sendClueMessage.js');\nconst sendPlayerJoinGame = require('../sockets/sendPlayerJoinGame.js');\nconst sendPrompt = require('../sockets/sendPrompt');\n\nmodule.exports = (io, db) => {\n  io.on('connection', (socket) => {\n    onConnect(io, socket);\n    socket.on('disconnect', () => {\n      onDisconnect(io, socket);\n    });\n    socket.on('action', (action) => {\n      switch (action.type) {\n        case 'server/sendGuessMessage':\n          return sendGuessMessage(io, socket, action, db);\n        case 'server/sendClueMessage':\n          return sendClueMessage(io, socket, action);\n        case 'server/joinGame':\n          return sendPlayerJoinGame(io, socket, action, db);\n        case 'server/sendPrompt':\n          return sendPrompt(io, socket, action);\n        default:\n          return null;\n      }\n    });\n  });\n};\n\n"
   },
   {
-    "__docId__": 8,
+    "__docId__": 34,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -157,7 +771,7 @@
     }
   },
   {
-    "__docId__": 9,
+    "__docId__": 35,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -178,7 +792,7 @@
     }
   },
   {
-    "__docId__": 10,
+    "__docId__": 36,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -199,7 +813,7 @@
     }
   },
   {
-    "__docId__": 11,
+    "__docId__": 37,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -220,13 +834,13 @@
     }
   },
   {
-    "__docId__": 12,
+    "__docId__": 38,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "joinRandomGame",
+    "name": "sendPlayerJoinGame",
     "memberof": "smileguess-server/config/sockets.js",
-    "longname": "smileguess-server/config/sockets.js~joinRandomGame",
+    "longname": "smileguess-server/config/sockets.js~sendPlayerJoinGame",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/config/sockets.js",
@@ -241,19 +855,19 @@
     }
   },
   {
-    "__docId__": 13,
+    "__docId__": 39,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "ioCreate",
+    "name": "sendPrompt",
     "memberof": "smileguess-server/config/sockets.js",
-    "longname": "smileguess-server/config/sockets.js~ioCreate",
+    "longname": "smileguess-server/config/sockets.js~sendPrompt",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/config/sockets.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 7,
+    "lineNumber": 6,
     "undocument": true,
     "type": {
       "types": [
@@ -262,7 +876,7 @@
     }
   },
   {
-    "__docId__": 14,
+    "__docId__": 40,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -272,16 +886,16 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const Game = require('../models/Game');\nconst Games = require('../collections/Games');\n\nconst openGames = Games.openGames;\n\nmodule.exports = {\n  joinOrStartGame: (user) => {\n    if (openGames.length > 0) {\n      openGames[openGames.length - 1].addPlayer(user);\n      Games.sort(openGames);\n    } else {\n      const newGame = new Game(user);\n      newGame.updateGameAvailability();\n    }\n  },\n};\n\n"
+    "content": "const User = require('../models/User');\n\nmodule.exports = {\n  /**\n   * Handles the addition of a player to a selected game\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   */\n  handlePlayerJoin: (gamesCollection, user) => {\n    return gamesCollection.getNextOpenGame().addPlayer(userId);\n  },\n  /**\n   * Handles a player leaving a game\n   * @params {object} - a instance of the Games collection\n   * @params {string} - a game ID\n   * @params {object} - an instance of the User model\n   */\n  handlePlayerLeave: (gamesCollection, gameId, userId) => (\n    gamesCollection.retrieve(gameId).removePlayer(userId)\n  ),\n  /**\n   * Handles a user wanting to play a game. If there are available games,\n   the user will be added to an ongoing game. A new game will be created\n   * for the user otherwise.\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   */\n  play: (gamesCollection, callback) => {\n    if (!gamesCollection.openGames.length) {\n      return callback(gamesCollection.createGame());\n    }\n    return callback(gamesCollection.getNextOpenGame());\n  },\n  /**\n   * Handles the judgement of a player's guesses.\n   * Returns true for correct guesses, false for incorect guesses.\n   * @params {object} - a instance of the Games collection\n   * @params {object} - an instance of the User model\n   */\n  handleGuess: (gamesCollection, gameId, message) => (\n    gamesCollection.retrieve(gameId).checkGuess(message)\n  ),\n\n  retrieve: (gamesCollection, gameId) => (\n    gamesCollection.retrieve(gameId)\n  ),\n\n  disseminateChange: (type, game) => {\n    gameSockets.modifyClientGameState(type, game);\n  }\n};\n\n"
   },
   {
-    "__docId__": 15,
+    "__docId__": 41,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "Game",
+    "name": "User",
     "memberof": "smileguess-server/controllers/GameController.js",
-    "longname": "smileguess-server/controllers/GameController.js~Game",
+    "longname": "smileguess-server/controllers/GameController.js~User",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/controllers/GameController.js",
@@ -296,49 +910,20 @@
     }
   },
   {
-    "__docId__": 16,
-    "kind": "variable",
+    "__docId__": 42,
+    "kind": "file",
     "static": true,
     "variation": null,
-    "name": "Games",
-    "memberof": "smileguess-server/controllers/GameController.js",
-    "longname": "smileguess-server/controllers/GameController.js~Games",
+    "name": "smileguess-server/controllers/UserController.js",
+    "memberof": null,
+    "longname": "smileguess-server/controllers/UserController.js",
     "access": null,
-    "export": false,
-    "importPath": "./smileguess-server/controllers/GameController.js",
-    "importStyle": null,
     "description": null,
-    "lineNumber": 2,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
+    "lineNumber": 1,
+    "content": "module.exports = {\n  getUser(userCollection, userId) {\n    return userCollection.getOne(userId);\n  },\n  newUser(req, res, userCollection, callback) {\n    if (callback) {\n      return callback(userCollection.createUser(req.params.deviceId));\n    }\n    return userCollection.createUser(req.params.deviceId);\n  },\n};\n"
   },
   {
-    "__docId__": 17,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "openGames",
-    "memberof": "smileguess-server/controllers/GameController.js",
-    "longname": "smileguess-server/controllers/GameController.js~openGames",
-    "access": null,
-    "export": false,
-    "importPath": "./smileguess-server/controllers/GameController.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 4,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 18,
+    "__docId__": 43,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -351,7 +936,7 @@
     "content": "module.exports = {\n  minPlayers: 3,\n  maxPlayers: 6,\n  charsToAvoid: /-/g,\n};\n"
   },
   {
-    "__docId__": 19,
+    "__docId__": 44,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -361,10 +946,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const settings = require('../gameSettings');\n// const gameMethods = require('../controllers/GameController');\nconst Games = require('../collections/Games');\nconst utils = require('../utils');\nconst solutions = require('../solutions');\n\nconst fullGames = Games.fullGames;\nconst openGames = Games.openGames;\nconst random = utils.getRandomIntInclusive;\n/*\n  When a user clicks 'join random game,' he or she will be put\n  into an active game, if one is available. If one is not available,\n  a new game will be instantiated for him or her.\n\n  When players join the game, they are pushed into the game's 'players' array.\n  A game will start when enough players are available to have a fun time. This\n  variable resides in game-settings.js with a default value of 3.\n\n  After enough players have joined to satisfy game genesis, a dealer will be\n  chosen at random.\n\n  A category will be randomly chosen, then a solution will randomly be chosen\n  within that category.\n\n  As the dealer enters or removes emojis as clues, they will be pushed and\n  popped to and from the 'this.clue' array.\n*/\n\n/**\n * The Game model persists data about a single game room, including players, dealer\n * and other state information. Should be instantiated when a brand new game room is\n * created, otherwise retrieved from the Games collection.\n * @example\n * const newGame = new Game(user);\n */\nmodule.exports = class Game {\n  /**\n   * Constructor to instantiate a new Game instance.\n   */\n  constructor(userWhoStartsGame) {\n    /**\n    * @type {number}\n    */\n    this.gameId = null;\n    /**\n    * @type {number}\n    */\n    this.socketId = null;\n    /**\n     * @type {object[ ]}\n     */\n    this.players = [userWhoStartsGame];\n    /**\n    * @type {number}\n    */\n    this.seatsOpen = settings.maxPlayers - 1;\n    /**\n    * @type {object}\n    */\n    this.dealer = null;\n    /**\n    * This property defines the \"solution\" that the \"dealer\"\n    * must communicate via emojis\n    * @type {string}\n    */\n    this.solutionForDisplay = null;\n    /**\n    * This property prevents correct answers from being deemed\n    * incorrect due to capitilization, special characters, etc.\n    * @type {string}\n    */\n    this.solutionForMatching = null;\n    /**\n    * This property will communicate the solution's category to all players\n    * @type {string}\n    */\n    this.category = null;\n    /**\n    * This property will prevent the game from running until sufficient players have joined\n    * @type {boolean}\n    */\n    this.active = false;\n\n    // in the future, we may want to add a clue property, referring to the dealer's emoji's\n  }\n\n  updateOpenSeats() {\n    this.seatsOpen = settings.maxPlayers - this.players.length;\n  }\n\n  removePlayer(user) {\n    this.players.splice(this.players.indexOf(user), 1);\n    this.updateOpenSeats();\n    this.updateGameAvailability(this);\n  }\n\n  addPlayer(user) {\n    if (this.players.length < settings.maxPlayers) {\n      this.players.push(user);\n    } else {\n      console.error('Error: Game full');\n    }\n    this.updateOpenSeats();\n    this.updateGameAvailability(this);\n    if (!this.active && this.players.length >= settings.minPlayers) {\n      this.active = true;\n      this.assignFirstDealer();\n      this.getSolution();\n    }\n  }\n\n  updateGameAvailability() {\n    if (this.seatsOpen === 0 && fullGames.indexOf(this) === -1) {\n      Games.fullGames.push(this);\n      openGames.splice(openGames.indexOf(this), 1);\n    } else if (this.seatsOpen === settings.maxPlayers) {\n      openGames.splice(openGames.indexOf(this), 1);\n    } else if (openGames.indexOf(this) === -1) {\n      openGames.push(this);\n      Games.sort(openGames);\n      const gameLoc = fullGames.indexOf(this);\n      if (gameLoc !== -1) {\n        fullGames.splice(gameLoc, 1);\n      }\n    }\n  }\n\n  assignFirstDealer() {\n    this.dealer = this.players[random(1, this.players.length) - 1];\n  }\n\n  getSolution() {\n    const categoryNumber = random(0, solutions.solutionsForDisplay.length - 1);\n    const solutionNumber = random(0, solutions.solutionsForDisplay[categoryNumber].length - 1);\n    this.solutionForDisplay = solutions.solutionsForDisplay[categoryNumber][solutionNumber];\n    this.solutionForMatching = solutions.simplifiedSolutions[categoryNumber][solutionNumber];\n  }\n\n  checkGuess(message) {\n    const simplifiedGuess = utils.simplifyString(message.messageBody);\n    if (simplifiedGuess === this.solutionForMatching) {\n      this.handleDealerChange(message.user);\n    }\n  }\n\n  handleDealerChange(user) {\n    this.dealer = user;\n    this.getSolution();\n  }\n};\n"
+    "content": "const settings = require('../gameSettings');\nconst utils = require('../utils');\nconst solutions = require('../solutions');\nconst random = utils.getRandomIntInclusive;\n/*\n  When a user clicks 'join random game,' he or she will be put\n  into an active game, if one is available. If one is not available,\n  a new game will be instantiated for him or her.\n\n  When players join the game, they are pushed into the game's 'players' array.\n  A game will start when enough players are available to have a fun time. This\n  variable resides in game-settings.js with a default value of 3.\n\n  After enough players have joined to satisfy game genesis, a dealer will be\n  chosen at random.\n\n  A category will be randomly chosen, then a solution will randomly be chosen\n  within that category.\n\n  As the dealer enters or removes emojis as clues, they will be pushed and\n  popped to and from the 'this.clue' array.\n*/\n\n/**\n * The Game model persists data about a single game room, including players, dealer\n * and other state information. Should be instantiated when a brand new game room is\n * created, otherwise retrieved from the Games collection.\n * @example\n * const newGame = new Game(user);\n */\nmodule.exports = class Game {\n  /**\n   * Constructor to instantiate a new Game instance.\n   * @param {Object} userWhoStartsGame - an instance of the user model\n   * @param {number} gameId - the identifer of the new game\n   */\n  constructor(gameId, io) {\n    /**\n    * Game identifier\n    * @type {number}\n    */\n    this.gameId = gameId;\n    /**\n     * Collection of user instances in the game\n     * @type {object[ ]}\n     */\n    this.players = {\n      all: {},\n      byId: [],\n    }\n    /**\n    * Current number of available seats in the game\n    * @type {number}\n    */\n    this.seatsOpen = settings.maxPlayers;\n    /**\n    * Specifies which player is currently creating clues with emojis\n    * @type {object}\n    */\n    this.dealerId = null;\n    /**\n    * Defines the prompt that the \"dealer\"\n    * must communicate via emojis\n    * @type {string}\n    */\n    this.prompt = {\n      /**\n      * Communicates the solution's category to all players\n      * @type {string}\n      */\n      category: null,\n      /**\n      * Communicates the prompt to the dealer\n      * @type {string}\n      */\n      forDisplay: null,\n      /**\n      * Prevents correct answers from being deemed\n      * incorrect due to capitilization, spacing, special characters, etc.\n      * @type {string}\n      */\n      forMatching: null,\n    }\n    /**\n    * Prevents the game from running until sufficient players have joined\n    * @type {boolean}\n    */\n    this.active = false;\n    /**\n    * Event listener callback functions to be invoked\n    * @type {object[ ]}\n    */\n    this.events = [];\n\n\n    this.io = io;\n  }\n  /**\n   * Adds event listeners\n   * @param {string} event - an event name\n   * @param {function} gameId - a function to invoke upon an event\n   */\n  on(event, ...args) {\n    this.events[event] = this.events[event] || [];\n    args.forEach(callback => this.events[event].push(callback))\n  }\n  /**\n   * Triggers a callback associated with a given event\n   * @param {string} - an event name\n   */\n  trigger(event, ...args) {\n    if (this.events[event]) {\n      this.events[event].forEach(callback => callback.apply(null, args));\n    }\n  }\n  /**\n   * Modifies the number of available seats in the game\n   */\n  updateOpenSeats() {\n    const wasFull = this.seatsOpen === 0;\n    const gameId = this.gameId;\n    this.seatsOpen = settings.maxPlayers - this.players.length;\n    this.trigger('playerChange', 'playerChange', this);\n    if (this.seatsOpen === 0) {\n      return this.trigger('full', gameId);\n    }\n    if (this.seatsOpen === settings.maxPlayers) {\n      return this.trigger('empty', gameId);\n    }\n    if (wasFull) {\n      return this.trigger('nowAvailable', gameId, this.seatsOpen);\n    }\n  }\n  /**\n   * Removes a player from the game\n   * @params {number} - a user ID\n   */\n  removePlayer(userId) {\n    this.players.splice(this.players.indexOf(userId), 1);\n    delete this.players.all[userId];\n    this.updateOpenSeats();\n    if (this.players.length < settings.minPlayers) {\n      this.active = false;\n    }\n    return this;\n  }\n  /**\n   * Adds a player to the game\n   * @params {number} - a user ID\n   */\n  addPlayer(user) {\n    if (this.players.length < settings.maxPlayers) {\n      this.players.byId.push(user.userId);\n      this.players.all[user.userId] = user;\n    } else {\n      console.log('Error: Game full');\n    }\n    this.updateOpenSeats();\n    if (!this.active && this.players.length >= settings.minPlayers) {\n      this.active = true;\n      this.trigger('activityStatus')\n      this.assignFirstDealer();\n      this.getPrompt();\n    }\n    return this;\n  }\n  /**\n   * Randomly chooses a world or phrase to be guessed\n   */\n  getPrompt() {\n    const categoryNumber = random(0, solutions.solutionsForDisplay.length - 1);\n    const solutionNumber = random(0, solutions.solutionsForDisplay[categoryNumber].length - 1);\n    this.promptForDisplay = solutions.solutionsForDisplay[categoryNumber][solutionNumber];\n    this.promptForMatching = solutions.simplifiedSolutions[categoryNumber][solutionNumber];\n  }\n  /**\n   * Checks messages for correct guesses\n   * @params {object} - an object containing a message and a reference to the sender\n   */\n  checkGuess(message) {\n    if (utils.simplifyString(message) === this.promptForMatching) {\n      return this.handleDealerChange(message.userId);\n    }\n    return false;\n  }\n  /**\n   * Assigns the next dealer as the correct guesser\n   * @params {string} - the user id of the next dealer\n   */\n  handleDealerChange(userId) {\n    this.dealerId = userId || this.players[random(1, this.players.length) - 1];\n    this.trigger('newDealer', 'newDealer', this);\n    this.getPrompt();\n    return this.dealerId;\n  }\n};\n\n"
   },
   {
-    "__docId__": 20,
+    "__docId__": 45,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -385,13 +970,34 @@
     }
   },
   {
-    "__docId__": 21,
+    "__docId__": 46,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "Games",
+    "name": "utils",
     "memberof": "smileguess-server/models/Game.js",
-    "longname": "smileguess-server/models/Game.js~Games",
+    "longname": "smileguess-server/models/Game.js~utils",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/models/Game.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 2,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 47,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "solutions",
+    "memberof": "smileguess-server/models/Game.js",
+    "longname": "smileguess-server/models/Game.js~solutions",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/models/Game.js",
@@ -406,13 +1012,13 @@
     }
   },
   {
-    "__docId__": 22,
+    "__docId__": 48,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "utils",
+    "name": "random",
     "memberof": "smileguess-server/models/Game.js",
-    "longname": "smileguess-server/models/Game.js~utils",
+    "longname": "smileguess-server/models/Game.js~random",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/models/Game.js",
@@ -427,91 +1033,7 @@
     }
   },
   {
-    "__docId__": 23,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "solutions",
-    "memberof": "smileguess-server/models/Game.js",
-    "longname": "smileguess-server/models/Game.js~solutions",
-    "access": null,
-    "export": false,
-    "importPath": "./smileguess-server/models/Game.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 5,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 24,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "fullGames",
-    "memberof": "smileguess-server/models/Game.js",
-    "longname": "smileguess-server/models/Game.js~fullGames",
-    "access": null,
-    "export": false,
-    "importPath": "./smileguess-server/models/Game.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 7,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 25,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "openGames",
-    "memberof": "smileguess-server/models/Game.js",
-    "longname": "smileguess-server/models/Game.js~openGames",
-    "access": null,
-    "export": false,
-    "importPath": "./smileguess-server/models/Game.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 8,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 26,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "random",
-    "memberof": "smileguess-server/models/Game.js",
-    "longname": "smileguess-server/models/Game.js~random",
-    "access": null,
-    "export": false,
-    "importPath": "./smileguess-server/models/Game.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 9,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 27,
+    "__docId__": 49,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -526,11 +1048,11 @@
     "examples": [
       "const newGame = new Game(user);"
     ],
-    "lineNumber": 36,
+    "lineNumber": 31,
     "interface": false
   },
   {
-    "__docId__": 28,
+    "__docId__": 50,
     "kind": "constructor",
     "static": false,
     "variation": null,
@@ -539,19 +1061,33 @@
     "longname": "smileguess-server/models/Game.js~Game#constructor",
     "access": null,
     "description": "Constructor to instantiate a new Game instance.",
-    "lineNumber": 40,
+    "lineNumber": 37,
     "params": [
       {
-        "name": "userWhoStartsGame",
+        "nullable": null,
         "types": [
-          "*"
-        ]
+          "Object"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "userWhoStartsGame",
+        "description": "an instance of the user model"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "number"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "gameId",
+        "description": "the identifer of the new game"
       }
     ],
     "generator": false
   },
   {
-    "__docId__": 29,
+    "__docId__": 51,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -559,8 +1095,8 @@
     "memberof": "smileguess-server/models/Game.js~Game",
     "longname": "smileguess-server/models/Game.js~Game#gameId",
     "access": null,
-    "description": "",
-    "lineNumber": 44,
+    "description": "Game identifier",
+    "lineNumber": 42,
     "type": {
       "nullable": null,
       "types": [
@@ -571,27 +1107,7 @@
     }
   },
   {
-    "__docId__": 30,
-    "kind": "member",
-    "static": false,
-    "variation": null,
-    "name": "socketId",
-    "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#socketId",
-    "access": null,
-    "description": "",
-    "lineNumber": 48,
-    "type": {
-      "nullable": null,
-      "types": [
-        "number"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 31,
+    "__docId__": 52,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -599,8 +1115,8 @@
     "memberof": "smileguess-server/models/Game.js~Game",
     "longname": "smileguess-server/models/Game.js~Game#players",
     "access": null,
-    "description": "",
-    "lineNumber": 52,
+    "description": "Collection of user instances in the game",
+    "lineNumber": 47,
     "type": {
       "nullable": null,
       "types": [
@@ -611,7 +1127,7 @@
     }
   },
   {
-    "__docId__": 32,
+    "__docId__": 53,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -619,8 +1135,8 @@
     "memberof": "smileguess-server/models/Game.js~Game",
     "longname": "smileguess-server/models/Game.js~Game#seatsOpen",
     "access": null,
-    "description": "",
-    "lineNumber": 56,
+    "description": "Current number of available seats in the game",
+    "lineNumber": 55,
     "type": {
       "nullable": null,
       "types": [
@@ -631,15 +1147,15 @@
     }
   },
   {
-    "__docId__": 33,
+    "__docId__": 54,
     "kind": "member",
     "static": false,
     "variation": null,
-    "name": "dealer",
+    "name": "dealerId",
     "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#dealer",
+    "longname": "smileguess-server/models/Game.js~Game#dealerId",
     "access": null,
-    "description": "",
+    "description": "Specifies which player is currently creating clues with emojis",
     "lineNumber": 60,
     "type": {
       "nullable": null,
@@ -651,15 +1167,15 @@
     }
   },
   {
-    "__docId__": 34,
+    "__docId__": 55,
     "kind": "member",
     "static": false,
     "variation": null,
-    "name": "solutionForDisplay",
+    "name": "prompt",
     "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#solutionForDisplay",
+    "longname": "smileguess-server/models/Game.js~Game#prompt",
     "access": null,
-    "description": "This property defines the \"solution\" that the \"dealer\"\nmust communicate via emojis",
+    "description": "Defines the prompt that the \"dealer\"\nmust communicate via emojis",
     "lineNumber": 66,
     "type": {
       "nullable": null,
@@ -671,47 +1187,7 @@
     }
   },
   {
-    "__docId__": 35,
-    "kind": "member",
-    "static": false,
-    "variation": null,
-    "name": "solutionForMatching",
-    "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#solutionForMatching",
-    "access": null,
-    "description": "This property prevents correct answers from being deemed\nincorrect due to capitilization, special characters, etc.",
-    "lineNumber": 72,
-    "type": {
-      "nullable": null,
-      "types": [
-        "string"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 36,
-    "kind": "member",
-    "static": false,
-    "variation": null,
-    "name": "category",
-    "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#category",
-    "access": null,
-    "description": "This property will communicate the solution's category to all players",
-    "lineNumber": 77,
-    "type": {
-      "nullable": null,
-      "types": [
-        "string"
-      ],
-      "spread": false,
-      "description": null
-    }
-  },
-  {
-    "__docId__": 37,
+    "__docId__": 56,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -719,8 +1195,8 @@
     "memberof": "smileguess-server/models/Game.js~Game",
     "longname": "smileguess-server/models/Game.js~Game#active",
     "access": null,
-    "description": "This property will prevent the game from running until sufficient players have joined",
-    "lineNumber": 82,
+    "description": "Prevents the game from running until sufficient players have joined",
+    "lineNumber": 88,
     "type": {
       "nullable": null,
       "types": [
@@ -731,7 +1207,105 @@
     }
   },
   {
-    "__docId__": 38,
+    "__docId__": 57,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "events",
+    "memberof": "smileguess-server/models/Game.js~Game",
+    "longname": "smileguess-server/models/Game.js~Game#events",
+    "access": null,
+    "description": "Event listener callback functions to be invoked",
+    "lineNumber": 93,
+    "type": {
+      "nullable": null,
+      "types": [
+        "object[ ]"
+      ],
+      "spread": false,
+      "description": null
+    }
+  },
+  {
+    "__docId__": 58,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "io",
+    "memberof": "smileguess-server/models/Game.js~Game",
+    "longname": "smileguess-server/models/Game.js~Game#io",
+    "access": null,
+    "description": null,
+    "lineNumber": 96,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 59,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "on",
+    "memberof": "smileguess-server/models/Game.js~Game",
+    "longname": "smileguess-server/models/Game.js~Game#on",
+    "access": null,
+    "description": "Adds event listeners",
+    "lineNumber": 103,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "event",
+        "description": "an event name"
+      },
+      {
+        "nullable": null,
+        "types": [
+          "function"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "gameId",
+        "description": "a function to invoke upon an event"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 60,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "trigger",
+    "memberof": "smileguess-server/models/Game.js~Game",
+    "longname": "smileguess-server/models/Game.js~Game#trigger",
+    "access": null,
+    "description": "Triggers a callback associated with a given event",
+    "lineNumber": 111,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "string"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "-",
+        "description": "an event name"
+      }
+    ],
+    "generator": false
+  },
+  {
+    "__docId__": 61,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -739,14 +1313,18 @@
     "memberof": "smileguess-server/models/Game.js~Game",
     "longname": "smileguess-server/models/Game.js~Game#updateOpenSeats",
     "access": null,
-    "description": null,
-    "lineNumber": 87,
-    "undocument": true,
+    "description": "Modifies the number of available seats in the game",
+    "lineNumber": 119,
     "params": [],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
     "generator": false
   },
   {
-    "__docId__": 39,
+    "__docId__": 62,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -755,7 +1333,7 @@
     "longname": "smileguess-server/models/Game.js~Game#seatsOpen",
     "access": null,
     "description": null,
-    "lineNumber": 88,
+    "lineNumber": 122,
     "undocument": true,
     "type": {
       "types": [
@@ -764,7 +1342,7 @@
     }
   },
   {
-    "__docId__": 40,
+    "__docId__": 63,
     "kind": "method",
     "static": false,
     "variation": null,
@@ -772,43 +1350,31 @@
     "memberof": "smileguess-server/models/Game.js~Game",
     "longname": "smileguess-server/models/Game.js~Game#removePlayer",
     "access": null,
-    "description": null,
-    "lineNumber": 91,
-    "undocument": true,
+    "description": "Removes a player from the game",
+    "lineNumber": 138,
+    "unknown": [
+      {
+        "tagName": "@params",
+        "tagValue": "{number} - a user ID"
+      }
+    ],
     "params": [
       {
-        "name": "user",
+        "name": "userId",
         "types": [
           "*"
         ]
       }
     ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
     "generator": false
   },
   {
-    "__docId__": 41,
-    "kind": "method",
-    "static": false,
-    "variation": null,
-    "name": "addPlayer",
-    "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#addPlayer",
-    "access": null,
-    "description": null,
-    "lineNumber": 97,
-    "undocument": true,
-    "params": [
-      {
-        "name": "user",
-        "types": [
-          "*"
-        ]
-      }
-    ],
-    "generator": false
-  },
-  {
-    "__docId__": 42,
+    "__docId__": 64,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -817,7 +1383,7 @@
     "longname": "smileguess-server/models/Game.js~Game#active",
     "access": null,
     "description": null,
-    "lineNumber": 106,
+    "lineNumber": 143,
     "undocument": true,
     "type": {
       "types": [
@@ -826,138 +1392,22 @@
     }
   },
   {
-    "__docId__": 43,
+    "__docId__": 65,
     "kind": "method",
     "static": false,
     "variation": null,
-    "name": "updateGameAvailability",
+    "name": "addPlayer",
     "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#updateGameAvailability",
+    "longname": "smileguess-server/models/Game.js~Game#addPlayer",
     "access": null,
-    "description": null,
-    "lineNumber": 112,
-    "undocument": true,
-    "params": [],
-    "generator": false
-  },
-  {
-    "__docId__": 44,
-    "kind": "method",
-    "static": false,
-    "variation": null,
-    "name": "assignFirstDealer",
-    "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#assignFirstDealer",
-    "access": null,
-    "description": null,
-    "lineNumber": 128,
-    "undocument": true,
-    "params": [],
-    "generator": false
-  },
-  {
-    "__docId__": 45,
-    "kind": "member",
-    "static": false,
-    "variation": null,
-    "name": "dealer",
-    "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#dealer",
-    "access": null,
-    "description": null,
-    "lineNumber": 129,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 46,
-    "kind": "method",
-    "static": false,
-    "variation": null,
-    "name": "getSolution",
-    "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#getSolution",
-    "access": null,
-    "description": null,
-    "lineNumber": 132,
-    "undocument": true,
-    "params": [],
-    "generator": false
-  },
-  {
-    "__docId__": 47,
-    "kind": "member",
-    "static": false,
-    "variation": null,
-    "name": "solutionForDisplay",
-    "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#solutionForDisplay",
-    "access": null,
-    "description": null,
-    "lineNumber": 135,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 48,
-    "kind": "member",
-    "static": false,
-    "variation": null,
-    "name": "solutionForMatching",
-    "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#solutionForMatching",
-    "access": null,
-    "description": null,
-    "lineNumber": 136,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 49,
-    "kind": "method",
-    "static": false,
-    "variation": null,
-    "name": "checkGuess",
-    "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#checkGuess",
-    "access": null,
-    "description": null,
-    "lineNumber": 139,
-    "undocument": true,
-    "params": [
+    "description": "Adds a player to the game",
+    "lineNumber": 151,
+    "unknown": [
       {
-        "name": "message",
-        "types": [
-          "*"
-        ]
+        "tagName": "@params",
+        "tagValue": "{number} - a user ID"
       }
     ],
-    "generator": false
-  },
-  {
-    "__docId__": 50,
-    "kind": "method",
-    "static": false,
-    "variation": null,
-    "name": "handleDealerChange",
-    "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#handleDealerChange",
-    "access": null,
-    "description": null,
-    "lineNumber": 146,
-    "undocument": true,
     "params": [
       {
         "name": "user",
@@ -966,19 +1416,56 @@
         ]
       }
     ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
     "generator": false
   },
   {
-    "__docId__": 51,
+    "__docId__": 66,
     "kind": "member",
     "static": false,
     "variation": null,
-    "name": "dealer",
+    "name": "active",
     "memberof": "smileguess-server/models/Game.js~Game",
-    "longname": "smileguess-server/models/Game.js~Game#dealer",
+    "longname": "smileguess-server/models/Game.js~Game#active",
     "access": null,
     "description": null,
-    "lineNumber": 147,
+    "lineNumber": 160,
+    "undocument": true,
+    "type": {
+      "types": [
+        "boolean"
+      ]
+    }
+  },
+  {
+    "__docId__": 67,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "getPrompt",
+    "memberof": "smileguess-server/models/Game.js~Game",
+    "longname": "smileguess-server/models/Game.js~Game#getPrompt",
+    "access": null,
+    "description": "Randomly chooses a world or phrase to be guessed",
+    "lineNumber": 170,
+    "params": [],
+    "generator": false
+  },
+  {
+    "__docId__": 68,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "promptForDisplay",
+    "memberof": "smileguess-server/models/Game.js~Game",
+    "longname": "smileguess-server/models/Game.js~Game#promptForDisplay",
+    "access": null,
+    "description": null,
+    "lineNumber": 173,
     "undocument": true,
     "type": {
       "types": [
@@ -987,7 +1474,107 @@
     }
   },
   {
-    "__docId__": 52,
+    "__docId__": 69,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "promptForMatching",
+    "memberof": "smileguess-server/models/Game.js~Game",
+    "longname": "smileguess-server/models/Game.js~Game#promptForMatching",
+    "access": null,
+    "description": null,
+    "lineNumber": 174,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 70,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "checkGuess",
+    "memberof": "smileguess-server/models/Game.js~Game",
+    "longname": "smileguess-server/models/Game.js~Game#checkGuess",
+    "access": null,
+    "description": "Checks messages for correct guesses",
+    "lineNumber": 180,
+    "unknown": [
+      {
+        "tagName": "@params",
+        "tagValue": "{object} - an object containing a message and a reference to the sender"
+      }
+    ],
+    "params": [
+      {
+        "name": "message",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "boolean"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 71,
+    "kind": "method",
+    "static": false,
+    "variation": null,
+    "name": "handleDealerChange",
+    "memberof": "smileguess-server/models/Game.js~Game",
+    "longname": "smileguess-server/models/Game.js~Game#handleDealerChange",
+    "access": null,
+    "description": "Assigns the next dealer as the correct guesser",
+    "lineNumber": 190,
+    "unknown": [
+      {
+        "tagName": "@params",
+        "tagValue": "{string} - the user id of the next dealer"
+      }
+    ],
+    "params": [
+      {
+        "name": "userId",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": {
+      "types": [
+        "*"
+      ]
+    },
+    "generator": false
+  },
+  {
+    "__docId__": 72,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "dealerId",
+    "memberof": "smileguess-server/models/Game.js~Game",
+    "longname": "smileguess-server/models/Game.js~Game#dealerId",
+    "access": null,
+    "description": null,
+    "lineNumber": 191,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 73,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -997,10 +1584,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const Chance = require('chance');\nconst chance = new Chance();\nconst utils = require('../utils');\n\n\nmodule.exports = class User {\n  constructor(identifier) {\n    this.id = identifier;\n    this.username = chance.word({ syllables: utils.getRandomIntInclusive(2, 3) });\n  }\n};\n"
+    "content": "const Chance = require('chance');\nconst chance = new Chance();\nconst utils = require('../utils');\n\n\nmodule.exports = class User {\n    /**\n   * Instantiates new users\n   * @params {string} - a unique string identifying a user\n   */\n  constructor(userId, deviceId) {\n    this.userId = userId;\n    this.deviceId = deviceId;\n    this.username = chance.word({ syllables: utils.getRandomIntInclusive(2, 3) });\n    this.socket = null;\n    this.points = 0;\n    this.wins = 0;\n    this.emojicoins = 0;\n    this.picture = '';\n  }\n};\n"
   },
   {
-    "__docId__": 53,
+    "__docId__": 74,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1021,7 +1608,7 @@
     }
   },
   {
-    "__docId__": 54,
+    "__docId__": 75,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1042,7 +1629,7 @@
     }
   },
   {
-    "__docId__": 55,
+    "__docId__": 76,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1063,7 +1650,7 @@
     }
   },
   {
-    "__docId__": 56,
+    "__docId__": 77,
     "kind": "class",
     "static": true,
     "variation": null,
@@ -1080,7 +1667,7 @@
     "interface": false
   },
   {
-    "__docId__": 57,
+    "__docId__": 78,
     "kind": "constructor",
     "static": false,
     "variation": null,
@@ -1088,12 +1675,23 @@
     "memberof": "smileguess-server/models/User.js~User",
     "longname": "smileguess-server/models/User.js~User#constructor",
     "access": null,
-    "description": null,
-    "lineNumber": 7,
-    "undocument": true,
+    "description": "Instantiates new users",
+    "lineNumber": 11,
+    "unknown": [
+      {
+        "tagName": "@params",
+        "tagValue": "{string} - a unique string identifying a user"
+      }
+    ],
     "params": [
       {
-        "name": "identifier",
+        "name": "userId",
+        "types": [
+          "*"
+        ]
+      },
+      {
+        "name": "deviceId",
         "types": [
           "*"
         ]
@@ -1102,16 +1700,16 @@
     "generator": false
   },
   {
-    "__docId__": 58,
+    "__docId__": 79,
     "kind": "member",
     "static": false,
     "variation": null,
-    "name": "id",
+    "name": "userId",
     "memberof": "smileguess-server/models/User.js~User",
-    "longname": "smileguess-server/models/User.js~User#id",
+    "longname": "smileguess-server/models/User.js~User#userId",
     "access": null,
     "description": null,
-    "lineNumber": 8,
+    "lineNumber": 12,
     "undocument": true,
     "type": {
       "types": [
@@ -1120,7 +1718,25 @@
     }
   },
   {
-    "__docId__": 59,
+    "__docId__": 80,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "deviceId",
+    "memberof": "smileguess-server/models/User.js~User",
+    "longname": "smileguess-server/models/User.js~User#deviceId",
+    "access": null,
+    "description": null,
+    "lineNumber": 13,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 81,
     "kind": "member",
     "static": false,
     "variation": null,
@@ -1129,7 +1745,7 @@
     "longname": "smileguess-server/models/User.js~User#username",
     "access": null,
     "description": null,
-    "lineNumber": 9,
+    "lineNumber": 14,
     "undocument": true,
     "type": {
       "types": [
@@ -1138,7 +1754,97 @@
     }
   },
   {
-    "__docId__": 60,
+    "__docId__": 82,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "socket",
+    "memberof": "smileguess-server/models/User.js~User",
+    "longname": "smileguess-server/models/User.js~User#socket",
+    "access": null,
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 83,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "points",
+    "memberof": "smileguess-server/models/User.js~User",
+    "longname": "smileguess-server/models/User.js~User#points",
+    "access": null,
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "type": {
+      "types": [
+        "number"
+      ]
+    }
+  },
+  {
+    "__docId__": 84,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "wins",
+    "memberof": "smileguess-server/models/User.js~User",
+    "longname": "smileguess-server/models/User.js~User#wins",
+    "access": null,
+    "description": null,
+    "lineNumber": 17,
+    "undocument": true,
+    "type": {
+      "types": [
+        "number"
+      ]
+    }
+  },
+  {
+    "__docId__": 85,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "emojicoins",
+    "memberof": "smileguess-server/models/User.js~User",
+    "longname": "smileguess-server/models/User.js~User#emojicoins",
+    "access": null,
+    "description": null,
+    "lineNumber": 18,
+    "undocument": true,
+    "type": {
+      "types": [
+        "number"
+      ]
+    }
+  },
+  {
+    "__docId__": 86,
+    "kind": "member",
+    "static": false,
+    "variation": null,
+    "name": "picture",
+    "memberof": "smileguess-server/models/User.js~User",
+    "longname": "smileguess-server/models/User.js~User#picture",
+    "access": null,
+    "description": null,
+    "lineNumber": 19,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 87,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1151,7 +1857,7 @@
     "content": "const dummy = {};\ndummy.gameId = 'something_random_created_by_game_model';\ndummy.message = 'This is a test of the emergency broadcast system';\ndummy.user = {\n  id: 5,\n  username: 'bob33',\n};\n\nmodule.exports = dummy;\n\n"
   },
   {
-    "__docId__": 61,
+    "__docId__": 88,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1172,93 +1878,7 @@
     }
   },
   {
-    "__docId__": 62,
-    "kind": "file",
-    "static": true,
-    "variation": null,
-    "name": "smileguess-server/sockets/joinRandomGame.js",
-    "memberof": null,
-    "longname": "smileguess-server/sockets/joinRandomGame.js",
-    "access": null,
-    "description": null,
-    "lineNumber": 1,
-    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * Function is called when a socket action is received\n * from the client requesting to join a random game.\n * A game is chosen, the user joins the socket room for\n * that game, and the other players are sent a \n * 'SOCKET_PLAYER_JOIN_GAME' action\n * @param {Object} io - the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} user - The user object of the user joining\n */\nconst joinRandomGame = (io, socket, user) => {\n  socket.join(dummy.gameId);\n  socket.broadcast.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_PLAYER_JOIN_GAME',\n    user: dummy.user,\n  });\n};\n\nmodule.exports = joinRandomGame;\n\n"
-  },
-  {
-    "__docId__": 63,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "dummy",
-    "memberof": "smileguess-server/sockets/joinRandomGame.js",
-    "longname": "smileguess-server/sockets/joinRandomGame.js~dummy",
-    "access": null,
-    "export": false,
-    "importPath": "./smileguess-server/sockets/joinRandomGame.js",
-    "importStyle": null,
-    "description": null,
-    "lineNumber": 1,
-    "undocument": true,
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 64,
-    "kind": "variable",
-    "static": true,
-    "variation": null,
-    "name": "joinRandomGame",
-    "memberof": "smileguess-server/sockets/joinRandomGame.js",
-    "longname": "smileguess-server/sockets/joinRandomGame.js~joinRandomGame",
-    "access": null,
-    "export": true,
-    "importPath": "./smileguess-server/sockets/joinRandomGame.js",
-    "importStyle": "joinRandomGame",
-    "description": "Function is called when a socket action is received\nfrom the client requesting to join a random game.\nA game is chosen, the user joins the socket room for\nthat game, and the other players are sent a \n'SOCKET_PLAYER_JOIN_GAME' action",
-    "lineNumber": 13,
-    "params": [
-      {
-        "nullable": null,
-        "types": [
-          "Object"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "io",
-        "description": "the socket.io object"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "Object"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "socket",
-        "description": "the users socket connection"
-      },
-      {
-        "nullable": null,
-        "types": [
-          "Object"
-        ],
-        "spread": false,
-        "optional": false,
-        "name": "user",
-        "description": "The user object of the user joining"
-      }
-    ],
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 65,
+    "__docId__": 89,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1268,10 +1888,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * Function for setting up a users socket connection\n * @param {Object} io - the socket.io object\n * @param {Object} socket - the users socket connection\n */\nconst onConnect = (io, socket) => {\n  console.log('Connected to Socket');\n};\nmodule.exports = onConnect;\n/**\n * TODO: Expect that the client will make a REST call \n * to server to get the game data upon entering a game\n */\n\nmodule.exports = onConnect;\n\n"
+    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * Function for setting up a users socket connection\n * @param {Object} io - the socket.io object\n * @param {Object} socket - the users socket connection\n */\nconst onConnect = (io, socket) => {\n  console.log('Connected to Socket');\n};\nmodule.exports = onConnect;\n/**\n * TODO: Expect that the client will make a REST call \n * to server to get the game data upon entering a game\n */\n\n\n"
   },
   {
-    "__docId__": 66,
+    "__docId__": 90,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1292,7 +1912,7 @@
     }
   },
   {
-    "__docId__": 67,
+    "__docId__": 91,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1334,7 +1954,7 @@
     }
   },
   {
-    "__docId__": 68,
+    "__docId__": 92,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1347,7 +1967,7 @@
     "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * The onDisonnect function is used to clean up a users connection to a game \n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n */\nconst onDisconnect = (io, socket) => {\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_USER_LEAVE_GAME',\n    userid: dummy.user.id,\n  });\n  socket.leave(dummy.gameId);\n};\nmodule.exports = onDisconnect;\n\n"
   },
   {
-    "__docId__": 69,
+    "__docId__": 93,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1368,7 +1988,7 @@
     }
   },
   {
-    "__docId__": 70,
+    "__docId__": 94,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1410,7 +2030,7 @@
     }
   },
   {
-    "__docId__": 71,
+    "__docId__": 95,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1420,10 +2040,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a clue message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} action - the action passed to the server from the client\n * @example <caption>The action emitted:</caption>\n * let action = {\n *   type: 'SOCKET_CLUE_MESSAGE',\n *   userid: 5,\n *   message: '📵🐓 🌸',\n * };\n */\nconst sendClueMessage = (io, socket, action) => {\n  console.log('sending clue message');\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_CLUE_MESSAGE',\n    userid: action.userid,\n    message: action.message,\n  });\n};\nmodule.exports = sendClueMessage;\n\n"
+    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a clue message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} action - the action passed to the server from the client\n * @example <caption>The action emitted:</caption>\n * let action = {\n *   type: 'SOCKET_CLUE_MESSAGE',\n *   userid: 5,\n *   message: '📵🐓 🌸',\n * };\n */\nconst sendClueMessage = (io, socket, action) => {\n  console.log('sending clue message. action:', action);\n  io.to(action.gameId).emit('action', {\n    type: 'SOCKET_CLUE_MESSAGE',\n    userid: action.userId,\n    message: action.message,\n  });\n};\n\nmodule.exports = sendClueMessage;\n\n"
   },
   {
-    "__docId__": 72,
+    "__docId__": 96,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1444,7 +2064,7 @@
     }
   },
   {
-    "__docId__": 73,
+    "__docId__": 97,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1499,7 +2119,41 @@
     }
   },
   {
-    "__docId__": 74,
+    "__docId__": 98,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "smileguess-server/sockets/sendGameChange.js",
+    "memberof": null,
+    "longname": "smileguess-server/sockets/sendGameChange.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "const socketUtils = require('./socketUtils');\n\nexports.modifyClientGameState = (event, game) => {\n  const action = socketUtils.createGameChangeAction(event, game);\n  game.io.emit('action', action);\n};\n"
+  },
+  {
+    "__docId__": 99,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "socketUtils",
+    "memberof": "smileguess-server/sockets/sendGameChange.js",
+    "longname": "smileguess-server/sockets/sendGameChange.js~socketUtils",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/sockets/sendGameChange.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 1,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 100,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1509,16 +2163,16 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a guess message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} action - the action passed to the server from the client\n * @example <caption>The action emitted:</caption>\n * let action = {\n *   type: 'SOCKET_GUESS_MESSAGE',\n *   userid: 5,\n *   message: 'this will blow your mind!',\n * };\n */\nconst sendGuessMessage = (io, socket, action) => {\n  console.log('sending guess message');\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_GUESS_MESSAGE',\n    userid: action.userid,\n    message: action.message,\n  });\n};\nmodule.exports = sendGuessMessage;\n\n"
+    "content": "const GameController = require('../controllers/GameController');\nconst sendWinner = require('./sendWinner');\n\n/**\n * This function sends a guess message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} action - the action passed to the server from the client\n * @example <caption>The action emitted:</caption>\n * let action = {\n *   type: 'SOCKET_GUESS_MESSAGE',\n *   userid: 5,\n *   message: 'this will blow your mind!',\n * };\n */\n // action should include type, gameId, userId, message\nconst sendGuessMessage = (io, socket, action, db) => {\n  console.log('emitting guess message:', action);\n  if (GameController.handleGuess(db.games, action.gameId, action.message)) {\n    sendWinner(io, socket, action.gameId, action.username, action.newDealer);\n  }\n  io.to(action.gameId).emit('action', {\n    type: 'SOCKET_GUESS_MESSAGE',\n    userid: action.username,\n    message: action.message,\n  });\n};\n\nmodule.exports = sendGuessMessage;\n\n"
   },
   {
-    "__docId__": 75,
+    "__docId__": 101,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "dummy",
+    "name": "GameController",
     "memberof": "smileguess-server/sockets/sendGuessMessage.js",
-    "longname": "smileguess-server/sockets/sendGuessMessage.js~dummy",
+    "longname": "smileguess-server/sockets/sendGuessMessage.js~GameController",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/sockets/sendGuessMessage.js",
@@ -1533,7 +2187,28 @@
     }
   },
   {
-    "__docId__": 76,
+    "__docId__": 102,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "sendWinner",
+    "memberof": "smileguess-server/sockets/sendGuessMessage.js",
+    "longname": "smileguess-server/sockets/sendGuessMessage.js~sendWinner",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/sockets/sendGuessMessage.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 2,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 103,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1548,7 +2223,7 @@
     "examples": [
       "<caption>The action emitted:</caption>\nlet action = {\n  type: 'SOCKET_GUESS_MESSAGE',\n  userid: 5,\n  message: 'this will blow your mind!',\n};"
     ],
-    "lineNumber": 16,
+    "lineNumber": 18,
     "params": [
       {
         "nullable": null,
@@ -1588,7 +2263,7 @@
     }
   },
   {
-    "__docId__": 77,
+    "__docId__": 104,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1598,16 +2273,16 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a message letting the users of a\n * game know that another user has joined.\n * @param {Object} io - the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} user - the user object of the user joining\n */\nconst sendPlayerJoinGame = (io, socket, user) => {\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_PLAYER_JOIN_GAME',\n    user: user,\n  });\n};\nmodule.exports = sendPlayerJoinGame;\n\n"
+    "content": "const GameController = require('../controllers/GameController');\nconst UserController = require('../controllers/UserController');\n\n/**\n * This function sends a message letting the users of a\n * game know that another user has joined.\n * @param {Object} io - the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} user - the user object of the user joining\n */\nconst sendPlayerJoinGame = (io, socket, action, db) => {\n  console.log('SOCKET_PLAYER_JOIN_GAME CALLED');\n\n  let user = action.userId ? UserController.getUser(db.users, action.userId) : null;\n  if (!user) {\n    user = UserController.newUser(null, null, db.users);\n  }\n\n  console.log(user);\n  user.socket = socket;\n  GameController.handlePlayerJoin(db.games, user.userId);\n\n  socket.join(action.gameId);\n  socket.broadcast.to(action.gameId).emit('action', {\n    type: 'SOCKET_PLAYER_JOIN_GAME',\n    user: db.users.getOne(user.userId),\n    game: GameController.retrieve(db.games, action.gameId),\n  });\n};\n\nmodule.exports = sendPlayerJoinGame;\n"
   },
   {
-    "__docId__": 78,
+    "__docId__": 105,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "dummy",
+    "name": "GameController",
     "memberof": "smileguess-server/sockets/sendPlayerJoinGame.js",
-    "longname": "smileguess-server/sockets/sendPlayerJoinGame.js~dummy",
+    "longname": "smileguess-server/sockets/sendPlayerJoinGame.js~GameController",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/sockets/sendPlayerJoinGame.js",
@@ -1622,7 +2297,28 @@
     }
   },
   {
-    "__docId__": 79,
+    "__docId__": 106,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "UserController",
+    "memberof": "smileguess-server/sockets/sendPlayerJoinGame.js",
+    "longname": "smileguess-server/sockets/sendPlayerJoinGame.js~UserController",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/sockets/sendPlayerJoinGame.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 2,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 107,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1634,7 +2330,7 @@
     "importPath": "./smileguess-server/sockets/sendPlayerJoinGame.js",
     "importStyle": "sendPlayerJoinGame",
     "description": "This function sends a message letting the users of a\ngame know that another user has joined.",
-    "lineNumber": 10,
+    "lineNumber": 11,
     "params": [
       {
         "nullable": null,
@@ -1674,7 +2370,41 @@
     }
   },
   {
-    "__docId__": 80,
+    "__docId__": 108,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "smileguess-server/sockets/sendPrompt.js",
+    "memberof": null,
+    "longname": "smileguess-server/sockets/sendPrompt.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "const sendPrompt = (io, socket, action, db) => {\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_GUESS_MESSAGE',\n    userid: action.username,\n    message: action.message,\n  });\n};\n\nmodule.exports = sendPrompt;\n"
+  },
+  {
+    "__docId__": 109,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "sendPrompt",
+    "memberof": "smileguess-server/sockets/sendPrompt.js",
+    "longname": "smileguess-server/sockets/sendPrompt.js~sendPrompt",
+    "access": null,
+    "export": true,
+    "importPath": "./smileguess-server/sockets/sendPrompt.js",
+    "importStyle": "sendPrompt",
+    "description": null,
+    "lineNumber": 1,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 110,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1684,10 +2414,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a clue message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} user - the user for the particular socket\n * @example <caption>The action emitted:</caption>\n * let action = {\n *   type: 'SOCKET_DECLARE_WINNER',\n *   userid: 5,\n * };\n */\nconst sendWinner = (io, socket, user) => {\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_DECLARE_WINNER',\n    userid: user.id,\n  });\n};\nmodule.exports = sendWinner;\n\n"
+    "content": "const dummy = require('./dummySocketData.js');\n\n/**\n * This function sends a clue message to all the members of a room through sockets.\n * When this action is received on the client, it will be dispatched by redux automatically.\n * @param {Object} io - this is the socket.io object\n * @param {Object} socket - the users socket connection\n * @param {Object} user - the user for the particular socket\n * @example <caption>The action emitted:</caption>\n * let action = {\n *   type: 'SOCKET_DECLARE_WINNER',\n *   userid: 5,\n * };\n */\nconst sendWinner = (io, socket, gameId, user) => {\n  io.to(dummy.gameId).emit('action', {\n    type: 'SOCKET_DECLARE_WINNER',\n    userid: user.id,\n  });\n};\nmodule.exports = sendWinner;\n\n"
   },
   {
-    "__docId__": 81,
+    "__docId__": 111,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1708,7 +2438,7 @@
     }
   },
   {
-    "__docId__": 82,
+    "__docId__": 112,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1763,7 +2493,20 @@
     }
   },
   {
-    "__docId__": 83,
+    "__docId__": 113,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "smileguess-server/sockets/socketUtils.js",
+    "memberof": null,
+    "longname": "smileguess-server/sockets/socketUtils.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "exports.createGameChangeAction = (event, game) => {\n  const actionType = 'UPDATE_GAME_STATE';\n  const gameActions = {\n    newDealer: {\n      type: actionType,\n      payload: {\n        dealerId: game.dealerId,\n      },\n    },\n    playerChange: {\n      type: actionType,\n      payload: {\n        players: game.players,\n      },\n    },\n    newPrompt: {\n      type: actionType,\n      payload: {\n        prompt: {\n          category: game.prompt.category,\n          promptForDisplay: game.prompt.forDisplay,\n        },\n      },\n    },\n    activityStatus: {\n      type: actionType,\n      payload: {\n        active: game.active,\n      },\n    },\n  };\n  return gameActions.event;\n};\n\n// exports.alertAction = (type, gamesCol, gamesCol, userId) => {\n\n// }\n\n// UPDATE_MESSAGE_STATE\n// UPDATE_GAME_STATE\n// UPDATE_USER_STATE\n// GAME_NOTIFICATION\n"
+  },
+  {
+    "__docId__": 114,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1776,7 +2519,7 @@
     "content": "const utils = require('./utils');\n\nconst categoriesAndSolutions = {\n  places: \"Affluent Suburb,Airport Runway,American Consulate,American Embassy,Amish Country,Amusement Park,Animal Rescue,Apartment Building,Apple Orchard,Appliance Store,Art Gallery,Auto Supply Store,Back Alley,Bakeshop,Ballpark,Banquet Hall,Bar And Grill,Barnyard,Baseball Stadium,Bathroom,Bathroom,Batter's Box,Battery Park In New York,Beach Cottage,Beauty Parlor,Beauty Salon,Bed And Breakfast,Bed And Breakfast,Bed And Breakfast,Bird Sanctuary,Boarding School,Boardroom,Boston Bruins,Boutique Hotel,Boxing Ring,Boy Scout Camp,Branch Bank,Branch Offices,Brick House,Bridal Salon,Broom Closet,Bullpen,Bumpy Road,Bunkhouse,Burger Joint,Business District,Busy Highway,Butcher Shop,Butler's Pantry,Camera Shop,Campaign Headquarters,Campground Site,Camping Ground,Candy Counter,Candy Factory,Car Dealership,Car Park,Cattle Ranch,Charm School,Charming Neighborhoods,Chinese Restaurant,City Hall,City Property,Civic Auditorium,Civic Center,Coastline,Cockpit,Coin-Operated Laundromat,College Campus,College Dormitory,Comedy Club,Comedy Club,Community College,Concert Hall,Congressional District,Convenient Location,Convention Center,Corner Deli,Corner Newsstand,Corner Office With Windows,County Courthouse,Courtroom,Courtside,Covered Patio,Covered Porch,Cozy Study,Credit Union,Crosswalk,Crowded Restaurant,Crowded Room,Cul-De-Sac,Cultural Center,Cultural Institution,Dairy Farm,Dance Studio,Deli Counter,Dentist's Office,Desert Landscape,Dinner Theater,Distant Galaxies\",\n  foodAndDrink: \"Apple Butter,After-Dinner Mint,Aged Cheddar Cheese,Aged Parmesan Cheese,Ahi Tuna Salad,Alaskan Cod Fillets,Alfalfa Sprouts,All-Natural Ingredients,Alphabet Soup,Apple Dumplings,Apple Jacks,Apple Juice,Apple Cider Vinegar,Applesauce,Apricot Raisin Pie,Artichoke Hearts,Arugula Salad,Authentic Italian Cuisine,Avocados,Bacon Bits,Bacon And Cheese Pizza,Baked Alaska,Baked Halibut With Tomato Salsa,Baked Lasagna,Baked Macaroni,Baked Ziti,Baked Fruit Compote,Banana Nut Bread,Banana Rum Creme Brulee,Barbecued Chicken,Barbecued Spare Ribs,Barbecued Beef Ribs,Barbecued Beef Sandwich,Barley Soup,Bartlett Pears,Basil Leaves,Batch Of Cookies,Batch Of Cookies,BBQ Pork,BBQ Baked Beans,Bean Sprouts,Beef Spaghetti,Beef Wellington,Beef And Vegetable Stir-Fry,Beef Filet With Red Pepper Relish,Beef Pot Roast,Beef Rib Roast,Beef Satay On Skewers,Bing Cherries,Birthday Cake,Birthday Cake With Buttermilk Icing,Birthday Cake & Ice Cream,Biscotti,Biscuits & Gravy,Bite-Sized Fudge Brownie Pieces,Bittersweet Chocolate,Black Bean Soup With Roasted Jalapenos,Black-Eyed Peas And Rice,Blackberry Jam,Blue Plate Special,Blueberry Shortcake,Boiled Beans,Boiled Beets,Boiled Cabbage,Boiled Eggs,Boiled Noodles,Boiled New Potatoes,Bologna Sandwich,Bolognese Pasta Sauce,Boston Baked Beans,Bottled Beer,Bountiful Harvest,Box Lunch,Braised Pheasant,Braised Veal Chops,Bread And Butter Pickles,Breakfast Burrito,Breakfast Cereals,Breast Wing Thigh & Drumstick,Broiled Mushrooms,Brown And Serve Rolls,Brown Bag Lunch,Buckwheat Pancakes,Buckwheat Pancakes,Bulk Candy,Burger & Fries,Buttered Bagel,Buttered Croissant,Buttermilk Waffles,Butterscotch Pudding,Buttery Biscuits,Cajun Cuisine,Cake,Canadian Bacon Pizza,Candied Apple,Candied Walnuts,Candied Yams,Canned Tuna,Canned Baked Beans,Canned Tomato Salad\",\n};\nlet solutionsForDisplay = [];\nlet simplifiedSolutions = [];\n\nlet categoryCount = 0;\nObject.keys(categoriesAndSolutions).forEach((category) => {\n  simplifiedSolutions.push(category);\n  simplifiedSolutions[categoryCount] = categoriesAndSolutions[category].split(',').map((solution) =>\n    utils.simplifyString(solution));\n  solutionsForDisplay.push(category);\n  solutionsForDisplay[categoryCount] = categoriesAndSolutions[category].split(',');\n  categoryCount++;\n});\n\nmodule.exports = {\n  solutionsForDisplay,\n  simplifiedSolutions,\n};\n"
   },
   {
-    "__docId__": 84,
+    "__docId__": 115,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1797,7 +2540,7 @@
     }
   },
   {
-    "__docId__": 85,
+    "__docId__": 116,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1818,7 +2561,7 @@
     }
   },
   {
-    "__docId__": 86,
+    "__docId__": 117,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1839,7 +2582,7 @@
     }
   },
   {
-    "__docId__": 87,
+    "__docId__": 118,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1860,7 +2603,7 @@
     }
   },
   {
-    "__docId__": 88,
+    "__docId__": 119,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1881,7 +2624,7 @@
     }
   },
   {
-    "__docId__": 89,
+    "__docId__": 120,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1894,7 +2637,104 @@
     "content": "window = {};\nwindow.navigator = {};\nwindow.navigator.userAgent = 'react-native';\n\nmodule.exports = window;\n\n"
   },
   {
-    "__docId__": 90,
+    "__docId__": 121,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "smileguess-server/spec/requestTest.js",
+    "memberof": null,
+    "longname": "smileguess-server/spec/requestTest.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "const request = require('request');\nconst Games = require('../collections/Games');\n\nconst joinOrStartGameURL = 'http://127.0.0.1:1234/api/play/';\n\nconsole.log('open games ', Games.openGames);\n\nconst sendNewOrRandomGameRequest = (deviceId, requestOptions) => {\n  const id = deviceId || 'defaultTestDeviceId';\n  const options = requestOptions || {\n    method: 'GET',\n    uri: joinOrStartGameURL + id,\n  };\n  request(options, (err, res, body) => {\n    if (err) {\n      console.log(err);\n    } else {\n      console.log(body);\n      console.log('open games ', Games.openGames);\n    }\n  });\n};\n\nsendNewOrRandomGameRequest();\n\nsetTimeout(() => (console.log('open games after timeout', Games.openGames), 5000));\n"
+  },
+  {
+    "__docId__": 122,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "request",
+    "memberof": "smileguess-server/spec/requestTest.js",
+    "longname": "smileguess-server/spec/requestTest.js~request",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/requestTest.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 1,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 123,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "Games",
+    "memberof": "smileguess-server/spec/requestTest.js",
+    "longname": "smileguess-server/spec/requestTest.js~Games",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/requestTest.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 2,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 124,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "joinOrStartGameURL",
+    "memberof": "smileguess-server/spec/requestTest.js",
+    "longname": "smileguess-server/spec/requestTest.js~joinOrStartGameURL",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/requestTest.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 125,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "sendNewOrRandomGameRequest",
+    "memberof": "smileguess-server/spec/requestTest.js",
+    "longname": "smileguess-server/spec/requestTest.js~sendNewOrRandomGameRequest",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/requestTest.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 126,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -1904,10 +2744,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const reporter = require('./support/reporter');\nconst request = require('request');\nconst User = require('../models/User');\nconst Game = require('../models/Game');\nconst Games = require('../collections/Games.js');\nconst gameMethods = require('../controllers/GameController');\nconst settings = require('../gameSettings');\njasmine.getEnv().addReporter(reporter);\n\nconst serverURL = 'http://127.0.0.1:1234';\n\ndescribe('Basic Server Functions', () => {\n  describe('Server', () => {\n    it('will respond to a request at a nonexistant endpoint', (done) => {\n      const options = {\n        method: 'GET',\n        uri: serverURL,\n      };\n\n      request(options, (error, res) => {\n        if (error && error.code === 'ECONNREFUSED') {\n          throw new Error('Connection refused, are you sure your server is running?');\n        }\n        expect(res.statusCode).toBe(404);\n        done();\n      });\n    });\n  });\n});\n\ndescribe('Models, Controllers and Collections: ', () => {\n  let openGames = Games.openGames;\n  const fullGames = Games.fullGames;\n  const testUser1 = new User('user1ID');\n  const testUser2 = new User('user2ID');\n  const testUser3 = new User('user3ID');\n  const testUser4 = new User('user4ID');\n  const testUser5 = new User('user5ID');\n  const testUser6 = new User('user6ID');\n  const testGame1 = new Game(testUser1);\n\n  describe('User Model', () => {\n    it('will correctly instantiate a new user', () => {\n      expect(testUser1.id).toBe('user1ID');\n      expect(typeof testUser1.username).toBe('string');\n    });\n  });\n\n  describe('Game: Model, Collection and Controllers', () => {\n\n    it('will correctly instantiate a new game', () => { \n      expect(testGame1.players[0].id).toBe('user1ID');\n    });\n\n    it('will place a user in a game', () => {\n      const testUser2 = new User('user2ID');\n      testGame1.addPlayer(testUser2);\n      expect(testGame1.players[0].id).toBe('user1ID');\n      expect(testGame1.players[1].id).toBe('user2ID');\n    });\n    it('will remove a player from a game', () => {\n      testGame1.removePlayer(testUser1);\n      expect(testGame1.players.length).toBe(1);\n    })\n    it('will adjust the number of seats available after adding players', () => {\n      testGame1.addPlayer(testUser2);\n      testGame1.addPlayer(testUser3);\n      expect(testGame1.seatsOpen).toBe(settings.maxPlayers - 3);\n    });\n    it('will adjust the number of seats available after removing players', () => {\n      testGame1.removePlayer(testUser2);\n      testGame1.removePlayer(testUser3);\n      expect(testGame1.seatsOpen).toBe(settings.maxPlayers - 1);\n    });\n    it('will quarantine full games', () => {\n      testGame1.addPlayer(testUser2);\n      testGame1.addPlayer(testUser3);\n      testGame1.addPlayer(testUser4);\n      testGame1.addPlayer(testUser5);\n      testGame1.addPlayer(testUser6);\n      expect(Games.fullGames.length).toBe(1);\n    });\n    it('will aggregate games with seats available', () => {\n      testGame1.removePlayer(testUser6);\n      expect(openGames.length).toBe(1);\n    });\n    it('will remove games from openGames when they are no longer open and add games to fullGames', () => {\n      expect(fullGames.length).toBe(0);\n      expect(openGames.length).toBe(1);\n\n      testGame1.addPlayer(testUser6);\n\n      expect(fullGames.length).toBe(1);\n      expect(openGames.length).toBe(0);\n    });\n    it('will remove games from fullGames when a seat is open, and add games to openGames', () => {\n      testGame1.removePlayer(testUser6);\n      expect(fullGames.length).toBe(0);\n      expect(openGames.length).toBe(1);\n    });\n    it('will order open games by number of seats available', () => {\n      const testGame2 = new Game(testUser2);\n      testGame2.updateGameAvailability();\n      Games.sort(openGames);\n      expect(openGames[0].seatsOpen < openGames[1].seatsOpen).toBe(true);\n    });\n    it('will place users in the game with the most seats available', () => {\n      gameMethods.joinOrStartGame(testUser2);\n      expect(openGames[1].seatsOpen).toBe(4);\n    });\n    it('will create a new game if no seats are available', () => {\n      gameMethods.joinOrStartGame(testUser2);\n      gameMethods.joinOrStartGame(testUser3);\n      gameMethods.joinOrStartGame(testUser4);\n      gameMethods.joinOrStartGame(testUser5);\n      gameMethods.joinOrStartGame(testUser6);\n\n      expect(openGames.length).toBe(0);\n      expect(openGames.length + fullGames.length).toBe(2);\n\n      gameMethods.joinOrStartGame(testUser6);\n\n      expect(openGames.length + fullGames.length).toBe(3);\n    });\n    it('will start a game after enough players have joined', () => {\n      expect(openGames[openGames.length - 1].active).toBe(false);\n      for (let i = 1; i < settings.minPlayers; i++) {\n        gameMethods.joinOrStartGame(testUser4);\n      }\n      expect(openGames[openGames.length - 1].active).toBe(true);\n    });\n    it('will assign the first dealer', () => {\n      expect(openGames[openGames.length - 1].dealer).not.toBe(null);\n    });\n    it('will assign a random solution from a random category', () => {\n      console.log(openGames[openGames.length - 1].solutionForDisplay);\n      expect(openGames[openGames.length - 1].solutionForDisplay).not.toBe(null);\n      expect(openGames[openGames.length - 1].solutionForMatching).not.toBe(null);\n    });\n    it('will destroy the game if all players leave', () => {\n      openGames[0].removePlayer(testUser4);\n      openGames[0].removePlayer(testUser4);\n      expect(openGames.length).toBe(1);\n      openGames[0].removePlayer(testUser6);\n      expect(openGames.length).toBe(0);\n    });\n    xit('will check guesses', () => {\n      // game method built, but waiting until message functions are built to test\n    });\n  });\n});\n"
+    "content": "const reporter = require('./support/reporter');\nconst request = require('request');\nconst User = require('../models/User');\nconst Users = require('../collections/Users');\nconst Games = require('../collections/Games.js');\nconst GameController = require('../controllers/GameController');\nconst UserController = require('../controllers/UserController');\nconst settings = require('../gameSettings');\nconst testUtils = require('./testUtils');\njasmine.getEnv().addReporter(reporter);\n\nconst serverURL = 'http://127.0.0.1:1234';\nconst joinOrStartGameURL = 'http://127.0.0.1:1234/api/game/';\n\nlet testDb = {\n  games: new Games(),\n  users: new Users(),\n};\n\ndescribe('Server Functions', () => {\n  describe('API', () => {\n    it('will respond to a request at a nonexistant endpoint', (done) => {\n      const options = {\n        method: 'GET',\n        uri: serverURL,\n      };\n      request(options, (error, res) => {\n        if (error && error.code === 'ECONNREFUSED') {\n          throw new Error('Connection refused, are you sure your server is running?');\n        }\n        expect(res.statusCode).toBe(404);\n        done();\n      });\n    });\n    it('will respond with a game instance', (done) => {\n      testUtils.sendPlayRequest(null, (req, res, body) => {\n        const game = JSON.parse(body);\n        expect(game.hasOwnProperty('gameId')).toBe(true);\n        expect(game.hasOwnProperty('players')).toBe(true);\n        expect(game.hasOwnProperty('seatsOpen')).toBe(true);\n        done();\n      });\n    });\n  });\n});\n\ndescribe('Models, Collections and Controllers: ', () => {\n  beforeEach(() => {\n    testDb = {\n      games: new Games(),\n      users: new Users(),\n    };\n  });\n\n  describe('User Model', () => {\n    it('will correctly instantiate a new user', () => {\n      expect(testDb.users.createUser('hypotheticalDeviceId').userId).toBe(1);\n      expect(UserController.getUser(testDb.users, 1).username).not.toBe(undefined);\n    });\n  });\n\n  describe('Game Model', () => {\n    it('will correctly instantiate a new game', () => {\n      testDb.games.createGame();\n      expect(testDb.games.getNextOpenGame().hasOwnProperty('gameId')).toBe(true);\n      expect(testDb.games.getNextOpenGame().hasOwnProperty('players')).toBe(true);\n      expect(testDb.games.getNextOpenGame().hasOwnProperty('seatsOpen')).toBe(true);\n      expect(testDb.games.getNextOpenGame().hasOwnProperty('dealer')).toBe(true);\n      expect(testDb.games.getNextOpenGame().hasOwnProperty('events')).toBe(true);\n    });\n\n    it('will place a player in a game', () => {\n      testDb.games.createGame();\n      testUtils.populateNextOpenGameWithPlayers(testDb, 2)\n      expect(testDb.games.getNextOpenGame().players[0]).toBe(1);\n      expect(testDb.games.getNextOpenGame().players[1]).toBe(2);\n    });\n    it('will remove a player from a game', () => {\n      const testGame = testDb.games.createGame();\n      testUtils.populateNextOpenGameWithPlayers(testDb, 2)\n      expect(testGame.players.length).toEqual(2);\n\n\n      GameController.handlePlayerLeave(testDb.games, 1, 1);\n      expect(testGame.players.length).toBe(1);\n    });\n    it('will adjust the number of seats available after adding players', () => {\n      const testGame = testDb.games.createGame();\n      testUtils.populateNextOpenGameWithPlayers(testDb, 1);\n      expect(testGame.seatsOpen).toEqual(settings.maxPlayers - 1);\n\n      testUtils.populateNextOpenGameWithPlayers(testDb, 1);\n      expect(testGame.seatsOpen).toEqual(settings.maxPlayers - testGame.players.length);\n    });\n    it('will adjust the number of seats available after removing players', () => {\n      const testGame = testDb.games.createGame();\n      testUtils.populateNextOpenGameWithPlayers(testDb, 2);\n      expect(testGame.seatsOpen).toEqual(settings.maxPlayers - 2);\n\n      GameController.handlePlayerLeave(testDb.games, 1, 2);\n      expect(testGame.seatsOpen).toEqual(settings.maxPlayers - 1);\n    });\n    it('will start a game after enough players have joined', () => {\n      testDb.games.createGame();\n      testUtils.populateNextOpenGameWithPlayers(testDb, settings.minPlayers - 1);\n      expect(testDb.games.getNextOpenGame().active).toBe(false);\n\n      testUtils.populateNextOpenGameWithPlayers(testDb, 1);\n      expect(testDb.games.getNextOpenGame().active).toBe(true);\n    });\n    it('will assign the first dealer', () => {\n      testDb.games.createGame();\n      testUtils.populateNextOpenGameWithPlayers(testDb, settings.minPlayers);\n      expect(testDb.games.openGames[0].dealer).not.toBe(null);\n    });\n    it('will assign a random prompt from a random category', () => {\n      testDb.games.createGame();\n      testUtils.populateNextOpenGameWithPlayers(testDb, settings.minPlayers);\n      expect(testDb.games.openGames[0].prompt.forDisplay).not.toBe(null);\n      expect(testDb.games.openGames[0].prompt.forMatching).not.toBe(null);\n    });\n    it('will check guesses', () => {\n      const testGuess = {\n        type: 'SOCKET_GUESS_MESSAGE',\n        userid: 'user1ID',\n        message: 'NOT A CORRECT GUESS',\n      };\n      testDb.games.createGame();\n      testUtils.populateNextOpenGameWithPlayers(testDb, settings.minPlayers);\n      expect(GameController.handleGuess(testDb.games, 1, testGuess.message)).toBe(false);\n\n      prompt = testDb.games.getNextOpenGame().prompt.forMatching.toLowerCase();\n      expect(GameController.handleGuess(testDb.games, 1, prompt)).not.toBe(false);\n    });\n  });\n\n  describe('Game Collection', () => {\n    it('will retrieve a game by game id', () => {\n      testDb.games.createGame();\n      expect(testDb.games.retrieve(1)).not.toBe(undefined);\n    });\n    it('will quarantine full games', () => {\n      testDb.games.createGame();\n      testUtils.populateNextOpenGameWithPlayers(testDb, settings.maxPlayers - 1);\n      expect(testDb.games.fullGames.length).toEqual(0);\n\n      GameController.handlePlayerJoin(testDb.games, testUtils.generateTestUsers(testDb.users, 1)[0].userId);\n      expect(testDb.games.fullGames.length).toEqual(1);\n    });\n    it('will aggregate games with seats available', () => {\n      testDb.games.createGame();\n      testDb.games.createGame();\n      expect(testDb.games.openGames.length).toEqual(2);\n    });\n    it('will move games from openGames to fullGames when they are full', () => {\n      testDb.games.createGame();\n      testUtils.populateNextOpenGameWithPlayers(testDb, settings.maxPlayers - 1);\n      expect(testDb.games.fullGames.length).toEqual(0);\n      console.log(testDb.games.fullGames.length, testDb.games.openGames.length);\n      GameController.handlePlayerJoin(testDb.games, testUtils.generateTestUsers(testDb.users, 1)[0].userId);\n      console.log(testDb.games.fullGames.length, testDb.games.openGames.length);\n      expect(testDb.games.fullGames.length).toEqual(1);\n      expect(testDb.games.openGames.length).toEqual(0);\n    });\n    it('will move games from fullGames to openGames when a seat becomes available', () => {\n      testDb.games.createGame();\n      expect(testDb.games.fullGames.length).toEqual(0);\n      testUtils.populateNextOpenGameWithPlayers(testDb, settings.maxPlayers);\n      expect(testDb.games.fullGames.length).toEqual(1);\n    });\n    it('will order open games by number of seats available', () => {\n      testDb.games.createGame();\n      testDb.games.createGame();\n      testUtils.populateNextOpenGameWithPlayers(testDb, 3);\n\n      expect(testDb.games.retrieve(testDb.games.openGames[0]).seatsOpen).toEqual(4);\n      expect(testDb.games.retrieve(testDb.games.openGames[1]).seatsOpen).toEqual(5);\n    });\n    it('will place users in the game with the most seats available', () => {\n      testDb.games.createGame();\n      testDb.games.createGame();\n      testUtils.populateNextOpenGameWithPlayers(testDb, 4);\n      expect(testDb.games.openGames[0][1]).toEqual(testDb.games.openGames[1][1]);\n    });\n    it('will create a new game if no seats are available', () => {\n      GameController.play(testDb.games, (game) => {\n        testUtils.populateNextOpenGameWithPlayers(testDb, 1);\n        expect(game.players[0]).toEqual(1);\n      });\n    });\n    it('will destroy the game if all players leave', () => {\n      testDb.games.createGame();\n      expect(testDb.games.openGames.length).toEqual(1);\n      expect(typeof testDb.games.retrieve(testDb.games.openGames[0])).toBe('object');\n      console.log(testDb.games.getNextOpenGame())\n      GameController.handlePlayerLeave(testDb.games, 1, 1);\n      console.log(testDb.games.openGames);\n      expect(testDb.games.openGames.length).toEqual(0);\n      expect(testDb.games.retrieve(testDb.games.openGames[0])).toBe(undefined);\n    });\n  });\n});\n\nmodule.exports = {\n\n};\n"
   },
   {
-    "__docId__": 91,
+    "__docId__": 127,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1928,7 +2768,7 @@
     }
   },
   {
-    "__docId__": 92,
+    "__docId__": 128,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1949,7 +2789,7 @@
     }
   },
   {
-    "__docId__": 93,
+    "__docId__": 129,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -1970,13 +2810,13 @@
     }
   },
   {
-    "__docId__": 94,
+    "__docId__": 130,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "Game",
+    "name": "Users",
     "memberof": "smileguess-server/spec/serverSideTests.js",
-    "longname": "smileguess-server/spec/serverSideTests.js~Game",
+    "longname": "smileguess-server/spec/serverSideTests.js~Users",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/spec/serverSideTests.js",
@@ -1991,7 +2831,7 @@
     }
   },
   {
-    "__docId__": 95,
+    "__docId__": 131,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2012,13 +2852,13 @@
     }
   },
   {
-    "__docId__": 96,
+    "__docId__": 132,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "gameMethods",
+    "name": "GameController",
     "memberof": "smileguess-server/spec/serverSideTests.js",
-    "longname": "smileguess-server/spec/serverSideTests.js~gameMethods",
+    "longname": "smileguess-server/spec/serverSideTests.js~GameController",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/spec/serverSideTests.js",
@@ -2033,13 +2873,13 @@
     }
   },
   {
-    "__docId__": 97,
+    "__docId__": 133,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "settings",
+    "name": "UserController",
     "memberof": "smileguess-server/spec/serverSideTests.js",
-    "longname": "smileguess-server/spec/serverSideTests.js~settings",
+    "longname": "smileguess-server/spec/serverSideTests.js~UserController",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/spec/serverSideTests.js",
@@ -2054,7 +2894,49 @@
     }
   },
   {
-    "__docId__": 98,
+    "__docId__": 134,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "settings",
+    "memberof": "smileguess-server/spec/serverSideTests.js",
+    "longname": "smileguess-server/spec/serverSideTests.js~settings",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/serverSideTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 8,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 135,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "testUtils",
+    "memberof": "smileguess-server/spec/serverSideTests.js",
+    "longname": "smileguess-server/spec/serverSideTests.js~testUtils",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/serverSideTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 136,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2066,7 +2948,7 @@
     "importPath": "./smileguess-server/spec/serverSideTests.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 10,
+    "lineNumber": 12,
     "undocument": true,
     "type": {
       "types": [
@@ -2075,7 +2957,49 @@
     }
   },
   {
-    "__docId__": 99,
+    "__docId__": 137,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "joinOrStartGameURL",
+    "memberof": "smileguess-server/spec/serverSideTests.js",
+    "longname": "smileguess-server/spec/serverSideTests.js~joinOrStartGameURL",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/serverSideTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 13,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 138,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "testDb",
+    "memberof": "smileguess-server/spec/serverSideTests.js",
+    "longname": "smileguess-server/spec/serverSideTests.js~testDb",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/serverSideTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 139,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2085,10 +3009,10 @@
     "access": null,
     "description": null,
     "lineNumber": 1,
-    "content": "const reporter = require('./support/reporter.js');\njasmine.getEnv().addReporter(reporter);\nconst io = require('socket.io-client');\nconst serverURL = 'http://127.0.0.1:1234';\n\nconst sendGuessMessage = require('../sockets/sendGuessMessage.js');\nconst sendClueMessage = require('../sockets/sendClueMessage.js');\nconst sendWinner = require('../sockets/sendWinner.js');\n\nvar socket;\ndescribe('Socket responder functions', () => {\n  beforeEach((done) => {\n    socket = io.connect(serverURL, {\n      'reconnection delay': 0,\n      'reopen delay': 0,\n      'force new connection': true,\n    });\n    socket.on('connect', () => {\n      socket.emit('action', {\n        type: 'server/joinRandomGame',\n        user: { id: 5, username: 'testUser' },\n      });\n      done();\n    });\n  });\n\n  afterEach((done) => {\n    socket.disconnect();\n    done();\n  });\n\n  describe('sendGuessMessage', () => {\n    let actionType = 'SOCKET_GUESS_MESSAGE'\n    let label = 'sendGuessMessage';\n    it('should be a function', () => {\n      expect(typeof sendGuessMessage).toBe('function');\n    });\n    it('should respond with an action called ' + actionType, (done) => {\n      socket.on('action', (response) => {\n        if (response.type === actionType) {\n          expect(response.type).toBe(actionType);\n          expect(response.userid).toBe(5);\n          expect(response.message).toBe('testGuessMessage');\n          done();\n        }\n      });\n      socket.emit('action', {\n        type: 'server/' + label,\n        userid: 5,\n        message: 'testGuessMessage'\n      });\n    });\n  });\n\n  describe('sendClueMessage', () => {\n    let actionType = 'SOCKET_CLUE_MESSAGE'\n    let label = 'sendClueMessage';\n    it('should be a function', () => {\n      expect(typeof sendClueMessage).toBe('function');\n    });\n    it('should respond with an action called ' + actionType, (done) => {\n      socket.on('action', (response) => {\n        if (response.type === actionType) {\n          expect(response.userid).toBe(5);\n          expect(response.message).toBe('testClueMessage');\n          done();\n        }\n      });\n      socket.emit('action', {\n        type: 'server/' + label,\n        userid: 5,\n        message: 'testClueMessage'\n      });\n    });\n  });\n\n});\n\n\n"
+    "content": "const reporter = require('./support/reporter');\nconst io = require('socket.io-client');\nconst serverURL = 'http://127.0.0.1:1234';\nconst sendGuessMessage = require('../sockets/sendGuessMessage');\nconst sendClueMessage = require('../sockets/sendClueMessage');\nconst sendPrompt = require('../sockets/sendPrompt');\nconst sendWinner = require('../sockets/sendWinner');\nconst testUtils = require('./testUtils');\nconst sendPlayerJoinGame = require('../sockets/sendPlayerJoinGame');\nconst User = require('../models/User');\nconst Users = require('../collections/Users');\nconst Games = require('../collections/Games');\nconst settings = require('../gameSettings');\nconst testUser1 = new User('testUser1ID');\nconst GameController = require('../controllers/GameController');\nconst request = require('request');\nlet testUser = {};\nlet testGame = {};\ntestUtils.sendPlayRequest(null, (body) => {\n  testGame = body;\n});\ntestUtils.sendUserRequest(null, (body) => {\n  testUser = body;\n});\n//TODO: send a user maker api call to instantiate users and or games for testing\nvar socket;\n\ndescribe('Socket responder functions', () => {\n  beforeEach((done) => {\n    socket = io.connect(serverURL, {\n      'reconnection delay': 0,\n      'reopen delay': 0,\n      'force new connection': true,\n    });\n    socket.on('connect', () => {\n      socket.emit('action', {\n        type: 'server/joinGame',\n        gameId: 1,\n        userId: 1,\n      });\n      done();\n    });\n  });\n\n  afterEach((done) => {\n    socket.disconnect();\n    done();\n  });\n\n  describe('sendGuessMessage', () => {\n    let actionType = 'SOCKET_GUESS_MESSAGE'\n    let label = 'sendGuessMessage';\n    it('should be a function', () => {\n      expect(typeof sendGuessMessage).toBe('function');\n    });\n    it('should respond with an action called ' + actionType, (done) => {\n      socket.on('action', (response) => {\n        console.log(response);\n        if (response.type === actionType) {\n          expect(response.type).toBe(actionType);\n          expect(response.message).toBe('testGuessMessage');\n          done();\n        }\n      });\n      socket.emit('action', {\n        type: 'server/' + label,\n        userId: 1,\n        gameId: 1,\n        message: 'testGuessMessage',\n      });\n    });\n  });\n\n  describe('sendClueMessage', () => {\n    let actionType = 'SOCKET_CLUE_MESSAGE'\n    let label = 'sendClueMessage';\n    xit('should be a function', () => {\n      expect(typeof sendClueMessage).toBe('function');\n    });\n    xit('should respond with an action called ' + actionType, (done) => {\n      socket.on('action', (response) => {\n        console.log('RESPONSE', response);\n        if (response.type === actionType) {\n          expect(response.userid).toBe(1);\n          expect(response.message).toBe('testClueMessage');\n          done();\n        }\n      });\n      socket.emit('action', {\n        type: 'server/' + label,\n        gameId: 1,\n        userId: 1,\n        message: 'testClueMessage',\n      });\n    });\n  });\n\n  //problem is we are passing a different db to the sockets than this one\n  describe('Socket puts users in games', () => {\n    let actionType = 'SOCKET_JOIN_GAME'\n    let label = 'joinGame';\n    xit('should be a function', () => {\n      expect(typeof sendClueMessage).toBe('function');\n    });\n    xit('should respond with an action called ' + actionType, (done) => {\n      socket.on('action', (response) => {\n        console.log('RESPONSE', response);\n        if (response.type === actionType) {\n          console.log(response);\n\n        }\n      });\n      socket.emit('action', {\n        type: 'server/' + label,\n        gameId: 1,\n        userId: 1,\n        deviceId: 'someDeviceId',\n      });\n    });\n  });\n\n  // describe('sendPrompt', () => {\n  //   let actionType = 'SOCKET_PROMPT'\n  //   let label = 'sendPrompt';\n  //   it('should be a function', () => {\n  //     expect(typeof sendPrompt).toBe('function');\n  //   });\n  //   it(`send a prompt to only the current dealer ${actionType}`, (done) => {\n  //     db.createGame(testUser1);\n  //     expect(db.getNextOpenGame().promptForDisplay).toBe(null);\n  //     testMethods.populateGameWithPlayers(db, settings.minPlayers - 1);\n  //     expect(db.getNextOpenGame().promptForDisplay).not.toBe(null);\n  //     const prompt = db.getNextOpenGame().promptForDisplay;\n  //     socket.on('action', (response) => {\n  //       if (response.type === actionType) {\n  //         // expect(response.userid).toBe(5);\n  //         // expect(response.message).toBe('testClueMessage');\n  //         done();\n  //       }\n  //     });\n  //     socket.emit('action', {\n  //       type: 'server/' + label,\n  //       dealerIndex: 5,\n  //     });\n  //     done();\n  //   });\n  // });\n\n});\n\n\n"
   },
   {
-    "__docId__": 100,
+    "__docId__": 140,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2109,7 +3033,7 @@
     }
   },
   {
-    "__docId__": 101,
+    "__docId__": 141,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2121,7 +3045,7 @@
     "importPath": "./smileguess-server/spec/socketTests.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 3,
+    "lineNumber": 2,
     "undocument": true,
     "type": {
       "types": [
@@ -2130,7 +3054,7 @@
     }
   },
   {
-    "__docId__": 102,
+    "__docId__": 142,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2142,7 +3066,7 @@
     "importPath": "./smileguess-server/spec/socketTests.js",
     "importStyle": null,
     "description": null,
-    "lineNumber": 4,
+    "lineNumber": 3,
     "undocument": true,
     "type": {
       "types": [
@@ -2151,13 +3075,55 @@
     }
   },
   {
-    "__docId__": 103,
+    "__docId__": 143,
     "kind": "variable",
     "static": true,
     "variation": null,
     "name": "sendGuessMessage",
     "memberof": "smileguess-server/spec/socketTests.js",
     "longname": "smileguess-server/spec/socketTests.js~sendGuessMessage",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/socketTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 144,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "sendClueMessage",
+    "memberof": "smileguess-server/spec/socketTests.js",
+    "longname": "smileguess-server/spec/socketTests.js~sendClueMessage",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/socketTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 145,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "sendPrompt",
+    "memberof": "smileguess-server/spec/socketTests.js",
+    "longname": "smileguess-server/spec/socketTests.js~sendPrompt",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/spec/socketTests.js",
@@ -2172,13 +3138,13 @@
     }
   },
   {
-    "__docId__": 104,
+    "__docId__": 146,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "sendClueMessage",
+    "name": "sendWinner",
     "memberof": "smileguess-server/spec/socketTests.js",
-    "longname": "smileguess-server/spec/socketTests.js~sendClueMessage",
+    "longname": "smileguess-server/spec/socketTests.js~sendWinner",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/spec/socketTests.js",
@@ -2193,13 +3159,13 @@
     }
   },
   {
-    "__docId__": 105,
+    "__docId__": 147,
     "kind": "variable",
     "static": true,
     "variation": null,
-    "name": "sendWinner",
+    "name": "testUtils",
     "memberof": "smileguess-server/spec/socketTests.js",
-    "longname": "smileguess-server/spec/socketTests.js~sendWinner",
+    "longname": "smileguess-server/spec/socketTests.js~testUtils",
     "access": null,
     "export": false,
     "importPath": "./smileguess-server/spec/socketTests.js",
@@ -2214,7 +3180,217 @@
     }
   },
   {
-    "__docId__": 106,
+    "__docId__": 148,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "sendPlayerJoinGame",
+    "memberof": "smileguess-server/spec/socketTests.js",
+    "longname": "smileguess-server/spec/socketTests.js~sendPlayerJoinGame",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/socketTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 9,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 149,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "User",
+    "memberof": "smileguess-server/spec/socketTests.js",
+    "longname": "smileguess-server/spec/socketTests.js~User",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/socketTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 10,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 150,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "Users",
+    "memberof": "smileguess-server/spec/socketTests.js",
+    "longname": "smileguess-server/spec/socketTests.js~Users",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/socketTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 11,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 151,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "Games",
+    "memberof": "smileguess-server/spec/socketTests.js",
+    "longname": "smileguess-server/spec/socketTests.js~Games",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/socketTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 12,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 152,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "settings",
+    "memberof": "smileguess-server/spec/socketTests.js",
+    "longname": "smileguess-server/spec/socketTests.js~settings",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/socketTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 13,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 153,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "testUser1",
+    "memberof": "smileguess-server/spec/socketTests.js",
+    "longname": "smileguess-server/spec/socketTests.js~testUser1",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/socketTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 14,
+    "undocument": true,
+    "type": {
+      "types": [
+        "User"
+      ]
+    }
+  },
+  {
+    "__docId__": 154,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "GameController",
+    "memberof": "smileguess-server/spec/socketTests.js",
+    "longname": "smileguess-server/spec/socketTests.js~GameController",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/socketTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 15,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 155,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "request",
+    "memberof": "smileguess-server/spec/socketTests.js",
+    "longname": "smileguess-server/spec/socketTests.js~request",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/socketTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 16,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 156,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "testUser",
+    "memberof": "smileguess-server/spec/socketTests.js",
+    "longname": "smileguess-server/spec/socketTests.js~testUser",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/socketTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 17,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 157,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "testGame",
+    "memberof": "smileguess-server/spec/socketTests.js",
+    "longname": "smileguess-server/spec/socketTests.js~testGame",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/socketTests.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 18,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 158,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2227,7 +3403,7 @@
     "content": "const JasmineConsoleReporter = require('jasmine-console-reporter');\nmodule.exports = new JasmineConsoleReporter({\n  colors: 1,           // (0|false)|(1|true)|2\n  cleanStack: 1,       // (0|false)|(1|true)|2|3\n  verbosity: 4,        // (0|false)|1|2|(3|true)|4\n  listStyle: 'indent', // \"flat\"|\"indent\"\n  activity: false,\n});\n"
   },
   {
-    "__docId__": 107,
+    "__docId__": 159,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2248,7 +3424,146 @@
     }
   },
   {
-    "__docId__": 108,
+    "__docId__": 160,
+    "kind": "file",
+    "static": true,
+    "variation": null,
+    "name": "smileguess-server/spec/testUtils.js",
+    "memberof": null,
+    "longname": "smileguess-server/spec/testUtils.js",
+    "access": null,
+    "description": null,
+    "lineNumber": 1,
+    "content": "const serverURL = 'http://127.0.0.1:1234';\nconst joinOrStartGameURL = 'http://127.0.0.1:1234/api/game/';\nconst getUserURL = 'http://127.0.0.1:1234/api/user/';\nconst deviceId = 'testUserDeviceId';\nconst request = require('request');\nconst GameController = require('../controllers/GameController');\n\nexports.sendPlayRequest = (requestOptions, callback) => {\n  const options = requestOptions || {\n    method: 'GET',\n    uri: joinOrStartGameURL,\n  };\n  return request(options, (err, res, body) => {\n    if (err) {\n      return console.log(err);\n    }\n    return callback(err, res, body);\n  });\n};\n\nexports.generateTestUsers = (usersColletion, n) => {\n  const testUsers = [];\n  for (let i = 1; i <= n; i++) {\n    testUsers.push(usersColletion.createUser(`fakeSocketId_${i}`));\n  }\n  return testUsers;\n};\n\nexports.populateNextOpenGameWithPlayers = (database, numberOfPlayers, arrayOfplayers) => {\n  const testPlayers = arrayOfplayers || exports.generateTestUsers(database.users, numberOfPlayers);\n  return testPlayers.forEach((player) => GameController.handlePlayerJoin(database.games, player.userId));\n};\n\nexports.sendUserRequest = (requestOptions, callback) => {\n  const options = requestOptions || {\n    method: 'GET',\n    uri: `${getUserURL}${deviceId}`,\n  };\n  return request(options, (err, res, body) => {\n    if (err) {\n      return console.log(err);\n    }\n    return callback(err, res, body);\n  });\n};\n"
+  },
+  {
+    "__docId__": 161,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "serverURL",
+    "memberof": "smileguess-server/spec/testUtils.js",
+    "longname": "smileguess-server/spec/testUtils.js~serverURL",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/testUtils.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 1,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 162,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "joinOrStartGameURL",
+    "memberof": "smileguess-server/spec/testUtils.js",
+    "longname": "smileguess-server/spec/testUtils.js~joinOrStartGameURL",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/testUtils.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 2,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 163,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "getUserURL",
+    "memberof": "smileguess-server/spec/testUtils.js",
+    "longname": "smileguess-server/spec/testUtils.js~getUserURL",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/testUtils.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 3,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 164,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "deviceId",
+    "memberof": "smileguess-server/spec/testUtils.js",
+    "longname": "smileguess-server/spec/testUtils.js~deviceId",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/testUtils.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 4,
+    "undocument": true,
+    "type": {
+      "types": [
+        "string"
+      ]
+    }
+  },
+  {
+    "__docId__": 165,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "request",
+    "memberof": "smileguess-server/spec/testUtils.js",
+    "longname": "smileguess-server/spec/testUtils.js~request",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/testUtils.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 5,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 166,
+    "kind": "variable",
+    "static": true,
+    "variation": null,
+    "name": "GameController",
+    "memberof": "smileguess-server/spec/testUtils.js",
+    "longname": "smileguess-server/spec/testUtils.js~GameController",
+    "access": null,
+    "export": false,
+    "importPath": "./smileguess-server/spec/testUtils.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 6,
+    "undocument": true,
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 167,
     "kind": "file",
     "static": true,
     "variation": null,
@@ -2261,7 +3576,7 @@
     "content": "const settings = require('./gameSettings');\n\nmodule.exports = {\n  getRandomIntInclusive: (min, max) => (\n    Math.floor(Math.random() * (max - min + 1)) + min\n  ),\n  simplifyString: (string) => (\n    string.toLowerCase().replace(settings.charsToAvoid, '')\n  ),\n};\n"
   },
   {
-    "__docId__": 109,
+    "__docId__": 168,
     "kind": "variable",
     "static": true,
     "variation": null,
@@ -2282,7 +3597,7 @@
     }
   },
   {
-    "__docId__": 111,
+    "__docId__": 170,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2295,7 +3610,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 112,
+    "__docId__": 171,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2308,7 +3623,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 113,
+    "__docId__": 172,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2321,7 +3636,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 114,
+    "__docId__": 173,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2334,7 +3649,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 115,
+    "__docId__": 174,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2347,7 +3662,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 116,
+    "__docId__": 175,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2360,7 +3675,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 117,
+    "__docId__": 176,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2373,7 +3688,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 118,
+    "__docId__": 177,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2386,7 +3701,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 119,
+    "__docId__": 178,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2399,7 +3714,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 120,
+    "__docId__": 179,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2412,7 +3727,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 121,
+    "__docId__": 180,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2425,7 +3740,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 122,
+    "__docId__": 181,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2438,7 +3753,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 123,
+    "__docId__": 182,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2451,7 +3766,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 124,
+    "__docId__": 183,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2464,7 +3779,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 125,
+    "__docId__": 184,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2477,7 +3792,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 126,
+    "__docId__": 185,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2490,7 +3805,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 127,
+    "__docId__": 186,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2503,7 +3818,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 128,
+    "__docId__": 187,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2516,7 +3831,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 129,
+    "__docId__": 188,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2529,7 +3844,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 130,
+    "__docId__": 189,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2542,7 +3857,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 131,
+    "__docId__": 190,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2555,7 +3870,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 132,
+    "__docId__": 191,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2568,7 +3883,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 133,
+    "__docId__": 192,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2581,7 +3896,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 134,
+    "__docId__": 193,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2594,7 +3909,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 135,
+    "__docId__": 194,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2607,7 +3922,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 136,
+    "__docId__": 195,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2620,7 +3935,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 137,
+    "__docId__": 196,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2633,7 +3948,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 138,
+    "__docId__": 197,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2646,7 +3961,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 139,
+    "__docId__": 198,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2659,7 +3974,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 140,
+    "__docId__": 199,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2672,7 +3987,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 141,
+    "__docId__": 200,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2685,7 +4000,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 142,
+    "__docId__": 201,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2698,7 +4013,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 143,
+    "__docId__": 202,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2711,7 +4026,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 144,
+    "__docId__": 203,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2724,7 +4039,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 145,
+    "__docId__": 204,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2737,7 +4052,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 146,
+    "__docId__": 205,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2750,7 +4065,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 147,
+    "__docId__": 206,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2763,7 +4078,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 148,
+    "__docId__": 207,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2776,7 +4091,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 149,
+    "__docId__": 208,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2789,7 +4104,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 150,
+    "__docId__": 209,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2802,7 +4117,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 151,
+    "__docId__": 210,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2815,7 +4130,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 152,
+    "__docId__": 211,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2828,7 +4143,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 153,
+    "__docId__": 212,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2841,7 +4156,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 154,
+    "__docId__": 213,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2854,7 +4169,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 155,
+    "__docId__": 214,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2867,7 +4182,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 156,
+    "__docId__": 215,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2880,7 +4195,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 157,
+    "__docId__": 216,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2893,7 +4208,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 159,
+    "__docId__": 218,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2906,7 +4221,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 160,
+    "__docId__": 219,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2919,7 +4234,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 161,
+    "__docId__": 220,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2932,7 +4247,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 162,
+    "__docId__": 221,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2945,7 +4260,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 163,
+    "__docId__": 222,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2958,7 +4273,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 164,
+    "__docId__": 223,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2971,7 +4286,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 165,
+    "__docId__": 224,
     "kind": "external",
     "static": true,
     "variation": null,
@@ -2984,7 +4299,7 @@
     "builtinExternal": true
   },
   {
-    "__docId__": 166,
+    "__docId__": 225,
     "kind": "external",
     "static": true,
     "variation": null,

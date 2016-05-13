@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl" href="../../">
-  <title data-ice="title">smileguess-server/gameSettings.js | API Document</title>
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">smileguess-server/spec/requestTest.js | API Document</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -48,12 +48,33 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/gameSettings.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">module.exports = {
-  minPlayers: 3,
-  maxPlayers: 6,
-  charsToAvoid: /-/g,
+<div class="content" data-ice="content"><h1 data-ice="title">smileguess-server/spec/requestTest.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">const request = require(&apos;request&apos;);
+const Games = require(&apos;../collections/Games&apos;);
+
+const joinOrStartGameURL = &apos;http://127.0.0.1:1234/api/play/&apos;;
+
+console.log(&apos;open games &apos;, Games.openGames);
+
+const sendNewOrRandomGameRequest = (deviceId, requestOptions) =&gt; {
+  const id = deviceId || &apos;defaultTestDeviceId&apos;;
+  const options = requestOptions || {
+    method: &apos;GET&apos;,
+    uri: joinOrStartGameURL + id,
+  };
+  request(options, (err, res, body) =&gt; {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(body);
+      console.log(&apos;open games &apos;, Games.openGames);
+    }
+  });
 };
+
+sendNewOrRandomGameRequest();
+
+setTimeout(() =&gt; (console.log(&apos;open games after timeout&apos;, Games.openGames), 5000));
 </code></pre>
 
 </div>
