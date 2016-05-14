@@ -1,6 +1,8 @@
-const socketUtils = require('./socketUtils');
+const actionCreators = require('./actionCreators.js');
 
-exports.modifyClientGameState = (event, game) => {
-  const action = socketUtils.createGameChangeAction(event, game);
+const sendGameChange = (event, game) => {
+  const action = actionCreators.createGameChangeAction(event, game);
   game.io.emit('action', action);
 };
+module.exports = sendGameChange;
+

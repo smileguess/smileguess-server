@@ -1,4 +1,4 @@
-exports.createGameChangeAction = (event, game) => {
+const createGameChangeAction = (event, game) => {
   const actionType = 'UPDATE_GAME_STATE';
   const gameActions = {
     newDealer: {
@@ -29,12 +29,20 @@ exports.createGameChangeAction = (event, game) => {
       },
     },
   };
-  return gameActions.event;
+  return gameActions[event];
 };
 
-// exports.alertAction = (type, gamesCol, gamesCol, userId) => {
+const createMemoAction = (message) => {
+  return {
+    type: 'GAME_MEMO',
+    payload: message,
+  };
+};
 
-// }
+module.exports = {
+  createMemoAction,
+  createGameChangeAction,
+};
 
 // UPDATE_MESSAGE_STATE
 // UPDATE_GAME_STATE
