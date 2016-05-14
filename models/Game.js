@@ -167,7 +167,7 @@ class Game {
     const categoryNumber = random(0, prompts.promptsForDisplay.length - 1);
     const solutionNumber = random(0, prompts.promptsForDisplay[categoryNumber].length - 1);
     this.prompt.forDisplay = prompts.promptsForDisplay[categoryNumber][solutionNumber];
-    this.prompt.forMatching = prompts.simplifiedprompts[categoryNumber][solutionNumber];
+    this.prompt.forMatching = prompts.simplifiedPrompts[categoryNumber][solutionNumber];
     this.trigger('newPrompt', 'newPrompt', this);
     return this;
   }
