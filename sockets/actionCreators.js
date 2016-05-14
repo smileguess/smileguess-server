@@ -39,6 +39,13 @@ const createMemoAction = (message) => {
   };
 };
 
+const createSystemMessageAction = (message) => {
+  return {
+    type: 'UPDATE_MESSAGE_STATE',
+    payload: message,
+  };
+};
+
 module.exports = {
   createMemoAction,
   createGameChangeAction,

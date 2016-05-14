@@ -1,57 +1,102 @@
 const sendGameChange = require('../sockets/sendGameChange');
+const actionCreators = require('../sockets/actionCreators');
+
+/**
+ * Handles the addition of a player to a selected game
+ * @params {object} - a instance of the Games collection
+ * @params {object} - an instance of the User model
+ */
+const handlePlayerJoin = (gamesCollection, user, gameId) => {
+  const game = gameId ? retrieve(gamesCollection, gameId) : gamesCollection.getNextOpenGame();
+  game.addPlayer(user);
+  return game;
+};
+/**
+ * Handles a player leaving a game
+ * @params {object} - a instance of the Games collection
+ * @params {string} - a game ID
+ * @params {object} - an instance of the User model
+ */
+const handlePlayerLeave = (gamesCollection, gameId, userId) => (
+  gamesCollection.retrieve(gameId).removePlayer(userId)
+);
+/**
+ * Handles a user wanting to play a game. If there are available games,
+ the user will be added to an ongoing game. A new game will be created
+ * for the user otherwise.
+ * @params {object} - a instance of the Games collection
+ * @params {object} - an instance of the User model
+ */
+const play = (gamesCollection, callback) => {
+  let game;
+  if (!gamesCollection.openGames.length) {
+    game = gamesCollection.createGame();
+    //Add callbacks and trigger for io funcs here
+    // sendNotification(`${user.username} has left the game`);
+    game.on('newPrompt', disseminateChange);
+    game.on('newDealer',
+      disseminateChange, 
+      (type, game, user) => sendNotification(`${user.username} is the new dealer`)
+    );
+    game.on('playerLeave', (type, game, user) => sendNotification(game, `${user.username} has left the game`));
+    game.on('playerJoin', (type, game, user) => sendNotification(game, `${user.username} has joined the game`));
+    game.on('playerWon', (type, game, user) => sendNotification(game, `${user.username} has won the game!`));
+
+  } else {
+    game = gamesCollection.getNextOpenGame();
+  }
+  return callback(game);
+};
+/**
+ * Handles the judgement of a player's guesses.
+ * Returns true for correct guesses, false for incorect guesses.
+ * @params {object} - a instance of the Games collection
+ * @params {object} - an instance of the User model
+ */
+const handleGuess = (gamesCollection, gameId, message) => 
+  gamesCollection.retrieve(gameId).checkGuess(message);
+
+const retrieve = (gamesCollection, gameId) =>
+  gamesCollection.retrieve(gameId);
+
+/**
+ * Sends a socket message as both a message and a memo
+ * @params {string} message - message to send
+ */
+const sendNotification = (game, message) => {
+  sendSystemMessage(message);
+  sendMemo(message);
+};
+
+/**
+ * Sends a socket message as a system message
+ * @params {string} message - message to send
+ */
+const sendSystemMessage = (game, message) =>
+  game.io.emit('action', actionCreators.createMemoAction(message));
+
+/**
+ * Sends a socket message as a memo message
+ * @params {string} message - message to send
+ */
+const sendMemoMessage = (game, message) => 
+  game.io.emit('action', actionCreators.createMemoMessageAction(message));
+
+/**
+ * TODO: change me to match my friends :-)
+ */
+const disseminateChange = (type, game) =>
+  sendGameChange.modifyClientGameState(type, game);
 
 module.exports = {
-  /**
-   * Handles the addition of a player to a selected game
-   * @params {object} - a instance of the Games collection
-   * @params {object} - an instance of the User model
-   */
-  handlePlayerJoin: (gamesCollection, user, gameId) => {
-    const game = gameId ? this.retrieve(gamesCollection, gameId) : gamesCollection.getNextOpenGame();
-    game.addPlayer(user);
-    game.on('newPrompt', this.disseminateChange);
-    game.on('newDealer', this.disseminateChange);
-    game.on('playerChange', this.disseminateChange);
-    return game;
-  },
-  /**
-   * Handles a player leaving a game
-   * @params {object} - a instance of the Games collection
-   * @params {string} - a game ID
-   * @params {object} - an instance of the User model
-   */
-  handlePlayerLeave: (gamesCollection, gameId, userId) => (
-    gamesCollection.retrieve(gameId).removePlayer(userId)
-  ),
-  /**
-   * Handles a user wanting to play a game. If there are available games,
-   the user will be added to an ongoing game. A new game will be created
-   * for the user otherwise.
-   * @params {object} - a instance of the Games collection
-   * @params {object} - an instance of the User model
-   */
-  play: (gamesCollection, callback) => {
-    if (!gamesCollection.openGames.length) {
-      return callback(gamesCollection.createGame());
-    }
-    return callback(gamesCollection.getNextOpenGame());
-  },
-  /**
-   * Handles the judgement of a player's guesses.
-   * Returns true for correct guesses, false for incorect guesses.
-   * @params {object} - a instance of the Games collection
-   * @params {object} - an instance of the User model
-   */
-  handleGuess: (gamesCollection, gameId, message) => (
-    gamesCollection.retrieve(gameId).checkGuess(message)
-  ),
-
-  retrieve: (gamesCollection, gameId) => (
-    gamesCollection.retrieve(gameId)
-  ),
-
-  disseminateChange: (type, game) => {
-    sendGameChange.modifyClientGameState(type, game);
-  },
+  handlePlayerJoin,
+  handlePlayerLeave,
+  play,
+  handleGuess,
+  retrieve,
+  sendNotification,
+  sendSystemMessage,
+  sendMemoMessage,
+  disseminateChange
 };
 
