@@ -94,7 +94,7 @@ class Game {
 
   /**
    * Triggers a callback associated with a given event
-   * @param {string} - an event name
+   * @param {string} event - an event name
    */
   trigger(event, ...args) {
     if (this.events[event]) {
@@ -124,9 +124,11 @@ class Game {
 
   /**
    * Removes a player from the game
-   * @params {number} - a user ID
+   * @params {number} userId - a user ID
    */
   removePlayer(userId) {
+    const user = this.players.all[userId];
+    this.trigger('playerLeave', 'playerLeave', this, user);
     this.players.byId.splice(this.players.byId.indexOf(userId), 1);
     delete this.players.all[userId];
     this.updateOpenSeats();
@@ -138,7 +140,7 @@ class Game {
 
   /**
    * Adds a player to the game
-   * @params {object} - a user model
+   * @params {object} user - a user model
    */
   addPlayer(user) {
     if (this.players.byId.length < settings.maxPlayers) {
@@ -147,6 +149,7 @@ class Game {
     } else {
       console.log('Error: Game full');
     }
+    this.trigger('playerJoin', 'playerJoin', this, user);
     this.updateOpenSeats();
     if (!this.active && this.players.byId.length >= settings.minPlayers) {
       this.active = true;
@@ -171,10 +174,11 @@ class Game {
 
   /**
    * Checks messages for correct guesses
-   * @params {object} - an object containing a message and a reference to the sender
+   * @params {object} message - an object containing a message and a reference to the sender
    */
   checkGuess(message) {
-    if (utils.simplifyString(message) === this.prompt.forMatching) {
+    if (utils.simplifyString(message).indexOf(this.prompt.forMatching) !== -1) {
+      this.trigger('playerWon', 'playerWon', this, this.players.all[message.userId]);
       return this.newDealer(message.userId);
     }
     return false;
@@ -182,14 +186,16 @@ class Game {
 
   /**
    * Assigns the next dealer as the correct guesser
-   * @params {string} - the user id of the next dealer
+   * @params {number} userId - the user id of the next dealer
    */
   newDealer(userId) {
     this.dealerId = userId || this.players[random(1, this.players.length) - 1];
-    this.trigger('newDealer', 'newDealer', this);
+    let user = this.players.all[this.dealerId];
+    this.trigger('newDealer', 'newDealer', this, user);
     this.getPrompt();
     return this;
   }
+
 };
 
 module.exports = Game;
