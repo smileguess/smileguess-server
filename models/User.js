@@ -1,6 +1,6 @@
 const Chance = require('chance');
 const chance = new Chance();
-const utils = require('../utils');
+const utils = require('../controllers/utils');
 
 
 /**
