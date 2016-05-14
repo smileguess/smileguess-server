@@ -1,9 +1,7 @@
 const onConnect = require('../sockets/onConnect.js');
 const onDisconnect = require('../sockets/onDisconnect.js');
-const sendGuessMessage = require('../sockets/sendGuessMessage.js');
-const sendClueMessage = require('../sockets/sendClueMessage.js');
-const sendPlayerJoinGame = require('../sockets/sendPlayerJoinGame.js');
-// const sendPrompt = require('../sockets/sendPrompt');
+const joinGame = require('../sockets/joinGame.js');
+
 
 module.exports = (io, db) => {
   io.on('connection', (socket) => {
@@ -18,9 +16,7 @@ module.exports = (io, db) => {
         case 'server/sendClueMessage':
           return sendClueMessage(io, socket, action);
         case 'server/joinGame':
-          return sendPlayerJoinGame(io, socket, action, db);
-        case 'server/sendPrompt':
-          // return sendPrompt(io, socket, action);
+          return joinGame(io, socket, action, db);
         default:
           return null;
       }

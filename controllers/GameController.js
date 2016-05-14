@@ -6,8 +6,13 @@ module.exports = {
    * @params {object} - a instance of the Games collection
    * @params {object} - an instance of the User model
    */
-  handlePlayerJoin: (gamesCollection, user) => {
-    return gamesCollection.getNextOpenGame().addPlayer(user)
+  handlePlayerJoin: (gamesCollection, user, gameId) => {
+    const game = gameId ? this.retrieve(gamesCollection, gameId) : gamesCollection.getNextOpenGame();
+    game.addPlayer(user);
+    game.on('newPrompt', this.disseminateChange);
+    game.on('newDealer', this.disseminateChange);
+    game.on('playerChange', this.disseminateChange);
+    return game;
   },
   /**
    * Handles a player leaving a game
