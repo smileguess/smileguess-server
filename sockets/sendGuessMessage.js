@@ -1,5 +1,4 @@
 const GameController = require('../controllers/GameController');
-const sendWinner = require('./sendWinner');
 
 /**
  * This function sends a guess message to all the members of a room through sockets.
@@ -18,7 +17,7 @@ const sendWinner = require('./sendWinner');
 const sendGuessMessage = (io, socket, action, db) => {
   console.log('emitting guess message:', action);
   if (GameController.handleGuess(db.games, action.gameId, action.message)) {
-    sendWinner(io, socket, action.gameId, action.username, action.newDealer);
+    //sendWinner(io, socket, action.gameId, action.username, action.newDealer);
   }
   io.to(action.gameId).emit('action', {
     type: 'SOCKET_GUESS_MESSAGE',
