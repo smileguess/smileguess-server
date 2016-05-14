@@ -38,9 +38,9 @@ const play = (gamesCollection, callback) => {
       disseminateChange, 
       (type, game, user) => sendNotification(`${user.username} is the new dealer`)
     );
-    game.on('playerLeave', (type, game, user) => sendNotification(game, `${user.username} has left the game`));
-    game.on('playerJoin', (type, game, user) => sendNotification(game, `${user.username} has joined the game`));
-    game.on('playerWon', (type, game, user) => sendNotification(game, `${user.username} has won the game!`));
+    game.on('playerLeave', (type, thisGame, user) => sendNotification(thisGame, `${user.username} has left the game`));
+    game.on('playerJoin', (type, thisGame, user) => sendNotification(thisGame, `${user.username} has joined the game`));
+    game.on('playerWon', (type, thisGame, user) => sendNotification(thisGame, `${user.username} has won the game!`));
 
   } else {
     game = gamesCollection.getNextOpenGame();
@@ -60,27 +60,29 @@ const retrieve = (gamesCollection, gameId) =>
   gamesCollection.retrieve(gameId);
 
 /**
- * Sends a socket message as both a message and a memo
- * @params {string} message - message to send
- */
-const sendNotification = (game, message) => {
-  sendSystemMessage(message);
-  sendMemo(message);
-};
-
-/**
  * Sends a socket message as a system message
  * @params {string} message - message to send
  */
-const sendSystemMessage = (game, message) =>
+const sendSystemMessage = (game, message) => {
   game.io.emit('action', actionCreators.createMemoAction(message));
+}
 
 /**
  * Sends a socket message as a memo message
  * @params {string} message - message to send
  */
-const sendMemoMessage = (game, message) => 
-  game.io.emit('action', actionCreators.createMemoMessageAction(message));
+const sendMemoMessage = (game, message) => {
+  game.io.emit('action', actionCreators.createMemoAction(message));
+  }
+/**
+ * Sends a socket message as both a message and a memo
+ * @params {string} message - message to send
+ */
+const sendNotification = (game, message) => {
+  sendSystemMessage(game, message);
+  sendMemoMessage(game, message);
+};
+
 
 /**
  * TODO: change me to match my friends :-)

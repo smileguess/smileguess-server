@@ -1,6 +1,5 @@
 const reporter = require('./support/reporter');
 const request = require('request');
-const User = require('../models/User');
 const Users = require('../collections/Users');
 const Games = require('../collections/Games.js');
 const GameController = require('../controllers/GameController');
@@ -14,7 +13,6 @@ const ioCreate = require('socket.io');
 jasmine.getEnv().addReporter(reporter);
 
 const serverURL = 'http://127.0.0.1:1234';
-const joinOrStartGameURL = 'http://127.0.0.1:1234/api/game/';
 
 let testDb = {
   games: new Games(ioCreate.listen(server)),
@@ -58,7 +56,7 @@ describe('Models, Collections and Controllers: ', () => {
   describe('User Model', () => {
     it('will correctly instantiate a new user', () => {
       expect(testDb.users.createUser('hypotheticalDeviceId').userId).toBe(1);
-      expect(UserController.getUser(testDb.users, 1).username).not.toBe(undefined);
+      expect(UserController.get(testDb.users, 1).username).not.toBe(undefined);
     });
   });
 
@@ -192,7 +190,7 @@ describe('Models, Collections and Controllers: ', () => {
     });
     it('will create a new game if no seats are available', () => {
       GameController.play(testDb.games, (game) => {
-        testUtils.populateNextOpenGameWithPlayers(testDb, 1);
+        testUtils.populateNextOpenGameWithPlayers(testDb, 1, null);
         expect(game.players.byId[0]).toEqual(1);
       });
     });
