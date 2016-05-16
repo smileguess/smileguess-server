@@ -1,7 +1,8 @@
-const onConnect = require('../sockets/onConnect.js');
-const onDisconnect = require('../sockets/onDisconnect.js');
-const sendMessage = require('../sockets/sendMessage.js');
-const joinGame = require('../sockets/joinGame.js');
+const onConnect = require('../sockets/onConnect');
+const onDisconnect = require('../sockets/onDisconnect');
+const sendMessage = require('../sockets/sendMessage');
+const joinGame = require('../sockets/joinGame');
+const messageController = require('../controllers/messageController');
 
 module.exports = (io, db) => {
   io.on('connection', (socket) => {
@@ -12,7 +13,7 @@ module.exports = (io, db) => {
     socket.on('action', (action) => {
       switch (action.type) {
         case 'server/sendMessage':
-          return sendMessage(io, socket, action, db);
+          return messageController.send(action.gameId, actionCreators.createMessageAction(action));
         case 'server/joinGame':
           return joinGame(io, socket, action, db);
         default:

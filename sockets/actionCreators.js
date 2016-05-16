@@ -39,12 +39,16 @@ const createMemoAction = (message) => {
   };
 };
 
-const createSystemMessageAction = (message) => {
+const createMessageAction = (details) => {
   return {
-    type: 'UPDATE_MESSAGE_STATE',
-    payload: message,
+    type: 'ADD_MESSAGE',
+    payload: messageController.create(details),
   };
 };
+
+const createPlayerMessageAction = (details) => {
+
+}
 
 module.exports = {
   createMemoAction,
