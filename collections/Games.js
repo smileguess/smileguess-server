@@ -34,11 +34,11 @@ module.exports = class Games {
    */
   createGame() {
     const gameId = this.generateGameId();
-    const newGame = new Game(gameId, this.io);
-    newGame.on('empty', this.destroy.bind(this));
-    newGame.on('full', this.moveToFullGames.bind(this));
-    newGame.on('nowAvailable', this.moveToOpenGames.bind(this));
-    newGame.on('playerChange', this.updateQueue.bind(this));
+    const newGame = new Game(gameId, this.io)
+      .on('empty', this.destroy.bind(this))
+      .on('full', this.moveToFullGames.bind(this))
+      .on('nowAvailable', this.moveToOpenGames.bind(this))
+      .on('playerChange', this.updateQueue.bind(this));
     this.insert(newGame);
     return newGame;
   }

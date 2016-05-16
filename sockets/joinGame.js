@@ -12,8 +12,8 @@ const joinGame = (io, socket, action, db) => {
   if (!user) {
     user = UserController.create(null, null, db.users);
   }
-  user.socket = socket;
   socket.join(action.gameId);
+  UserController(user, socket);
   return GameController.handlePlayerJoin(db.games, user);
 };
 
