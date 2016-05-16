@@ -13,7 +13,7 @@ const joinGame = (io, socket, action, db) => {
     user = UserController.create(null, null, db.users);
   }
   socket.join(action.gameId);
-  UserController(user, socket);
+  UserController.connect(user, socket);
   return GameController.handlePlayerJoin(db.games, user);
 };
 

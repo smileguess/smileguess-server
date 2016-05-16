@@ -6,9 +6,10 @@ const categoriesAndPrompts = {
 };
 const promptsForDisplay = [];
 const simplifiedPrompts = [];
+const categories = Object.keys(categoriesAndPrompts);
 
 let categoryCount = 0;
-Object.keys(categoriesAndPrompts).forEach((category) => {
+categories.forEach((category) => {
   simplifiedPrompts.push(category);
   simplifiedPrompts[categoryCount] = categoriesAndPrompts[category].split(',').map((prompt) =>
     utils.simplifyString(prompt));
@@ -18,6 +19,7 @@ Object.keys(categoriesAndPrompts).forEach((category) => {
 });
 
 module.exports = {
+  categories,
   promptsForDisplay,
   simplifiedPrompts,
 };

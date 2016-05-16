@@ -15,8 +15,8 @@ const Users = require('../collections/Users');
 const UserController = require('../controllers/UserController');
 const Games = require('../collections/Games');
 
-const users = server.db.users;
-const games = server.db.games;
+// const users = server.db.users;
+// const games = server.db.games;
 
 // Instantiate a user for testing
 testUtils.sendUserRequest(null, (err, res, body) => {
@@ -24,10 +24,10 @@ testUtils.sendUserRequest(null, (err, res, body) => {
   console.log('testUser', testUser);
   testUtils.sendPlayRequest(null, (err, res, body) => {
     let testGame = JSON.parse(body);
-    console.log('testGame', testGame);
-    console.log('open games', games.openGames);
-    console.log(users);
-    console.log(games);
+    // console.log('testGame', testGame);
+    // console.log('open games', games.openGames);
+    // console.log(users);
+    // console.log(games);
   });
 });
 // Instantiate a game for testing
@@ -62,7 +62,7 @@ let socket;
 //   });
 // });
 
-describe('Game notifications', () => {
+xdescribe('Game notifications', () => {
   beforeEach(() => {
     socket = io.connect(serverURL, {
       'reconnection delay': 0,

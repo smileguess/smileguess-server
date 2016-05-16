@@ -1,6 +1,4 @@
-const Messages = require('../collections/Messages');
-
-const create = (details) => {
+const create = (details, messageCollection) => {
   if (!details.type) {
     if (Array.isArray(details.message)) {
       details.type = 'clue';
@@ -8,11 +6,15 @@ const create = (details) => {
       details.type = 'guess';
     }
   }
-  return Messages.create(details);
+  return messageCollection.create(details);
 };
 
-const send = (gameId, messageAction) => {
-  game.io.to(gameId).emit('action', messageAction);
+const send = (game, messageAction) => {
+  game.io.to(game.id).emit('action', messageAction);
 };
 
-module.exports = create, send;
+module.exports = {
+  create,
+  send
+};
+
