@@ -42,6 +42,13 @@ describe('Server Functions', () => {
         done();
       });
     });
+    it('will respond with a user instance', (done) => {
+      testUtils.sendUserRequest(null, (err, res, body) => {
+        const user = JSON.parse(body);
+        expect(user.hasOwnProperty('userId')).toBe(true);
+        done();
+      });
+    });
   });
 });
 

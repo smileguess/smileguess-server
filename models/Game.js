@@ -90,6 +90,7 @@ class Game {
   on(event, ...args) {
     this.events[event] = this.events[event] || [];
     args.forEach(callback => this.events[event].push(callback));
+    return this;
   }
 
   /**

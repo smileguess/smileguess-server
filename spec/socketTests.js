@@ -1,72 +1,120 @@
-const reporter = require('./support/reporter');
-const io = require('socket.io-client');
-const serverURL = 'http://127.0.0.1:1234';
+// const GameController = require('../controllers/GameController');
+// const User = require('../models/User');
+// const settings = require('../config/gameSettings');
 const testUtils = require('./testUtils');
+
+// const express = require('express');
+const serverURL = 'http://127.0.0.1:1234';
+// const ioCreate = require('socket.io');
+const io = require('socket.io-client');
 const joinGame = require('../sockets/joinGame');
-const User = require('../models/User');
+// const testApp = express();
+const server = require('../server.js');
+
 const Users = require('../collections/Users');
+const UserController = require('../controllers/UserController');
 const Games = require('../collections/Games');
-const settings = require('../config/gameSettings');
-const testUser1 = new User('testUser1ID');
-const GameController = require('../controllers/GameController');
-const request = require('request');
-let testUser = {};
-let testGame = {};
 
-// Instantiate a game for testing
-testUtils.sendPlayRequest(null, (body) => {
-  testGame = body;
-});
+const users = server.db.users;
+const games = server.db.games;
+
 // Instantiate a user for testing
-testUtils.sendUserRequest(null, (body) => {
-  testUser = body;
+testUtils.sendUserRequest(null, (err, res, body) => {
+  let testUser = JSON.parse(body);
+  console.log('testUser', testUser);
+  testUtils.sendPlayRequest(null, (err, res, body) => {
+    let testGame = JSON.parse(body);
+    console.log('testGame', testGame);
+    console.log('open games', games.openGames);
+    console.log(users);
+    console.log(games);
+  });
 });
+// Instantiate a game for testing
 
-describe('Socket responder functions', () => {
-  beforeEach((done) => {
+let socket;
+
+// describe('Socket responder functions', () => {
+//   beforeEach(() => {
+//     socket = io.connect(serverURL, {
+//       'reconnection delay': 0,
+//       'reopen delay': 0,
+//       'force new connection': true,
+//     });
+//   });
+//   describe('join game socket room', () => {
+//     const label = 'joinGame';
+//     it('should be a function', () => {
+//       expect(typeof joinGame).toBe('function');
+//     });
+//     it('should impart users with socket objects', (done) => {
+//       socket.emit('action', {
+//         type: `server/${label}`,
+//         userId: 1,
+//         gameId: 1,
+//       });
+//       setTimeout(() => {
+//         console.log(UserController.get(users, 1));
+//         expect(UserController.get(users, 1).socket).not.toBe(null);
+//         done();
+//       }, 500);
+//     });
+//   });
+// });
+
+describe('Game notifications', () => {
+  beforeEach(() => {
     socket = io.connect(serverURL, {
       'reconnection delay': 0,
       'reopen delay': 0,
       'force new connection': true,
     });
-    socket.on('connect', () => {
-      socket.emit('action', {
-        type: 'server/joinGame',
-        gameId: 1,
-        userId: 1,
-      });
-      done();
-    });
   });
+  const label = 'sendMemo';
+  it('should be a function', () => {
+    expect(typeof joinGame).toBe('function');
+  });
+  it('should impart users with socket objects', (done) => {
+    socket.emit('action', {
+      type: `server/${label}`,
+      userId: 1,
+      gameId: 1,
+    });
+    setTimeout(() => {
+      console.log(UserController.get(users, 1));
+      expect(UserController.get(users, 1).socket).not.toBe(null);
+      done();
+    }, 500);
+  });
+});
+
+
+
+// let testUser = {};
+// let testGame = {};
+
+
+
+
+// Wills before each fucntion body
+/*
+    // socket = io.connect(serverURL, {
+    //   'reconnection delay': 0,
+    //   'reopen delay': 0,
+    //   'force new connection': true,
+    // });
+    // socket.on('connect', () => {
+    //   socket.emit('action', {
+    //     type: 'server/joinGame',
+    //     gameId: 1,
+    //     userId: 1,
+    //   });
+      // done();
 
   // afterEach((done) => {
   //   socket.disconnect();
   //   done();
-  });
-  describe('join game socket room', () => {
-    expect(UserController.get(db.users, 1).socket).not.toBe(undefined);
-    let label = 'joinGame';
-    it('should be a function', () => {
-      expect(typeof joinGame).toBe('function');
-    });
-    // it('should impart users with socket objects')
-//     xit('should respond with an action called ' + actionType, (done) => {
-//       socket.on('action', (response) => {
-//         console.log(response);
-//         if (response.type === actionType) {
-//           expect(response.type).toBe(actionType);
-//           expect(response.message).toBe('testGuessMessage');
-//           done();
-//         }
-//       });
-      socket.emit('action', {
-        type: 'server/' + label,
-        userId: 1,
-        gameId: 1,
-      });
-  });
-//     });
-//   });
+  */
 
 //   describe('sendClueMessage', () => {
 //     let actionType = 'SOCKET_CLUE_MESSAGE'

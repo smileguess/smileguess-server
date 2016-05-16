@@ -1,4 +1,4 @@
-const dummy = require('./dummySocketData.js');
+const messageController = require('../controllers/messageController');
 
 /**
  * This function sends a clue message to all the members of a room through sockets.
@@ -7,20 +7,29 @@ const dummy = require('./dummySocketData.js');
  * @param {Object} socket - the users socket connection
  * @param {Object} action - the action passed to the server from the client
  * @example <caption>The action emitted:</caption>
+ *
+ * Example action received from the client:
  * let action = {
- *   type: 'SOCKET_CLUE_MESSAGE',
- *   userid: 5,
- *   message: '📵🐓 🌸',
- * };
+ *   type: ,
+ *   userId: 6,
+ *   body: 'home on the range',
+ * }
+ *
+ * Example response sent to all clients in the game:
+ * let action = {
+    type: 'UPDATE_MESSAGE_STATE',
+    payload: {
+      id: 289,
+      time: action.time,
+      userId: action.userId,
+      type: messageType,
+      message: action.message,
+    }, * };
  */
-const sendClueMessage = (io, socket, action) => {
+
+const sendMessage = (io, socket, action) => {
   console.log('sending clue message. action:', action);
-  io.to(action.gameId).emit('action', {
-    type: 'SOCKET_CLUE_MESSAGE',
-    userid: action.userId,
-    message: action.message,
-  });
+  io.to(action.gameId).emit('action', messageController.create(action));
 };
 
-module.exports = sendClueMessage;
-
+module.exports = sendMessage;
