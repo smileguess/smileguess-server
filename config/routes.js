@@ -21,9 +21,9 @@ module.exports = (app, db) => {
   });
 
   app.get('/api/user/:deviceId', (req, res) => {
-    UserController.newUser(req, res, db.users, (user) => {
+    UserController.create(req, res, db.users, (user) => {
       res.json({
-        userId: user.userId,
+        id: user.userId,
         username: user.username,
         points: user.points,
         wins: user.wins,
