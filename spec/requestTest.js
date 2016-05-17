@@ -15,8 +15,8 @@ const sendNewOrRandomGameRequest = (deviceId, requestOptions) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(body);
-      console.log('open games ', Games.openGames);
+      // console.log(body);
+      // console.log('open games ', Games.openGames);
     }
   });
 };
