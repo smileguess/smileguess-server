@@ -1,9 +1,11 @@
 const Game = require('../models/Game');
-module.exports = class Games {
-  /**
-  * Creates a collection of games
-  */
-  constructor(io) {
+const Messages = require('../collections/Messages.js');
+
+/**
+ * TODO: Document games collection
+ */
+class Games {
+  constructor(io, messages) {
     /**
     * Map for storing game instances, referenced by game ID
     * @type {map}
@@ -25,6 +27,7 @@ module.exports = class Games {
     */
     this.allTimeGameCount = 0;
 
+    this.messages = new Messages();
 
     this.io = io;
   }
@@ -130,3 +133,6 @@ module.exports = class Games {
     return this.retrieve(this.openGames[this.openGames.length - 1]);
   }
 };
+
+module.exports = Games;
+

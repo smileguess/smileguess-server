@@ -17,7 +17,7 @@ const handlePlayerJoin = (gamesCollection, user, gameId) => (
  * TODO: change me to match my friends :-)
  */
 const disseminateChange = (type, game) =>
-  sendGameChange.modifyClientGameState(type, game);
+  sendGameChange(type, game);
 /**
  * Handles a player leaving a game
  * @params {object} - a instance of the Games collection
@@ -32,12 +32,12 @@ const handlePlayerLeave = (gamesCollection, gameId, userId) => (
  * Sends a socket message as a system message
  * @params {string} message - message to send
  */
-const sendSystemMessage = (game, body) => {
+const sendSystemMessage = (game, body, messageCollection) => {
   const details = {
     type: 'system',
     body,
   };
-  messageController.send(game.gameId, actionCreators.createSystemMessageAction(details));
+  messageController.send(game, actionCreators.createMessageAction(details, messageCollection));
 };
 
 /**
@@ -51,8 +51,9 @@ const sendMemo = (game, message) =>
  * Sends a socket message as both a message and a memo
  * @params {string} message - message to send
  */
-const sendNotification = (game, message) => {
-  sendMemo(game, message);
+const sendMemoAndSystemMessage = (game, message, messageCollection) => {
+  sendMemo(game, message, messageCollection);
+  sendSystemMessage(game, message, messageCollection);
 };
 
 /**
@@ -62,19 +63,19 @@ const sendNotification = (game, message) => {
  * @params {object} - a instance of the Games collection
  * @params {object} - an instance of the User model
  */
-const play = (gamesCollection, callback) => {
+const play = (games, callback) => {
   let game;
-  if (!gamesCollection.openGames.length) {
-    game = gamesCollection.createGame()
+  if (!games.openGames.length) {
+    game = games.createGame()
       .on('newPrompt', disseminateChange)
       .on('newDealer',
         disseminateChange,
-        (type, thisGame, user) => sendSystemMessage(game, `${user.username} is the new dealer`))
-      .on('playerLeave', (type, thisGame, user) => sendSystemMessage(game, `${user.username} has left the game`))
-      .on('playerJoin', (type, game, user) => sendSystemMessage(game, `${user.username} has joined the game`))
-      .on('playerWon', (type, game, user) => sendSystemMessage(game, `${user.username} has won the game!`));
+        (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} is the new dealer`, games.messages))
+        .on('playerLeave', (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} has left the game`, games.messages))
+        .on('playerJoin', (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} has joined the game`, games.messages))
+        .on('playerWon', (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} has won the game!`, games.messages));
   } else {
-    game = gamesCollection.getNextOpenGame();
+    game = games.getNextOpenGame();
   }
   return callback(game);
 };
@@ -88,16 +89,15 @@ const play = (gamesCollection, callback) => {
 const handleGuess = (gamesCollection, gameId, message) =>
   gamesCollection.retrieve(gameId).checkGuess(message);
 
-
 module.exports = {
   handlePlayerJoin,
   handlePlayerLeave,
   play,
   handleGuess,
   retrieve,
-  sendNotification,
+  sendMemoAndSystemMessage,
   sendSystemMessage,
-  sendMemoMessage,
+  sendMemo,
   disseminateChange,
 };
 

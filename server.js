@@ -23,5 +23,5 @@ if (!module.parent) {
 }
 
 module.exports = {
-  io, db,
+  io,
 };

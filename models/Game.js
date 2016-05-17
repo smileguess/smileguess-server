@@ -79,7 +79,7 @@ class Game {
      * The io object used for sending socket messages to this game
      * @type {object}
      */
-    this.io = io.to(this.id);
+    this.io = io.to(gameId);
 
   }
   /**
@@ -167,6 +167,7 @@ class Game {
   getPrompt() {
     const categoryNumber = random(0, prompts.promptsForDisplay.length - 1);
     const solutionNumber = random(0, prompts.promptsForDisplay[categoryNumber].length - 1);
+    this.prompt.category = prompts.categories[categoryNumber];
     this.prompt.forDisplay = prompts.promptsForDisplay[categoryNumber][solutionNumber];
     this.prompt.forMatching = prompts.simplifiedPrompts[categoryNumber][solutionNumber];
     this.trigger('newPrompt', 'newPrompt', this);
@@ -190,10 +191,10 @@ class Game {
    * @params {number} userId - the user id of the next dealer
    */
   newDealer(userId) {
-    this.dealerId = userId || this.players[random(1, this.players.length) - 1];
+    this.dealerId = userId || this.players.byId[random(1, this.players.byId.length) - 1];
     let user = this.players.all[this.dealerId];
-    this.trigger('newDealer', 'newDealer', this, user);
     this.getPrompt();
+    this.trigger('newDealer', 'newDealer', this, user);
     return this;
   }
 

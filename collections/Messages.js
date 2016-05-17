@@ -7,7 +7,7 @@ class Messages {
 
   create(details) {
     const message = new Message(details);
-    message.payload.id = ++this.count;
+    message.id = ++this.count;
     return message;
   }
 }
