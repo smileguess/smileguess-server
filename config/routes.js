@@ -17,7 +17,6 @@ module.exports = (app, db) => {
         },
         active: game.active,
       };
-      console.log(myObj);
       res.json(myObj);
     });
   });

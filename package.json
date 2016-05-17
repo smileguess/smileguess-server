@@ -8,6 +8,9 @@
     "start": "node server.js",
     "docs": "esdoc -c docs/esdoc.json"
   },
+  "engines": {
+    "node": "6.1.0"
+  },
   "babel": {
     "presets": [
       "es2015",
