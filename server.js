@@ -1,8 +1,10 @@
 const express = require('express');
+const morgan = require('morgan');
 const Games = require('./collections/Games');
 const Users = require('./collections/Users');
 const ioCreate = require('socket.io');
 const app = express();
+app.use(morgan('combined'));
 const server = require('http').createServer(app);
 const io = ioCreate.listen(server);
 

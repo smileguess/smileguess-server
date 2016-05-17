@@ -4,7 +4,7 @@ const UserController = require('../controllers/UserController');
 module.exports = (app, db) => {
   app.get('/api/game/', (req, res) => {
     GameController.play(db.games, (game) => {
-      res.json({
+      const myObj = {
         id: game.id,
         players: {
           all: game.players.all,
@@ -16,7 +16,9 @@ module.exports = (app, db) => {
           forDisplay: game.prompt.forDisplay,
         },
         active: game.active,
-      });
+      };
+      console.log(myObj);
+      res.json(myObj);
     });
   });
 

@@ -1,5 +1,3 @@
-const messageController = require('../controllers/messageController.js');
-
 const createGameChangeAction = (event, game) => {
   const actionType = 'UPDATE_GAME_STATE';
   const gameActions = {
@@ -33,30 +31,31 @@ const createGameChangeAction = (event, game) => {
   };
   return gameActions[event];
 };
+exports.createGameChangeAction = createGameChangeAction;
 
 const createMemoAction = (message) => {
   return {
     type: 'GAME_MEMO',
-    payload: message,
+    payload: {
+      body: message,
+    },
   };
 };
+exports.createMemoAction = createMemoAction;
 
 const createMessageAction = (details, messageCollection) => {
   return {
     type: 'ADD_MESSAGE',
-    payload: messageController.create(details, messageCollection),
+    payload: messageCollection.create(details, messageCollection),
   };
 };
+exports.createMessageAction = createMessageAction;
 
-const createPlayerMessageAction = (details) => {
-
-}
-
-module.exports = {
-  createMemoAction,
-  createMessageAction,
-  createGameChangeAction,
-};
+// module.exports = {
+//   createMemoAction,
+//   createMessageAction,
+//   createGameChangeAction,
+// };
 
 // UPDATE_MESSAGE_STATE
 // UPDATE_GAME_STATE
