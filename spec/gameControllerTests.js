@@ -26,7 +26,7 @@ describe('Game Controller', () => {
   });
   it('will place users in the game at front of queue', () => {
     GameController.handlePlayerJoin(games, new User(1, 'fake-device-id'), testGame1.id);
-    expect(testGame1.players.all[1].userId).toBe(1);
+    expect(testGame1.players.all[1].id).toBe(1);
   });
   it('will create a new game if no seats are available', (done) => {
     let id = 9;

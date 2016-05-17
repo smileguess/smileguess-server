@@ -24,7 +24,7 @@ describe('Game model', () => {
     expect(game.trigger.calls.all().filter((call) => call.args[0] === 'playerJoin')).toBeTruthy();
     expect(game.trigger.calls.all().filter((call) => call.args[0] === 'playerChange')).toBeTruthy();
     expect(game.seatsOpen).toBe(maxSeats - 1);
-    expect(game.players.all[1]).toBe(user);
+    expect(game.players.all[1]).toEqual(user.summary());
     expect(game.players.byId.length).toBe(1);
   });
   it('can remove a user', () => {
@@ -38,15 +38,16 @@ describe('Game model', () => {
     expect(game.players.byId.length).toBe(0);
   });
   it('should get a prompt with getPrompt', () => {
-    spyOn(game, 'trigger').and.callThrough();
-    expect(game.prompt.category).toBeNull();
-    expect(game.prompt.forDisplay).toBeNull();
-    expect(game.prompt.forMatching).toBeNull();
-    expect(game.getPrompt()).toBe(game);
-    expect(game.trigger.calls.all().filter((call) => call.args[0] === 'newPrompt')).toBeTruthy();
-    expect(game.prompt.category).toBeTruthy();
-    expect(game.prompt.forDisplay).toBeTruthy();
-    expect(game.prompt.forMatching).toBeTruthy();
+    const game2 = new Game(2, ioCreate.listen(server));
+    spyOn(game2, 'trigger').and.callThrough();
+    expect(game2.prompt.category).toBeNull();
+    expect(game2.prompt.forDisplay).toBeNull();
+    expect(game2.prompt.forMatching).toBeNull();
+    expect(game2.getPrompt()).toBe(game2);
+    expect(game2.trigger.calls.all().filter((call) => call.args[0] === 'newPrompt')).toBeTruthy();
+    expect(game2.prompt.category).toBeTruthy();
+    expect(game2.prompt.forDisplay).toBeTruthy();
+    expect(game2.prompt.forMatching).toBeTruthy();
   });
   it('should check a guess with checkGuess', () => {
     spyOn(game, 'trigger').and.callThrough();

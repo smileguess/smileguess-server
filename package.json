@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "node server.js & sleep 5 && jasmine && pgrep node | tail -n 1 | xargs kill -9",
+    "test": "jasmine",
     "start": "node server.js",
     "docs": "esdoc -c docs/esdoc.json"
   },
