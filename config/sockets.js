@@ -13,7 +13,7 @@ module.exports = (io, db) => {
     socket.on('action', (action) => {
       switch (action.type) {
         case 'server/sendMessage':
-          return messageController.send(action.gameId, actionCreators.createMessageAction(action));
+          return fieldMessage(db.games, action);
         case 'server/joinGame':
           return joinGame(io, socket, action, db);
         default:

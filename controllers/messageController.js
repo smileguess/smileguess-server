@@ -1,20 +1,28 @@
+const gameController = require('./GameController');
+const actionCreators = require('../sockets/actionCreators');
+
 const create = (details, messageCollection) => {
-  if (!details.type) {
-    if (Array.isArray(details.message)) {
-      details.type = 'clue';
-    } else {
-      details.type = 'guess';
-    }
-  }
   return messageCollection.create(details);
 };
 
 const send = (game, messageAction) => {
-  game.io.to(game.id).emit('action', messageAction);
+  game.io.to(game.gameId).emit('action', messageAction);
+};
+
+const fieldMessage = (games, action) => {
+  if (!action.payload.type) {
+    if (Array.isArray(action.payload.message)) {
+      action.payload.type = 'clue';
+    } else {
+      action.payload.type = 'guess';
+      gameController.handleGuess(games, action.payload.gameId, action.payload.body);
+    }
+  }
+  send(gameController.retrieve(games, action.gameId), actionCreators.createMessageAction(action));
 };
 
 module.exports = {
   create,
-  send
+  send,
+  fieldMessage,
 };
-
