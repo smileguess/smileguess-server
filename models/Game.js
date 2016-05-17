@@ -146,7 +146,7 @@ class Game {
   addPlayer(user) {
     if (this.players.byId.length < settings.maxPlayers) {
       this.players.byId.push(user.userId);
-      this.players.all[user.userId] = user;
+      this.players.all[user.userId] = user.summary();
     } else {
       console.log('Error: Game full');
     }
@@ -198,7 +198,22 @@ class Game {
     return this;
   }
 
-};
+  summary() {
+    return {
+      id: this.id,
+      players: {
+        all: this.players.all,
+        byId: this.players.byId,
+      },
+      dealerId: this.dealerId,
+      prompt: {
+        category: this.prompt.category,
+        forDisplay: this.prompt.forDisplay,
+      },
+      active: this.active,
+    };
+  }
+}
 
 module.exports = Game;
 

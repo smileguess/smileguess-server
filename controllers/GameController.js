@@ -90,7 +90,6 @@ const play = (games, callback) => {
  * @params {object} - an instance of the User model
  */
 const handleGuess = (gamesCollection, gameId, message) => {
-  console.log('handleGuess input: ', message);
   gamesCollection.retrieve(gameId).checkGuess(message);
 };
 

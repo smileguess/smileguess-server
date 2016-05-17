@@ -54,6 +54,17 @@ class User {
     */
     this.picture = '';
   }
+
+  summary() {
+    return {
+      id: this.userId,
+      username: this.username,
+      points: this.points,
+      wins: this.wins,
+      emojicoins: this.emojicoins,
+      picture: this.picture,
+    };
+  }
 }
 
 module.exports = User;
