@@ -4,6 +4,7 @@ const messageController = require('./messageController');
 
 const retrieve = (gamesCollection, gameId) =>
   gamesCollection.retrieve(gameId);
+
 /**
  * Handles the addition of a player to a selected game
  * @params {object} - a instance of the Games collection
@@ -16,8 +17,7 @@ const handlePlayerJoin = (gamesCollection, user, gameId) => (
 /**
  * TODO: change me to match my friends :-)
  */
-const disseminateChange = (type, game) =>
-  sendGameChange(type, game);
+const disseminateChange = (type, game) => sendGameChange(type, game);
 /**
  * Handles a player leaving a game
  * @params {object} - a instance of the Games collection
@@ -34,8 +34,11 @@ const handlePlayerLeave = (gamesCollection, gameId, userId) => (
  */
 const sendSystemMessage = (game, body, messageCollection) => {
   const details = {
-    type: 'system',
-    body,
+    payload: {
+      type: 'system',
+      body,
+      userId: 0,
+    },
   };
   messageController.send(game, actionCreators.createMessageAction(details, messageCollection));
 };
@@ -86,8 +89,10 @@ const play = (games, callback) => {
  * @params {object} - a instance of the Games collection
  * @params {object} - an instance of the User model
  */
-const handleGuess = (gamesCollection, gameId, message) =>
+const handleGuess = (gamesCollection, gameId, message) => {
+  console.log('handleGuess input: ', message);
   gamesCollection.retrieve(gameId).checkGuess(message);
+};
 
 module.exports = {
   handlePlayerJoin,

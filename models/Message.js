@@ -2,9 +2,9 @@ class Message {
   constructor(details) {
     this.id = null;
     this.time = new Date();
-    this.userId = details.userId || 0;
-    this.type = details.type;
-    this.body = details.body;
+    this.userId = details.payload.userId || 0;
+    this.type = details.payload.type;
+    this.body = details.payload.body;
   }
 }
 

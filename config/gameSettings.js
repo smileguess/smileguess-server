@@ -3,7 +3,7 @@ const gamePlaySettings = {
   * Minimum viable numbers to start a game
   * @type {number}
   */
-  minPlayers: 3,
+  minPlayers: 1,
   /**
   * Maximum number of players allowed in a game
   * @type {number}
