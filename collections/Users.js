@@ -9,6 +9,7 @@ class Users {
   */
   constructor() {
     this.users = new Map();
+    this.usersBySocketId = new Map();
     this.totalUsersCreated = 0;
   }
   /**
@@ -20,6 +21,11 @@ class Users {
     this.addUserToCollection(newUser);
     return newUser;
   }
+
+  mapUserIdToSocketId(socketId, userId) {
+    this.usersBySocketId.set(socketId, userId);
+  }
+
   /**
   * Inserts users into the collection
   * @params {object} - a User instance
@@ -42,6 +48,11 @@ class Users {
   */
   getOne(userId) {
     return this.users.get(userId);
+  }
+
+  getBySocketId(socketId) {
+    console.log('Users by socket Id:', this.usersBySocketId);
+    return this.usersBySocketId.get(socketId);
   }
 }
 

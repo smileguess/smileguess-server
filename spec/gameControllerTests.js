@@ -7,6 +7,7 @@ const settings = require('../config/gameSettings');
 const Games = require('../collections/Games.js');
 const User = require('../models/User.js');
 const GameController = require('../controllers/GameController.js');
+const Users = require('../collections/Users');
 
 describe('Game Controller', () => {
   const games = new Games(ioCreate.listen(server));
@@ -43,16 +44,25 @@ describe('Game Controller', () => {
     });
   });
   it('will remove a player from a game', () => {
-    GameController.handlePlayerJoin(games, new User(2, 'fake-device-id-2'), testGame2.id);
-    GameController.handlePlayerJoin(games, new User(3, 'fake-device-id-2'), testGame2.id);
+    const db = {
+      games,
+      users: new Users(),
+    }
+    GameController.handlePlayerJoin(db.games, db.users.createUser('fake-device-id-2'), testGame2.id).socket = null;
+    GameController.handlePlayerJoin(db.games, db.users.createUser('fake-device-id-3'), testGame2.id).socket = null;
     const numPlayers = testGame1.players.byId.length;
-    GameController.handlePlayerLeave(games, 2, 2);
+    GameController.handlePlayerLeave(db, 2, 2);
     expect(testGame2.players.byId.length).toBe(1);
   });
   it('will destroy the game if all players leave', () => {
-    GameController.handlePlayerLeave(games, 2, 3);
-    expect(games.openGames.length).toEqual(0);
-    expect(games.retrieve(games.openGames[0])).toBe(undefined);
+    const db = {
+      games,
+      users: new Users(),
+    }
+    GameController.handlePlayerJoin(db.games, db.users.createUser('fake-device-id-2'), testGame2.id).socket = null;
+    GameController.handlePlayerLeave(db, 2, 1);
+    expect(db.games.openGames.length).toEqual(0);
+    expect(db.games.retrieve(db.games.openGames[0])).toBe(undefined);
   });
 });
 

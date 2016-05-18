@@ -15,6 +15,7 @@ class Games {
     * Collection of game ID's that are not available to join
     * @type {number[]}
     */
+
     this.fullGames = [];
     /**
     * Queue of game ID's that are available to join

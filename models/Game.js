@@ -193,10 +193,14 @@ class Game {
    * @params {number} userId - the user id of the next dealer
    */
   newDealer(userId) {
-    this.dealerId = userId || this.players.byId[random(1, this.players.byId.length) - 1];
-    let user = this.players.all[this.dealerId];
-    this.getPrompt();
-    this.trigger('newDealer', 'newDealer', this, user);
+    if (this.players.byId.length >= settings.minPlayers) {
+      this.dealerId = userId ? userId : this.players.byId[random(1, this.players.byId.length) - 1];
+      this.getPrompt();
+      let user = this.players.all[this.dealerId];
+      this.trigger('newDealer', 'newDealer', this, user);
+    } else {
+      this.dealerId = null;
+    }
     return this;
   }
 
