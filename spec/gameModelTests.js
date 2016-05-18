@@ -51,8 +51,11 @@ describe('Game model', () => {
   });
   it('should check a guess with checkGuess', () => {
     spyOn(game, 'trigger').and.callThrough();
-    expect(game.checkGuess('')).toBe(false);
-    expect(game.checkGuess(game.prompt.forDisplay)).toBe(game);
+    expect(game.checkGuess({
+      body: 'notagoodguess',
+      userId: 1,
+    })).toBe(false);
+    expect(game.checkGuess({ body: game.prompt.forDisplay })).toBe(game);
     expect(game.trigger.calls.all().filter((call) => call.args[0] === 'playerWon')).toBeTruthy();
     expect(game.trigger.calls.all().filter((call) => call.args[0] === 'newDealer')).toBeTruthy();
     expect(game.trigger.calls.all().filter((call) => call.args[0] === 'newPrompt')).toBeTruthy();

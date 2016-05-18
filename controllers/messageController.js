@@ -4,18 +4,18 @@ const create = (details, messageCollection) => messageCollection.create(details)
 
 const send = (game, messageAction) => game.io.to(game.id).emit('action', messageAction);
 
-const fieldMessage = (games, action) => {
-  if (!action.payload.type) {
-    if (Array.isArray(action.payload.body)) {
-      action.payload.type = 'clue';
+const fieldMessage = (games, messagePayload) => {
+  if (!messagePayload.type) {
+    if (Array.isArray(messagePayload.body)) {
+      messagePayload.type = 'clue';
     } else {
-      action.payload.type = 'guess';
-      games.retrieve(action.payload.gameId).checkGuess(action.payload.body);
+      messagePayload.type = 'guess';
+      games.retrieve(messagePayload.gameId).checkGuess(messagePayload);
     }
   }
   send(
-    games.retrieve(action.payload.gameId),
-    actionCreators.createMessageAction(action, games.messages));
+    games.retrieve(messagePayload.gameId),
+    actionCreators.createMessageAction(messagePayload, games.messages));
 };
 
 module.exports = {

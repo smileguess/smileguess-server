@@ -5,8 +5,8 @@ class Messages {
     this.count = 0;
   }
 
-  create(details) {
-    const message = new Message(details);
+  create(messagePayload) {
+    const message = new Message(messagePayload);
     message.id = ++this.count;
     return message;
   }

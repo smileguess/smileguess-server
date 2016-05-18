@@ -18,7 +18,7 @@ const createGameChangeAction = (event, game) => {
       payload: {
         prompt: {
           category: game.prompt.category,
-          promptForDisplay: game.prompt.forDisplay,
+          forDisplay: game.prompt.forDisplay,
         },
       },
     },
@@ -31,33 +31,21 @@ const createGameChangeAction = (event, game) => {
   };
   return gameActions[event];
 };
-exports.createGameChangeAction = createGameChangeAction;
 
-const createMemoAction = (message) => {
-  return {
-    type: 'GAME_MEMO',
-    payload: {
-      body: message,
-    },
-  };
+const createMemoAction = (message) => ({
+  type: 'GAME_MEMO',
+  payload: {
+    body: message,
+  },
+});
+
+const createMessageAction = (messagePayload, messageCollection) => ({
+  type: 'ADD_MESSAGE',
+  payload: messageCollection.create(messagePayload),
+});
+
+module.exports = {
+  createGameChangeAction,
+  createMemoAction,
+  createMessageAction,
 };
-exports.createMemoAction = createMemoAction;
-
-const createMessageAction = (details, messageCollection) => {
-  return {
-    type: 'ADD_MESSAGE',
-    payload: messageCollection.create(details, messageCollection),
-  };
-};
-exports.createMessageAction = createMessageAction;
-
-// module.exports = {
-//   createMemoAction,
-//   createMessageAction,
-//   createGameChangeAction,
-// };
-
-// UPDATE_MESSAGE_STATE
-// UPDATE_GAME_STATE
-// UPDATE_USER_STATE
-// GAME_MEMO
