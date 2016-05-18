@@ -1,13 +1,8 @@
-const gameController = require('./GameController');
 const actionCreators = require('../sockets/actionCreators');
 
-const create = (details, messageCollection) => {
-  return messageCollection.create(details);
-};
+const create = (details, messageCollection) => messageCollection.create(details);
 
-const send = (game, messageAction) => {
-  game.io.to(game.id).emit('action', messageAction);
-};
+const send = (game, messageAction) => game.io.to(game.id).emit('action', messageAction);
 
 const fieldMessage = (games, action) => {
   if (!action.payload.type) {
@@ -15,15 +10,11 @@ const fieldMessage = (games, action) => {
       action.payload.type = 'clue';
     } else {
       action.payload.type = 'guess';
-      gameController.handleGuess(
-        games, 
-        action.payload.gameId, 
-        action.payload.body);
+      games.retrieve(action.payload.gameId).checkGuess(action.payload.body);
     }
   }
-  
   send(
-    games.retrieve(action.payload.gameId), 
+    games.retrieve(action.payload.gameId),
     actionCreators.createMessageAction(action, games.messages));
 };
 
