@@ -178,10 +178,10 @@ class Game {
    * Checks messages for correct guesses
    * @params {object} message - an object containing a message and a reference to the sender
    */
-  checkGuess(message) {
-    if (utils.simplifyString(message).indexOf(this.prompt.forMatching) !== -1) {
-      this.trigger('playerWon', 'playerWon', this, this.players.all[message.userId]);
-      return this.newDealer(message.userId);
+  checkGuess(messagePayload) {
+    if (utils.simplifyString(messagePayload.body).indexOf(this.prompt.forMatching) !== -1) {
+      this.trigger('playerWon', 'playerWon', this, this.players.all[messagePayload.userId]);
+      return this.newDealer(messagePayload.userId);
     }
     return false;
   }

@@ -1,10 +1,10 @@
 class Message {
-  constructor(details) {
+  constructor(messagePayload) {
     this.id = null;
     this.time = new Date();
-    this.userId = details.payload.userId || 0;
-    this.type = details.payload.type;
-    this.body = details.payload.body;
+    this.userId = messagePayload.userId || 0;
+    this.type = messagePayload.type;
+    this.body = messagePayload.body;
   }
 }
 

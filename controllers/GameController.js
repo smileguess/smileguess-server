@@ -9,10 +9,9 @@ const retrieve = (gamesCollection, gameId) =>
  * @params {object} - a instance of the Games collection
  * @params {object} - an instance of the User model
  */
-const handlePlayerJoin = (gamesCollection, user, gameId) => {
-  console.log('PLAYER JOINED', user.summary());
+const handlePlayerJoin = (gamesCollection, user, gameId) => (
   gameId ? retrieve(gamesCollection, gameId).addPlayer(user) : gamesCollection.getNextOpenGame().addPlayer(user)
-};
+);
 
 /**
  * Handles a player leaving a game
@@ -28,22 +27,17 @@ const handlePlayerLeave = (gamesCollection, gameId, userId) => (
  * Sends a socket message as a system message
  * @params {string} message - message to send
  */
-const sendSystemMessage = (game, body, messageCollection) => {
-  const details = {
-    payload: {
-      type: 'system',
-      body,
-      userId: 0,
-    },
+const sendSystemMessage = (game, messageBody, messageCollection) => {
+  const payload = {
+    type: 'system',
+    body: messageBody,
+    userId: 0,
   };
-  messageController.send(game, actionCreators.createMessageAction(details, messageCollection));
+  messageController.send(game, actionCreators.createMessageAction(payload, messageCollection));
 };
 
-const disseminateChange = (event, game) => {
-  console.log('sendGameChange called');
-  const action = actionCreators.createGameChangeAction(event, game);
-  game.io.emit('action', action);
-};
+const disseminateChange = (event, game) => game.io.emit('action', actionCreators.createGameChangeAction(event, game));
+
 /**
  * Sends a socket message as a memo message
  * @params {string} message - message to send
@@ -55,9 +49,9 @@ const sendMemo = (game, message) =>
  * Sends a socket message as both a message and a memo
  * @params {string} message - message to send
  */
-const sendMemoAndSystemMessage = (game, message, messageCollection) => {
-  sendMemo(game, message, messageCollection);
-  sendSystemMessage(game, message, messageCollection);
+const sendMemoAndSystemMessage = (game, messageBody, messageCollection) => {
+  sendMemo(game, messageBody);
+  sendSystemMessage(game, messageBody, messageCollection);
 };
 
 /**
