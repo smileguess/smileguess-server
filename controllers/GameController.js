@@ -1,4 +1,3 @@
-const sendGameChange = require('../sockets/sendGameChange');
 const actionCreators = require('../sockets/actionCreators');
 const messageController = require('./messageController');
 
@@ -15,10 +14,6 @@ const handlePlayerJoin = (gamesCollection, user, gameId) => {
   gameId ? retrieve(gamesCollection, gameId).addPlayer(user) : gamesCollection.getNextOpenGame().addPlayer(user)
 };
 
-/**
- * TODO: change me to match my friends :-)
- */
-const disseminateChange = (type, game) => sendGameChange(type, game);
 /**
  * Handles a player leaving a game
  * @params {object} - a instance of the Games collection
@@ -44,6 +39,11 @@ const sendSystemMessage = (game, body, messageCollection) => {
   messageController.send(game, actionCreators.createMessageAction(details, messageCollection));
 };
 
+const disseminateChange = (event, game) => {
+  console.log('sendGameChange called');
+  const action = actionCreators.createGameChangeAction(event, game);
+  game.io.emit('action', action);
+};
 /**
  * Sends a socket message as a memo message
  * @params {string} message - message to send
@@ -75,9 +75,10 @@ const play = (games, callback) => {
       .on('newDealer',
         disseminateChange,
         (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} is the new dealer`, games.messages))
-        .on('playerLeave', (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} has left the game`, games.messages))
-        .on('playerJoin', (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} has joined the game`, games.messages))
-        .on('playerWon', (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} has won the game!`, games.messages));
+      .on('playerChange', disseminateChange)
+      .on('playerLeave', (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} has left the game`, games.messages))
+      .on('playerJoin', (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} has joined the game`, games.messages))
+      .on('playerWon', (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} has won the game!`, games.messages));
   } else {
     game = games.getNextOpenGame();
   }

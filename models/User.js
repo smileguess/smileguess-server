@@ -2,7 +2,6 @@ const Chance = require('chance');
 const chance = new Chance();
 const utils = require('../controllers/utils');
 
-
 /**
  * Instantiates new users
  */
@@ -27,7 +26,7 @@ class User {
     * Username
     * @type {string}
     */
-    this.username = chance.word({ syllables: utils.getRandomIntInclusive(2, 3) });
+    this.username = chance.word({ syllables: utils.getRandomIntInclusive(1, 3) });
     /**
     * Socket Connection
     * @type {object}
@@ -52,7 +51,7 @@ class User {
     * User photo/avatar
     * @type {string}
     */
-    this.picture = '';
+    this.picture = 'https://chinesefontdesign.com/wp-content/uploads/2014/05/1817.gif';
   }
 
   summary() {
