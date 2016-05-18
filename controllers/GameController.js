@@ -10,9 +10,10 @@ const retrieve = (gamesCollection, gameId) =>
  * @params {object} - a instance of the Games collection
  * @params {object} - an instance of the User model
  */
-const handlePlayerJoin = (gamesCollection, user, gameId) => (
+const handlePlayerJoin = (gamesCollection, user, gameId) => {
+  console.log('PLAYER JOINED', user.summary());
   gameId ? retrieve(gamesCollection, gameId).addPlayer(user) : gamesCollection.getNextOpenGame().addPlayer(user)
-);
+};
 
 /**
  * TODO: change me to match my friends :-)
