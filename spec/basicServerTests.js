@@ -5,7 +5,7 @@ const request = require('request');
 const testUtils = require('./testUtils');
 const serverURL = 'http://127.0.0.1:1234';
 
-describe('Server Functions', () => {
+xdescribe('Server Functions', () => {
   it('will respond to a request at a nonexistant endpoint', (done) => {
     const options = {
       method: 'GET',
