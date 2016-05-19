@@ -131,7 +131,7 @@ class Game {
     const user = this.players.all[userId];
     this.trigger('playerLeave', 'playerLeave', this, user);
     this.players.byId.splice(this.players.byId.indexOf(userId), 1);
-    delete this.players.all[userId];
+    // delete this.players.all[userId];
     this.updateOpenSeats();
     if (this.players.byId.length < settings.minPlayers) {
       this.active = false;
@@ -145,7 +145,9 @@ class Game {
    */
   addPlayer(user) {
     if (this.players.byId.length < settings.maxPlayers) {
-      this.players.byId.push(user.userId);
+      if (this.players.byId.indexOf(user.userId) < 0) {
+        this.players.byId.push(user.userId);
+      }
       this.players.all[user.userId] = user.summary();
     } else {
       console.log('Error: Game full');

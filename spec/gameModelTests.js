@@ -34,7 +34,7 @@ describe('Game model', () => {
     expect(game.trigger.calls.all().filter((call) => call.args[0] === 'playerChange')).toBeTruthy();
     expect(game.trigger.calls.all().filter((call) => call.args[0] === 'empty')).toBeTruthy();
     expect(game.seatsOpen).toBe(maxSeats);
-    expect(game.players.all['1']).toBeUndefined();
+    expect(game.players.byId.indexOf('1')).toBe(-1);
     expect(game.players.byId.length).toBe(0);
   });
   it('should get a prompt with getPrompt', () => {
