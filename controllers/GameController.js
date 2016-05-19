@@ -1,5 +1,6 @@
 const actionCreators = require('../sockets/actionCreators');
 const messageController = require('./messageController');
+const userController = require('./UserController');
 
 const retrieve = (gamesCollection, gameId) =>
   gamesCollection.retrieve(gameId);
@@ -9,9 +10,9 @@ const retrieve = (gamesCollection, gameId) =>
  * @params {object} - a instance of the Games collection
  * @params {object} - an instance of the User model
  */
-const handlePlayerJoin = (gamesCollection, user, gameId) => (
-  gameId ? retrieve(gamesCollection, gameId).addPlayer(user) : gamesCollection.getNextOpenGame().addPlayer(user)
-);
+const handlePlayerJoin = (gamesCollection, user, gameId) => {
+  return gameId ? retrieve(gamesCollection, gameId).addPlayer(user) : gamesCollection.getNextOpenGame().addPlayer(user)
+};
 
 /**
  * Handles a player leaving a game
@@ -19,9 +20,14 @@ const handlePlayerJoin = (gamesCollection, user, gameId) => (
  * @params {string} - a game ID
  * @params {object} - an instance of the User model
  */
-const handlePlayerLeave = (gamesCollection, gameId, userId) => (
-  gamesCollection.retrieve(gameId).removePlayer(userId)
-);
+const handlePlayerLeave = (db, gameId, userId) => {
+  const game = db.games.retrieve(gameId).removePlayer(userId);
+  if (userId === game.dealerId) {
+    game.newDealer();
+  }
+  userController.destroy(db, userId);
+  return game;
+};
 
 /**
  * Sends a socket message as a system message
@@ -55,7 +61,24 @@ const sendMemoAndSystemMessage = (game, messageBody, messageCollection) => {
 };
 
 /**
- * Handles a user wanting to play a game. If there are available games,
+  * Establiishes a user socket connection and connects him/her to a game room
+  * @params {object} io - the io server
+  * @params {object} socket - the user's socket connection
+  * @params {object} action - join game action sent from client
+  * @params {object} db - Collections of games, users and messages
+  */
+const joinGame = (io, socket, action, db) => {
+  let user = action.userId ? userController.get(db.users, action.userId) : null;
+  if (!user) {
+    user = userController.create(null, null, db.users);
+  }
+  socket.join(action.gameId);
+  userController.connect(db, user, socket);
+  return handlePlayerJoin(db.games, user);
+};
+
+/**
+ * Handles a user wanting to play a game. If thedre are available games,
  the user will be added to an ongoing game. A new game will be created
  * for the user otherwise.
  * @params {object} - a instance of the Games collection
@@ -98,6 +121,7 @@ module.exports = {
   sendMemoAndSystemMessage,
   sendSystemMessage,
   sendMemo,
+  joinGame,
   disseminateChange,
 };
 
