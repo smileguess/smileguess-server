@@ -91,11 +91,14 @@ const play = (games, callback) => {
       .on('newPrompt', disseminateChange)
       .on('newDealer',
         disseminateChange,
-        (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} is the new dealer`, games.messages))
+        (type, game, user) => sendSystemMessage(game, `${user.username} is the new dealer`, games.messages))
       .on('playerChange', disseminateChange)
-      .on('playerLeave', (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} has left the game`, games.messages))
-      .on('playerJoin', (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} has joined the game`, games.messages))
-      .on('playerWon', (type, game, user) => sendMemoAndSystemMessage(game, `${user.username} has won the game!`, games.messages));
+      .on('playerLeave', (type, game, user) => sendSystemMessage(game, `${user.username} has left the game`, games.messages))
+      .on('playerJoin', (type, game, user) => sendSystemMessage(game, `${user.username} has joined the game`, games.messages))
+      .on('playerWon', (type, game, user) => { 
+        sendMemoAndSystemMessage(game, `${user.username} has won the game!`, games.messages);
+        sendSystemMessage(game, `The answer was "${game.prompt.forDisplay}"`, games.messages);
+      });
   } else {
     game = games.getNextOpenGame();
   }
