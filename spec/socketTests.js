@@ -1,42 +1,41 @@
 // const GameController = require('../controllers/GameController');
 // const User = require('../models/User');
-// const settings = require('../config/gameSettings');
-const testUtils = require('./testUtils');
+// // const settings = require('../config/gameSettings');
+// const testUtils = require('./testUtils');
 
-// const express = require('express');
-const serverURL = 'http://127.0.0.1:1234';
-// const ioCreate = require('socket.io');
-const io = require('socket.io-client');
-const joinGame = require('../sockets/joinGame');
-// const testApp = express();
-const server = require('../server.js');
+// // const express = require('express');
+// const serverURL = 'http://127.0.0.1:1234';
+// // const ioCreate = require('socket.io');
+// const io = require('socket.io-client');
+// const joinGame = require('../sockets/joinGame');
+// // const testApp = express();
+// const server = require('../server.js');
 
-const Users = require('../collections/Users');
-const UserController = require('../controllers/UserController');
-const Games = require('../collections/Games');
+// const Users = require('../collections/Users');
+// const UserController = require('../controllers/UserController');
+// const Games = require('../collections/Games');
 
-// const users = server.db.users;
-// const games = server.db.games;
+// // const users = server.db.users;
+// // const games = server.db.games;
 
-// Instantiate a user for testing
-testUtils.sendUserRequest(null, (err, res, body) => {
-  let testUser = JSON.parse(body);
-  console.log('testUser', testUser);
-  testUtils.sendPlayRequest(null, (err, res, body) => {
-    let testGame = JSON.parse(body);
-    // console.log('testGame', testGame);
-    // console.log('open games', games.openGames);
-    // console.log(users);
-    // console.log(games);
-  });
-});
-// Instantiate a game for testing
+// // Instantiate a user for testing
+// testUtils.sendUserRequest(null, (err, res, body) => {
+//   let testUser = JSON.parse(body);
+//   testUtils.sendPlayRequest(null, (err, res, body) => {
+//     let testGame = JSON.parse(body);
+//     // console.log('testGame', testGame);
+//     // console.log('open games', games.openGames);
+//     // console.log(users);
+//     // console.log(games);
+//   });
+// });
+// // Instantiate a game for testing
 
-let socket;
+// let socket;
 
-// describe('Socket responder functions', () => {
-//   beforeEach(() => {
-//     socket = io.connect(serverURL, {
+// // describe('Socket responder functions', () => {
+// //   beforeEach(() => {
+// //     socket = io.connect(serverURL, {
 //       'reconnection delay': 0,
 //       'reopen delay': 0,
 //       'force new connection': true,
@@ -62,31 +61,30 @@ let socket;
 //   });
 // });
 
-xdescribe('Game notifications', () => {
-  beforeEach(() => {
-    socket = io.connect(serverURL, {
-      'reconnection delay': 0,
-      'reopen delay': 0,
-      'force new connection': true,
-    });
-  });
-  const label = 'sendMemo';
-  it('should be a function', () => {
-    expect(typeof joinGame).toBe('function');
-  });
-  it('should impart users with socket objects', (done) => {
-    socket.emit('action', {
-      type: `server/${label}`,
-      userId: 1,
-      gameId: 1,
-    });
-    setTimeout(() => {
-      console.log(UserController.get(users, 1));
-      expect(UserController.get(users, 1).socket).not.toBe(null);
-      done();
-    }, 500);
-  });
-});
+// xdescribe('Game notifications', () => {
+//   beforeEach(() => {
+//     socket = io.connect(serverURL, {
+//       'reconnection delay': 0,
+//       'reopen delay': 0,
+//       'force new connection': true,
+//     });
+//   });
+//   const label = 'sendMemo';
+//   it('should be a function', () => {
+//     expect(typeof joinGame).toBe('function');
+//   });
+//   it('should impart users with socket objects', (done) => {
+//     socket.emit('action', {
+//       type: `server/${label}`,
+//       userId: 1,
+//       gameId: 1,
+//     });
+//     setTimeout(() => {
+//       expect(UserController.get(users, 1).socket).not.toBe(null);
+//       done();
+//     }, 500);
+//   });
+// });
 
 
 
