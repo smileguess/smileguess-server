@@ -182,6 +182,8 @@ class Game {
    */
   checkGuess(messagePayload) {
     if (utils.simplifyString(messagePayload.body).indexOf(this.prompt.forMatching) !== -1) {
+      this.players.all[messagePayload.userId].roundsWon++;
+      this.trigger('playerChange', 'playerChange', this);
       this.trigger('playerWon', 'playerWon', this, this.players.all[messagePayload.userId]);
       return this.newDealer(messagePayload.userId);
     }

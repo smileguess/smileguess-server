@@ -34,15 +34,15 @@ class User {
     */
     this.socket = null;
     /**
-    * Points in current game
+    * Rounds won in current game
     * @type {number}
     */
-    this.points = 0;
+    this.roundsWon = 0;
     /**
-    * Wins in current game
+    * Games won current room
     * @type {number}
     */
-    this.wins = 0;
+    this.gamesWon = 0;
     /**
     * Total number of emojicoins collected in all games
     * @type {number}
@@ -59,8 +59,8 @@ class User {
     return {
       id: this.userId,
       username: this.username,
-      points: this.points,
-      wins: this.wins,
+      roundsWon: this.roundsWon,
+      gamesWon: this.gamesWon,
       emojicoins: this.emojicoins,
       picture: this.picture,
     };
