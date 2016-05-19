@@ -21,7 +21,7 @@ describe('Game Controller', () => {
       expect(game.events['newDealer']).toBeDefined();
       expect(game.events['playerLeave']).toBeDefined();
       expect(game.events['playerJoin']).toBeDefined();
-      expect(game.events['playerWon']).toBeDefined();
+      expect(game.events['playerWinRound']).toBeDefined();
       done();
     });
   });

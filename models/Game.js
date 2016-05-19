@@ -181,10 +181,21 @@ class Game {
    * @params {object} message - an object containing a message and a reference to the sender
    */
   checkGuess(messagePayload) {
+    const userSummary = this.players.all[messagePayload.userId];
     if (utils.simplifyString(messagePayload.body).indexOf(this.prompt.forMatching) !== -1) {
-      this.players.all[messagePayload.userId].roundsWon++;
+      userSummary.emojicoins += settings.emojicoinsOnRoundWin;
+      userSummary.roundsWon++;
+      if (userSummary.roundsWon >= settings.roundsToWin) {
+        userSummary.gamesWon++;
+        userSummary.emojicoins += settings.emojicoinsOnGameWin;
+        this.players.byId.forEach((id) => {
+          this.players.all[id].roundsWon = 0;
+        });
+        this.trigger('playerWinGame', 'playerWinGame', this, userSummary);
+      } else {
+        this.trigger('playerWinRound', 'playerWinRound', this, userSummary);
+      }
       this.trigger('playerChange', 'playerChange', this);
-      this.trigger('playerWon', 'playerWon', this, this.players.all[messagePayload.userId]);
       return this.newDealer(messagePayload.userId);
     }
     return false;
