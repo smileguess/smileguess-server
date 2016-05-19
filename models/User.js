@@ -1,6 +1,7 @@
 const Chance = require('chance');
 const chance = new Chance();
 const utils = require('../controllers/utils');
+const randomAvatar = require('../config/randomAvatar');
 
 /**
  * Instantiates new users
@@ -51,7 +52,7 @@ class User {
     * User photo/avatar
     * @type {string}
     */
-    this.picture = 'https://chinesefontdesign.com/wp-content/uploads/2014/05/1817.gif';
+    this.picture = randomAvatar();
   }
 
   summary() {
