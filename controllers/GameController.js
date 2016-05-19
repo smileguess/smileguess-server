@@ -95,10 +95,14 @@ const play = (games, callback) => {
       .on('playerChange', disseminateChange)
       .on('playerLeave', (type, game, user) => sendSystemMessage(game, `${user.username} has left the game`, games.messages))
       .on('playerJoin', (type, game, user) => sendSystemMessage(game, `${user.username} has joined the game`, games.messages))
-      .on('playerWon', (type, game, user) => { 
-        sendMemoAndSystemMessage(game, `${user.username} has won the game!`, games.messages);
+      .on('playerWinRound', (type, game, user) => { 
+        sendMemoAndSystemMessage(game, `${user.username} has won the round!`, games.messages);
         sendSystemMessage(game, `The answer was "${game.prompt.forDisplay}"`, games.messages);
-      });
+      })
+      .on('playerWinGame', (type, game, user) => { 
+        sendMemoAndSystemMessage(game, `${user.username.toUpperCase()} is the SUPREME CHAMPION!`, games.messages);
+        sendSystemMessage(game, `The answer was "${game.prompt.forDisplay}"`, games.messages);
+      })
   } else {
     game = games.getNextOpenGame();
   }

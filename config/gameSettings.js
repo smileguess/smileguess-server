@@ -14,6 +14,16 @@ const gamePlaySettings = {
   * @type {RegEx<object>}
   */
   charsToAvoid: /-/g,
+  /**
+  * Number of round wins needed to win a game
+  * @type {number}
+  */
+  roundsToWin: 2,
+
+
+  emojicoinsOnGameWin: 79,
+
+  emojicoinsOnRoundWin: 44,
 };
 
 module.exports = gamePlaySettings;
