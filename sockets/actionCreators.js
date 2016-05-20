@@ -19,6 +19,7 @@ const createGameChangeAction = (event, game) => {
         prompt: {
           category: game.prompt.category,
           forDisplay: game.prompt.forDisplay,
+          hintForDisplay: game.prompt.hintForDisplay,
         },
       },
     },

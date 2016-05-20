@@ -52,7 +52,7 @@ class Game {
       /**
       * @property {string} prompt.category Communicates the solution's category to all players
       */
-      category: null,
+      category: 'Hang tight. More players are on the way!',
 
       /**
        * @property {string} prompt.forDisplay Communicates the prompt to the dealer
@@ -63,6 +63,16 @@ class Game {
        * @property {string} prompt.forMatching Prevents correct answers from being deemed incorrect due to capitilization, spacing, special characters, etc.
        */
       forMatching: null,
+
+      hint: '',
+
+      hintForDisplay: 'Hang tight. More players are on the way!',
+
+      hintLocations: {},
+
+      hintCount: 0,
+
+      intervalIds: [],
     };
     /**
     * Prevents the game from running until sufficient players have joined
@@ -80,8 +90,8 @@ class Game {
      * @type {object}
      */
     this.io = io.to(gameId);
-
   }
+
   /**
    * Adds event listeners
    * @param {string} event - an event name
@@ -158,7 +168,6 @@ class Game {
       this.active = true;
       this.trigger('activityStatus', 'activityStatus', this);
       this.newDealer();
-      this.getPrompt();
     }
     return this;
   }
@@ -172,6 +181,7 @@ class Game {
     this.prompt.category = prompts.categories[categoryNumber];
     this.prompt.forDisplay = prompts.promptsForDisplay[categoryNumber][solutionNumber];
     this.prompt.forMatching = prompts.simplifiedPrompts[categoryNumber][solutionNumber];
+    setTimeout(() => this.generateHint(), settings.timeToHintStart);
     this.trigger('newPrompt', 'newPrompt', this);
     return this;
   }
@@ -180,9 +190,18 @@ class Game {
    * Checks messages for correct guesses
    * @params {object} message - an object containing a message and a reference to the sender
    */
+  resetHints() {
+    console.log('CALLING CLEAR INTERVAL');
+    clearInterval(this.prompt.intervalIds.shift());
+    this.prompt.hintLocations = {};
+    this.prompt.hintCount = 0;
+    this.trigger('newPrompt', 'newPrompt', this);
+  }
+
   checkGuess(messagePayload) {
     const userSummary = this.players.all[messagePayload.userId];
     if (utils.simplifyString(messagePayload.body).indexOf(this.prompt.forMatching) !== -1) {
+      this.resetHints();
       userSummary.emojicoins += settings.emojicoinsOnRoundWin;
       userSummary.roundsWon++;
       if (userSummary.roundsWon >= settings.roundsToWin) {
@@ -195,10 +214,61 @@ class Game {
       } else {
         this.trigger('playerWinRound', 'playerWinRound', this, userSummary);
       }
+      // what is this trigger doing here????????????????????????????????????????????????????????????????????????????????????????????????????????????
       this.trigger('playerChange', 'playerChange', this);
       return this.newDealer(messagePayload.userId);
     }
     return false;
+  }
+
+
+  generateHint() {
+    const initializeHint = () => {
+      const prompt = this.prompt.forDisplay;
+      let starterHint = '';
+      this.prompt.hintCount = 0;
+      for (let i = 0; i < prompt.length; i++) {
+        if (prompt[i] === ' ') {
+          starterHint += ' ';
+        } else {
+          starterHint += '-';
+        }
+      }
+      this.prompt.hint = starterHint;
+      this.prompt.hintForDisplay = `${this.prompt.category}: ${this.prompt.hint}`;
+      this.trigger('newPrompt', 'newPrompt', this);
+    };
+
+    const iterateHint = setInterval(() => {
+      console.log('In setInterval. Hint count:', this.prompt.hintCount, '. There should be', settings.maxHints * this.prompt.forDisplay.length, 'hints given.');
+      if (this.prompt.hintCount <= settings.maxHints * this.prompt.forDisplay.length) {
+        this.showRandomChar();
+        console.log('called show random char. Hint count:', this.prompt.hintCount);
+      } else {
+        this.resetHints();
+      }
+    }, 3000);
+
+    initializeHint();
+    this.prompt.intervalIds.push(iterateHint);
+  }
+
+  showRandomChar() {
+    const prompt = this.prompt.forDisplay;
+    const tempHint = this.prompt.hint.split('');
+    const location = random(0, prompt.length - 1);
+    if (this.prompt[location] === ' ' || this.prompt.hintLocations[location]) {
+      console.log(`LOCATION ${location} ALREADY USED. HERE IS THE LOCATIONS OBJECT: ${Object.keys(this.prompt.hintLocations)}. TRYING AGAIN`)
+      return this.showRandomChar();
+    }
+    console.log('This is the prompt:', prompt, 'This is the value given as a hint:', prompt[location]);
+    this.prompt.hintLocations[location] = true;
+    tempHint[location] = prompt.charAt(location);
+    this.prompt.hint = tempHint.join('');
+    this.prompt.hintForDisplay = `${this.prompt.category}: ${this.prompt.hint}`;
+    this.prompt.hintCount++;
+    this.trigger('newPrompt', 'newPrompt', this);
+    return location;
   }
 
   /**
@@ -206,6 +276,7 @@ class Game {
    * @params {number} userId - the user id of the next dealer
    */
   newDealer(userId) {
+    console.log('NEW DEALER CALLED')
     if (this.players.byId.length >= settings.minPlayers) {
       this.dealerId = userId ? userId : this.players.byId[random(1, this.players.byId.length) - 1];
       this.getPrompt();

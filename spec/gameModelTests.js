@@ -40,8 +40,6 @@ describe('Game model', () => {
   it('should get a prompt with getPrompt', () => {
     const game2 = new Game(2, ioCreate.listen(server));
     spyOn(game2, 'trigger').and.callThrough();
-    expect(game2.prompt.category).toBeNull();
-    expect(game2.prompt.forDisplay).toBeNull();
     expect(game2.prompt.forMatching).toBeNull();
     expect(game2.getPrompt()).toBe(game2);
     expect(game2.trigger.calls.all().filter((call) => call.args[0] === 'newPrompt')).toBeTruthy();
