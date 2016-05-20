@@ -52,7 +52,7 @@ class Game {
       /**
       * @property {string} prompt.category Communicates the solution's category to all players
       */
-      category: 'Hang tight. More players are on the way!',
+      category: '⌚️ Hang tight. More players are on the way! 🚌',
 
       /**
        * @property {string} prompt.forDisplay Communicates the prompt to the dealer
@@ -66,7 +66,7 @@ class Game {
 
       hint: '',
 
-      hintForDisplay: 'Hang tight. More players are on the way!',
+      hintForDisplay: '⌚️ Hang tight. More players are on the way! 🚌',
 
       hintLocations: {},
 
