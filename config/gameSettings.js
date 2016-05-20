@@ -12,7 +12,7 @@ const gamePlaySettings = {
   /**
   * Regex defining which characters should not be considered in evaluating a guess
   * @type {RegEx<object>}
-  */
+  */ 
   charsToAvoid: /-/g,
   /**
   * Number of round wins needed to win a game

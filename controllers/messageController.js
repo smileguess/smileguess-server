@@ -5,12 +5,15 @@ const create = (details, messageCollection) => messageCollection.create(details)
 const send = (game, messageAction) => game.io.to(game.id).emit('action', messageAction);
 
 const fieldMessage = (games, messagePayload) => {
+  messagePayload.correct = false;
   if (!messagePayload.type) {
     if (Array.isArray(messagePayload.body)) {
       messagePayload.type = 'clue';
     } else {
       messagePayload.type = 'guess';
-      games.retrieve(messagePayload.gameId).checkGuess(messagePayload);
+      if (games.retrieve(messagePayload.gameId).checkGuess(messagePayload)) {
+        messagePayload.correct = true;
+      }
     }
   }
   send(

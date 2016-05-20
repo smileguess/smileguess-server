@@ -5,6 +5,7 @@ class Message {
     this.userId = messagePayload.userId || 0;
     this.type = messagePayload.type;
     this.body = messagePayload.body;
+    this.correct = messagePayload.correct;
   }
 }
 
