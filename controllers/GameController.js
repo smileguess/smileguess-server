@@ -103,6 +103,9 @@ const play = (games, callback) => {
         sendMemoAndSystemMessage(game, `${user.username.toUpperCase()} is the SUPREME CHAMPION!`, games.messages);
         sendSystemMessage(game, `The answer was "${game.prompt.forDisplay}"`, games.messages);
       })
+      .on('hint', (game) => {
+        sendSystemMessage(game, game.prompt.hintForDisplay, games.messages);
+      });
   } else {
     game = games.getNextOpenGame();
   }

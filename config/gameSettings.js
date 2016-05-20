@@ -24,6 +24,12 @@ const gamePlaySettings = {
   emojicoinsOnGameWin: 79,
 
   emojicoinsOnRoundWin: 44,
+
+  timeToHintStart: 30000,
+
+  timeBetweenHints: 22000,
+
+  maxHints: 0.77,
 };
 
 module.exports = gamePlaySettings;

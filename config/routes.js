@@ -5,7 +5,6 @@ module.exports = (app, db) => {
   app.get('/api/game/', (req, res) => {
     console.log('game requested via http:')
     GameController.play(db.games, (game) => {
-      console.log('responding with game:', game.summary());
       res.json(game.summary());
     });
   });
