@@ -25,7 +25,7 @@ const handlePlayerLeave = (db, gameId, userId) => {
   if (userId === game.dealerId) {
     game.newDealer();
   }
-  userController.destroy(db, userId);
+  // userController.destroy(db, userId);
   return game;
 };
 
