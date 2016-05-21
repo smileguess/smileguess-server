@@ -66,7 +66,7 @@ class Game {
 
       hint: '',
 
-      hintForDisplay: '⌚️  Hang tight. More players are on the way!  🚌',
+      hintForDisplay: this.active ? this.prompt.category : '⌚️  Hang tight. More players are on the way!  🚌',
 
       hintLocations: {},
 
@@ -157,6 +157,7 @@ class Game {
     if (this.players.byId.length < settings.maxPlayers) {
       if (this.players.byId.indexOf(user.userId) < 0) {
         this.players.byId.push(user.userId);
+        this.trigger('newPrompt', 'newPrompt', this);
       }
       this.players.all[user.userId] = user.summary();
     } else {
@@ -176,12 +177,13 @@ class Game {
    * Randomly chooses a world or phrase to be guessed
    */
   getPrompt() {
+    console.log('GENERATING NEW PROMPT');
     const categoryNumber = random(0, prompts.promptsForDisplay.length - 1);
     const solutionNumber = random(0, prompts.promptsForDisplay[categoryNumber].length - 1);
     this.prompt.category = prompts.categories[categoryNumber];
     this.prompt.forDisplay = prompts.promptsForDisplay[categoryNumber][solutionNumber];
     this.prompt.forMatching = prompts.simplifiedPrompts[categoryNumber][solutionNumber];
-    setTimeout(() => this.generateHint(), settings.timeToHintStart);
+    this.generateHint();
     this.trigger('newPrompt', 'newPrompt', this);
     return this;
   }
@@ -238,29 +240,30 @@ class Game {
       this.prompt.hintForDisplay = `${this.prompt.category}: ${this.prompt.hint}`;
       this.trigger('newPrompt', 'newPrompt', this);
     };
-
-    const iterateHint = setInterval(() => {
-      console.log('In setInterval. Hint count:', this.prompt.hintCount, '. There should be', settings.maxHints * this.prompt.forDisplay.length, 'hints given.');
-      if (this.prompt.hintCount <= settings.maxHints * this.prompt.forDisplay.length) {
-        this.showRandomChar();
-        console.log('called show random char. Hint count:', this.prompt.hintCount);
-      } else {
-        this.resetHints();
-      }
-    }, 3000);
+    setTimeout(() => {
+      const iterateHint = setInterval(() => {
+        console.log('In setInterval. Hint count:', this.prompt.hintCount, '. There should be', settings.maxHints * this.prompt.forDisplay.length, 'hints given.');
+        if (this.prompt.hintCount <= settings.maxHints * this.prompt.forDisplay.length) {
+          this.showRandomChar();
+          console.log('called show random char. Hint count:', this.prompt.hintCount);
+        } else {
+          this.resetHints();
+        }
+      }, 3000);
+      this.prompt.intervalIds.push(iterateHint);
+    }, settings.timeToHintStart);
 
     initializeHint();
-    this.prompt.intervalIds.push(iterateHint);
   }
 
   showRandomChar() {
     const prompt = this.prompt.forDisplay;
     const tempHint = this.prompt.hint.split('');
     const location = random(0, prompt.length - 1);
-    if (this.prompt[location] === ' ' || this.prompt.hintLocations[location]) {
-      console.log(`LOCATION ${location} ALREADY USED. HERE IS THE LOCATIONS OBJECT: ${Object.keys(this.prompt.hintLocations)}. TRYING AGAIN`)
-      return this.showRandomChar();
-    }
+    // if (this.prompt[location] === ' ' || this.prompt.hintLocations[location]) {
+    //   console.log(`LOCATION ${location} ALREADY USED. HERE IS THE LOCATIONS OBJECT: ${Object.keys(this.prompt.hintLocations)}. TRYING AGAIN`)
+    //   return this.showRandomChar();
+    // }
     console.log('This is the prompt:', prompt, 'This is the value given as a hint:', prompt[location]);
     this.prompt.hintLocations[location] = true;
     tempHint[location] = prompt.charAt(location);

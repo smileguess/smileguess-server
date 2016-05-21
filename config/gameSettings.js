@@ -25,9 +25,9 @@ const gamePlaySettings = {
 
   emojicoinsOnRoundWin: 44,
 
-  timeToHintStart: 30000,
+  timeToHintStart: 5000,
 
-  timeBetweenHints: 22000,
+  timeBetweenHints: 1000,
 
   maxHints: 0.77,
 };
